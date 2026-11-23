@@ -11,7 +11,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
 
   <!-- Custom Design System -->
-  <link rel="stylesheet" href="custom.css" />
+  <link rel="stylesheet" href="custom.css?v=3.2" />
 
   <style>
     /* Specific styles for Leaderboard */
@@ -221,7 +221,7 @@
         <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
         <div class="brand-text">
           <span>Lahan Basah Hijau</span>
-          <span class="brand-badge">🌱 STEM Interaktif</span>
+          <span class="brand-badge"><i class="bi bi-tree-fill me-1"></i> STEM Interaktif</span>
         </div>
       </a>
 
@@ -231,12 +231,12 @@
 
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.html"><span>🏠</span> Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="materi.html"><span>📚</span> Materi</a></li>
-          <li class="nav-item"><a class="nav-link" href="kuis.html"><span>🧠</span> Kuis</a></li>
-          <li class="nav-item"><a class="nav-link" href="simulasi.html"><span>🧪</span> Simulasi</a></li>
-          <li class="nav-item"><a class="nav-link" href="proyek.html"><span>💡</span> Proyek</a></li>
-          <li class="nav-item"><a class="nav-link active" href="leaderboard.html"><span>🏆</span> Papan Peringkat</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="materi.php"><i class="bi bi-book-fill"></i> Materi</a></li>
+          <li class="nav-item"><a class="nav-link" href="kuis.php"><i class="bi bi-controller"></i> Kuis & Games</a></li>
+          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-flask-fill"></i> Simulasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyek.html"><i class="bi bi-lightbulb-fill"></i> Proyek</a></li>
+          <li class="nav-item"><a class="nav-link active" href="leaderboard.html"><i class="bi bi-trophy-fill"></i> Papan Peringkat</a></li>
         </ul>
       </div>
     </div>
@@ -255,7 +255,7 @@
 
     <div class="container hero-content">
       <div class="hero-tag" data-aos="fade-down">
-        <span>🏆</span> Hall of Fame Juara Lingkungan
+        <i class="bi bi-trophy-fill me-1"></i> Hall of Fame Juara Lingkungan
       </div>
 
       <h1 class="hero-title" data-aos="zoom-in">
@@ -270,7 +270,7 @@
         <a href="#leaderboardList" class="btn-eco-primary">
           <i class="bi bi-award-fill"></i> Lihat Daftar Juara
         </a>
-        <a href="kuis.html" class="btn-eco-outline">
+        <a href="kuis.php" class="btn-eco-outline">
           <i class="bi bi-controller"></i> Coba Kuis Sekarang
         </a>
       </div>
@@ -291,7 +291,7 @@
     <div class="glass-leaderboard-card" data-aos="fade-up">
 
       <div class="text-center mb-4">
-        <h3 class="display-font text-success mb-1">🏅 Panggung Juara Teratas</h3>
+      <h3 class="display-font text-success mb-1"><img src="foto/leaderboard.webp" class="ui-2d-thumb ui-2d-thumb-sm" alt="" /> Panggung Juara Teratas</h3>
         <p class="text-muted small">Peringkat diambil dari hasil kuis yang tersimpan di browser perangkat ini.</p>
       </div>
 
@@ -308,7 +308,7 @@
         
         <!-- Juara 2 (Perak) -->
         <div class="podium-col rank-2">
-          <div class="podium-avatar">🥈</div>
+            <div class="podium-avatar"><i class="bi bi-award-fill text-secondary"></i></div>
           <div class="podium-name" id="p2Name">-</div>
           <div class="podium-school" id="p2School">-</div>
           <div class="podium-pedestal">
@@ -320,8 +320,8 @@
         <!-- Juara 1 (Emas) -->
         <div class="podium-col rank-1">
           <div class="podium-avatar">
-            <span class="crown-icon">👑</span>
-            🥇
+            <span class="crown-icon"><i class="bi bi-gem"></i></span>
+            <i class="bi bi-trophy-fill text-warning"></i>
           </div>
           <div class="podium-name" id="p1Name">-</div>
           <div class="podium-school" id="p1School">-</div>
@@ -333,7 +333,7 @@
 
         <!-- Juara 3 (Perunggu) -->
         <div class="podium-col rank-3">
-          <div class="podium-avatar">🥉</div>
+            <div class="podium-avatar"><i class="bi bi-award-fill" style="color:#b86b38"></i></div>
           <div class="podium-name" id="p3Name">-</div>
           <div class="podium-school" id="p3School">-</div>
           <div class="podium-pedestal">
@@ -361,9 +361,9 @@
 
       <!-- Call to Action Footer Card -->
       <div class="p-4 bg-success-subtle rounded-4 border border-success-subtle text-center mt-4">
-        <h5 class="fw-bold text-success mb-2">Ingin Namamu Masuk Papan Juara? 🚀</h5>
+          <h5 class="fw-bold text-success mb-2">Ingin Namamu Masuk Papan Juara? <i class="bi bi-rocket-takeoff-fill"></i></h5>
         <p class="text-muted small mb-3">Tunjukkan kemampuanmu dalam Kuis Interaktif Lahan Basah sekarang juga!</p>
-        <a href="kuis.html" class="btn-eco-primary">
+        <a href="kuis.php" class="btn-eco-primary">
           <i class="bi bi-lightning-charge-fill"></i> Mulai Kerjakan Kuis Sekarang
         </a>
       </div>
@@ -374,25 +374,22 @@
   <!-- ==========================================================================
        FLOATING MUSIC DOCK & TOAST
        ========================================================================== -->
-  <audio id="bg-music" loop preload="auto">
-    <source src="sound/sound2.mp3" type="audio/mpeg">
-  </audio>
-
+  <!-- Floating Audio Dock -->
   <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
     <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
-      <span id="music-icon">🔊</span>
+      <i id="music-icon" class="bi bi-volume-mute-fill"></i>
     </button>
     <div class="sound-bars">
-      <span class="sound-bar"></span>
-      <span class="sound-bar"></span>
-      <span class="sound-bar"></span>
+      <div class="sound-bar"></div>
+      <div class="sound-bar"></div>
+      <div class="sound-bar"></div>
     </div>
-    <span class="music-label d-none d-sm-inline">Musik Alam</span>
+    <span class="music-label d-none d-sm-inline">Musik</span>
   </div>
-
-  <div id="music-toast" class="music-toast-popup">
-    Musik Dinyalakan
-  </div>
+  <audio id="bg-music" loop preload="auto">
+    <source src="sound/sound2.mp3" type="audio/mpeg" />
+  </audio>
+  <div id="music-toast" class="music-toast-popup"></div>
 
   <!-- ==========================================================================
        FOOTER
@@ -419,7 +416,7 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="sfx.js"></script>
+  <script src="sfx.js?v=3.2"></script>
 
   <script>
     AOS.init({ duration: 800, once: true });
@@ -453,7 +450,7 @@
         if (data.length === 0) {
           podiumArea.style.display = "none";
           listContainer.innerHTML = `<div class="text-center py-5 text-muted">
-            <span class="fs-1 d-block mb-2">🌱</span>
+              <img src="foto/asetgame/Teratai.png" class="ui-2d-thumb ui-2d-thumb-lg d-block mx-auto mb-2" alt="Ilustrasi lahan basah" />
             Belum ada hasil kuis di perangkat ini. Jadilah yang pertama!
           </div>`;
           return;
@@ -524,7 +521,7 @@
               <small class="text-muted"><i class="bi bi-building"></i> ${escapeHtml(item.sekolah)}</small>
             </div>
             <div class="ranking-score-pill">
-              ⭐ ${item.skor} / 12
+                <i class="bi bi-star-fill text-warning me-1"></i>${item.skor} / 12
             </div>
           `;
 
@@ -553,57 +550,8 @@
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
-    // Music
-    const music = document.getElementById('bg-music');
-    const toggleBtn = document.getElementById('music-toggle');
-    const icon = document.getElementById('music-icon');
-    const toast = document.getElementById('music-toast');
-    const musicDock = document.getElementById('music-dock');
-
-    function updateIcon() {
-      if (music.paused) {
-        icon.textContent = '🔇';
-        musicDock.classList.remove('playing');
-      } else {
-        icon.textContent = '🔊';
-        musicDock.classList.add('playing');
-      }
-    }
-
-    function showToast(message) {
-      toast.textContent = message;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.opacity = '1'; }, 10);
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => (toast.style.display = 'none'), 400);
-      }, 2000);
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      if (music.paused) {
-        music.play().then(() => {
-          updateIcon();
-          showToast('Musik Dinyalakan 🎵');
-        }).catch(() => {});
-      } else {
-        music.pause();
-        updateIcon();
-        showToast('Musik Dimatikan 🔇');
-      }
-    });
-
     document.addEventListener("DOMContentLoaded", () => {
       renderLeaderboard();
-      const tryPlay = () => {
-        if (music.paused) {
-          music.play().then(updateIcon).catch(() => {});
-        } else {
-          updateIcon();
-        }
-        document.body.removeEventListener('click', tryPlay);
-      };
-      document.body.addEventListener('click', tryPlay);
     });
   </script>
 </body>

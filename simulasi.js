@@ -5,85 +5,85 @@
 const aktivitas = [
   {
     id: "restorasi",
-    nama: "🌱 Restorasi Ekosistem",
+    nama: "Restorasi Ekosistem",
     dampak: "positif",
     delta: +20,
-    penjelasan: "<strong>🎉 Habitat Dipulihkan!</strong> Tumbuhan lokal menyediakan tempat berlindung dan membantu menjaga tanah tetap lembap. Serangga dan ikan kecil bertambah sehingga makanan katak dan bangau kembali tersedia.",
+    penjelasan: "<strong><i class='bi bi-check-circle-fill me-1'></i>Habitat Dipulihkan!</strong> Tumbuhan lokal menyediakan tempat berlindung dan membantu menjaga tanah tetap lembap. Serangga dan ikan kecil bertambah sehingga makanan katak dan bangau kembali tersedia.",
     icon: "foto-simulasi/restorasi.webp",
     subtext: "+20% Kesehatan Ekosistem",
-    air: "Tanah lembap & air terjaga 💧",
-    biodiversitas: "Tumbuhan dan hewan pulih 🌿",
-    udara: "Rantai makanan menguat 🔗",
+    air: "Tanah lembap dan air terjaga",
+    biodiversitas: "Tumbuhan dan hewan pulih",
+    udara: "Rantai makanan menguat",
     komponen: "Abiotik: air dan tanah. Biotik: tumbuhan air, serangga, ikan, katak, dan bangau.",
     rantai: "Tumbuhan pulih → hewan kecil memperoleh habitat → makanan katak dan bangau bertambah."
   },
   {
     id: "penebangan",
-    nama: "🪓 Penebangan Pohon Liar",
+    nama: "Penebangan Pohon Liar",
     dampak: "negatif",
     delta: -25,
-    penjelasan: "<strong>⚠️ Habitat Berkurang!</strong> Penebangan menghilangkan tempat bersarang dan peneduh. Tanah lebih mudah kering atau terkikis, lalu banyak hewan kehilangan tempat hidup dan sumber makanan.",
+    penjelasan: "<strong><i class='bi bi-exclamation-triangle-fill me-1'></i>Habitat Berkurang!</strong> Penebangan menghilangkan tempat bersarang dan peneduh. Tanah lebih mudah kering atau terkikis, lalu banyak hewan kehilangan tempat hidup dan sumber makanan.",
     icon: "foto-simulasi/penebangan.webp",
     subtext: "-25% Kesehatan Ekosistem",
-    air: "Tanah terbuka & air keruh 🟤",
-    biodiversitas: "Populasi kehilangan habitat ⚠️",
-    udara: "Jaring makanan melemah 📉",
+    air: "Tanah terbuka dan air keruh",
+    biodiversitas: "Populasi kehilangan habitat",
+    udara: "Jaring makanan melemah",
     komponen: "Abiotik: tanah, air, dan cahaya. Biotik: pohon galam, serangga, ikan, dan burung.",
     rantai: "Pohon berkurang → habitat dan makanan hewan kecil berkurang → pemangsa ikut kesulitan makan."
   },
   {
     id: "limbah",
-    nama: "🏭 Pembuangan Limbah Kimia",
+    nama: "Pembuangan Limbah Kimia",
     dampak: "negatif",
     delta: -30,
-    penjelasan: "<strong>☣️ Kualitas Air Menurun!</strong> Zat berbahaya mengubah kondisi air. Plankton, ikan, dan katak dapat sakit atau mati sehingga sumber makanan bagi hewan lain berkurang.",
+    penjelasan: "<strong><i class='bi bi-exclamation-octagon-fill me-1'></i>Kualitas Air Menurun!</strong> Zat berbahaya mengubah kondisi air. Plankton, ikan, dan katak dapat sakit atau mati sehingga sumber makanan bagi hewan lain berkurang.",
     icon: "foto-simulasi/limbah.webp",
     subtext: "-30% Kesehatan Ekosistem",
-    air: "Air tercemar zat berbahaya 🧪",
-    biodiversitas: "Biota air menurun 🐟",
-    udara: "Rantai makanan terganggu ⚠️",
+    air: "Air tercemar zat berbahaya",
+    biodiversitas: "Biota air menurun",
+    udara: "Rantai makanan terganggu",
     komponen: "Abiotik: kualitas air. Biotik: plankton, ikan, katak, bangau, dan dekomposer.",
     rantai: "Air tercemar → organisme air menurun → katak dan bangau kehilangan makanan."
   },
   {
     id: "edukasi",
-    nama: "📚 Edukasi Lingkungan STEM",
+    nama: "Edukasi Lingkungan STEM",
     dampak: "positif",
     delta: +15,
-    penjelasan: "<strong>🌟 Kebiasaan Baik Menyebar!</strong> Pelajar mengamati lingkungan, mengurangi sampah, dan mengajak keluarga menjaga air. Tekanan terhadap habitat pun berkurang.",
+    penjelasan: "<strong><i class='bi bi-stars me-1'></i>Kebiasaan Baik Menyebar!</strong> Pelajar mengamati lingkungan, mengurangi sampah, dan mengajak keluarga menjaga air. Tekanan terhadap habitat pun berkurang.",
     icon: "foto-simulasi/edukasi.webp",
     subtext: "+15% Kesehatan Ekosistem",
-    air: "Sampah di air berkurang 🌊",
-    biodiversitas: "Makhluk hidup lebih aman 💚",
-    udara: "Hubungan ekosistem terjaga 🔗",
+    air: "Sampah di air berkurang",
+    biodiversitas: "Makhluk hidup lebih aman",
+    udara: "Hubungan ekosistem terjaga",
     komponen: "Peran manusia memengaruhi komponen air, tanah, tumbuhan, dan hewan.",
     rantai: "Sampah berkurang → habitat lebih aman → lebih banyak organisme dapat menjalankan perannya."
   },
   {
     id: "pembuangan",
-    nama: "🚯 Buang Sampah ke Sungai",
+    nama: "Buang Sampah ke Sungai",
     dampak: "negatif",
     delta: -20,
-    penjelasan: "<strong>🚫 Habitat Tercemar!</strong> Plastik dapat menyumbat aliran, menjerat hewan, atau termakan. Kualitas habitat turun dan hubungan makan-dimakan ikut terganggu.",
+    penjelasan: "<strong><i class='bi bi-trash3-fill me-1'></i>Habitat Tercemar!</strong> Plastik dapat menyumbat aliran, menjerat hewan, atau termakan. Kualitas habitat turun dan hubungan makan-dimakan ikut terganggu.",
     icon: "foto-simulasi/buang-sampah.webp",
     subtext: "-20% Kesehatan Ekosistem",
-    air: "Aliran terganggu & air kotor 🗑️",
-    biodiversitas: "Hewan terancam sampah 🐢",
-    udara: "Jaring makanan terganggu ⚠️",
+    air: "Aliran terganggu dan air kotor",
+    biodiversitas: "Hewan terancam sampah",
+    udara: "Jaring makanan terganggu",
     komponen: "Abiotik: aliran dan kualitas air. Biotik: ikan, katak, burung, tumbuhan, dan manusia.",
     rantai: "Sampah masuk → organisme air terganggu → makanan pemangsa berkurang."
   },
   {
     id: "konservasi",
-    nama: "🌿 Perlindungan Kawasan Alam",
+    nama: "Perlindungan Kawasan Alam",
     dampak: "positif",
     delta: +20,
-    penjelasan: "<strong>🛡️ Habitat Terlindungi!</strong> Vegetasi, air, dan tempat berkembang biak dijaga. Populasi memiliki ruang dan sumber makanan yang cukup sehingga ekosistem lebih seimbang.",
+    penjelasan: "<strong><i class='bi bi-shield-check me-1'></i>Habitat Terlindungi!</strong> Vegetasi, air, dan tempat berkembang biak dijaga. Populasi memiliki ruang dan sumber makanan yang cukup sehingga ekosistem lebih seimbang.",
     icon: "foto-simulasi/konservasi.webp",
     subtext: "+20% Kesehatan Ekosistem",
-    air: "Air & tanah terlindungi 💎",
-    biodiversitas: "Populasi lebih stabil 🦜",
-    udara: "Jaring makanan seimbang 🌳",
+    air: "Air dan tanah terlindungi",
+    biodiversitas: "Populasi lebih stabil",
+    udara: "Jaring makanan seimbang",
     komponen: "Abiotik dan biotik dijaga bersama sebagai satu kesatuan ekosistem.",
     rantai: "Habitat terjaga → produsen dan konsumen tersedia → populasi lebih seimbang."
   }
@@ -159,7 +159,7 @@ function terapkanAktivitas(id) {
 
   if (riwayatAksi.has(id)) {
     dampakArea.className = "impact-result-box alert alert-warning text-dark";
-    dampakArea.innerHTML = `<span>🔁 Tindakan <strong>${selected.nama}</strong> sudah diuji. Pilih tindakan lain agar kamu dapat membandingkan dampaknya.</span>`;
+    dampakArea.innerHTML = `<span><i class="bi bi-arrow-repeat me-1"></i>Tindakan <strong>${selected.nama}</strong> sudah diuji. Pilih tindakan lain agar kamu dapat membandingkan dampaknya.</span>`;
     return;
   }
   riwayatAksi.add(id);
@@ -185,7 +185,7 @@ function terapkanAktivitas(id) {
   if (selected.dampak === "positif") {
     dampakArea.classList.add("alert", "alert-success", "text-success");
     dampakArea.innerHTML = `<div class="d-flex align-items-center gap-3">
-      <span class="fs-1">🌿</span>
+      <img src="${selected.icon}" class="ui-2d-thumb ui-2d-thumb-lg" alt="" />
       <div class="text-start">
         ${selected.penjelasan}
         <hr class="my-2">
@@ -195,12 +195,12 @@ function terapkanAktivitas(id) {
     </div>`;
 
     animasiKarakter("happy");
-    stagePrompt.innerHTML = `✨ <strong>${selected.nama}</strong> berhasil diterapkan! Alam makin lestari.`;
+    stagePrompt.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i><strong>${selected.nama}</strong> berhasil diterapkan! Alam makin lestari.`;
     stagePrompt.className = "badge bg-success text-white shadow-sm px-4 py-2 rounded-pill fs-6";
   } else {
     dampakArea.classList.add("alert", "alert-danger", "text-danger");
     dampakArea.innerHTML = `<div class="d-flex align-items-center gap-3">
-      <span class="fs-1">⚠️</span>
+      <img src="${selected.icon}" class="ui-2d-thumb ui-2d-thumb-lg" alt="" />
       <div class="text-start">
         ${selected.penjelasan}
         <hr class="my-2">
@@ -210,7 +210,7 @@ function terapkanAktivitas(id) {
     </div>`;
 
     animasiKarakter("worried");
-    stagePrompt.innerHTML = `⚠️ <strong>${selected.nama}</strong> merusak ekosistem! Ayo pulihkan segera.`;
+    stagePrompt.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-1"></i><strong>${selected.nama}</strong> merusak ekosistem! Ayo pulihkan segera.`;
     stagePrompt.className = "badge bg-danger text-white shadow-sm px-4 py-2 rounded-pill fs-6";
   }
 
@@ -241,17 +241,17 @@ function updateMeter(selected) {
   if (healthScore >= 75) {
     meterBar.className = "meter-bar bg-success";
     meterValue.className = "fs-4 fw-bold text-success";
-    meterDesc.textContent = "Kondisi saat ini: Sangat Sehat & Seimbang (Luar Biasa!) 🌿";
+    meterDesc.textContent = "Kondisi saat ini: Sangat Sehat dan Seimbang (Luar Biasa!)";
     if (stageBg) stageBg.style.filter = "none";
   } else if (healthScore >= 45) {
     meterBar.className = "meter-bar bg-warning";
     meterValue.className = "fs-4 fw-bold text-warning";
-    meterDesc.textContent = "Kondisi saat ini: Sedang / Perlu Perhatian Bersama ⚠️";
+    meterDesc.textContent = "Kondisi saat ini: Sedang / Perlu Perhatian Bersama";
     if (stageBg) stageBg.style.filter = "sepia(25%)";
   } else {
     meterBar.className = "meter-bar bg-danger";
     meterValue.className = "fs-4 fw-bold text-danger";
-    meterDesc.textContent = "Kondisi saat ini: Kritis & Tercemar! Perlu Restorasi Cepat 🚨";
+    meterDesc.textContent = "Kondisi saat ini: Kritis dan Tercemar! Perlu Restorasi Cepat";
     if (stageBg) stageBg.style.filter = "grayscale(70%) contrast(120%)";
   }
 }
@@ -263,7 +263,7 @@ function catatRiwayat(act) {
   const item = document.createElement("div");
   item.className = `p-2 rounded-3 mb-2 small d-flex justify-content-between align-items-center ${isPos ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'}`;
   item.innerHTML = `
-    <span>${isPos ? '✅' : '❌'} <strong>${act.nama}</strong></span>
+    <span><i class="bi ${isPos ? 'bi-check-circle-fill' : 'bi-x-circle-fill'} me-1"></i><strong>${act.nama}</strong></span>
     <span class="badge ${isPos ? 'bg-success' : 'bg-danger'}">${act.subtext}</span>
   `;
   logTimeline.prepend(item);
@@ -296,9 +296,9 @@ function resetSimulasi() {
   riwayatAksi.clear();
   if (typeof SoundEffects !== 'undefined') SoundEffects.playPop();
 
-  if (paramAir) paramAir.textContent = "Air & tanah cukup baik 💧";
-  if (paramBio) paramBio.textContent = "Populasi cukup stabil 🌿";
-  if (paramUdara) paramUdara.textContent = "Hubungan masih seimbang 🔗";
+  if (paramAir) paramAir.textContent = "Air dan tanah cukup baik";
+  if (paramBio) paramBio.textContent = "Populasi cukup stabil";
+  if (paramUdara) paramUdara.textContent = "Hubungan masih seimbang";
 
   updateMeter();
 
@@ -308,7 +308,7 @@ function resetSimulasi() {
   dampakArea.className = "impact-result-box alert alert-info text-dark";
   dampakArea.innerHTML = "<span>Simulasi telah direset. Silakan seret atau klik kartu aksi untuk mulai bereksperimen lagi!</span>";
 
-  stagePrompt.innerHTML = "📍 Tarik salah satu aktivitas ke area ini atau klik kartu aksi di bawah!";
+  stagePrompt.innerHTML = '<i class="bi bi-hand-index-thumb me-1"></i>Tarik salah satu aktivitas ke area ini atau klik kartu aksi di bawah!';
   stagePrompt.className = "badge bg-white text-dark shadow-sm px-4 py-2 rounded-pill fs-6";
 
   if (stageBg) stageBg.style.filter = "none";

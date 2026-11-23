@@ -795,38 +795,69 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  padding: 6px 14px 6px 8px;
-  border-radius: var(--radius-pill);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(16, 185, 129, 0.4);
+  padding: 6px 14px 6px 6px;
+  border-radius: 999px;
+  box-shadow: 0 8px 25px rgba(6, 78, 59, 0.15);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
 }
 
 .music-dock:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.3);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.25);
+  border-color: #10b981;
 }
 
-.music-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-pill);
-  background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
-  color: #ffffff;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
-  cursor: pointer;
-  transition: transform 0.2s ease;
+.music-btn,
+#music-toggle,
+.music-toggle-btn {
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  outline: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.2rem !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4) !important;
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  flex-shrink: 0 !important;
 }
 
-.music-btn:hover {
-  transform: scale(1.1);
+.music-btn:hover,
+#music-toggle:hover,
+.music-toggle-btn:hover {
+  transform: scale(1.1) !important;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+}
+
+.music-dock.playing .music-btn,
+.music-dock.playing #music-toggle,
+.music-dock.playing .music-toggle-btn {
+  background: linear-gradient(135deg, #10b981 0%, #0284c7 100%) !important;
+  animation: pulseEco 2s infinite ease-in-out !important;
+}
+
+@keyframes pulseEco {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
 }
 
 .sound-bars {
@@ -837,9 +868,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sound-bar {
-  width: 3px;
-  background-color: #059669;
-  border-radius: 2px;
+  width: 3.5px;
+  background-color: #10b981;
+  border-radius: 99px;
   height: 4px;
   transition: height 0.2s ease;
 }
@@ -859,23 +890,25 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes eqBar3 { 0% { height: 3px; } 100% { height: 14px; } }
 
 .music-label {
-  font-family: var(--font-display);
-  font-size: 0.82rem;
+  font-family: var(--font-display, sans-serif);
+  font-size: 0.84rem;
   font-weight: 700;
   color: #064e3b;
   user-select: none;
+  white-space: nowrap;
 }
 
+.music-toast,
 .music-toast-popup {
   position: fixed;
-  bottom: 80px;
+  bottom: 84px;
   right: 24px;
   z-index: 9999;
   background: rgba(15, 23, 42, 0.92);
   color: #ffffff;
   backdrop-filter: blur(12px);
   padding: 8px 18px;
-  border-radius: var(--radius-pill);
+  border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 600;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
@@ -982,4 +1015,821 @@ h1, h2, h3, h4, h5, h6 {
     margin-right: 0 !important;
     margin-bottom: 10px;
   }
+}
+
+/* Shared non-emoji visual language */
+.ui-2d-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+  filter: drop-shadow(0 5px 8px rgba(6, 78, 59, 0.14));
+}
+
+.ui-2d-thumb-sm { width: 30px; height: 30px; }
+.ui-2d-thumb-lg { width: 72px; height: 72px; }
+.custom-nav-pills .nav-link > i { width: 18px; text-align: center; color: #059669; }
+.custom-nav-pills .nav-link.active > i { color: currentColor; }
+
+
+/* ==========================================================================
+   Modul Pembelajaran & Multi-Game Hub Styles (Child-Friendly & Fun)
+   ========================================================================== */
+
+/* Modular Tab Switcher */
+.module-nav-container {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 12px 6px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-green) #e2e8f0;
+}
+.module-nav-container::-webkit-scrollbar {
+  height: 6px;
+}
+.module-nav-container::-webkit-scrollbar-thumb {
+  background: var(--primary-green);
+  border-radius: 99px;
+}
+
+.module-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+  color: var(--text-dark);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.module-nav-btn:hover {
+  border-color: var(--primary-green);
+  transform: translateY(-2px);
+  color: var(--primary-dark);
+}
+
+.module-nav-btn.active {
+  background: linear-gradient(135deg, var(--primary-green), var(--emerald-accent));
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+}
+
+.module-nav-btn .icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+/* Modul Card Stage */
+.materi-stage-card {
+  background: #ffffff;
+  border-radius: 28px;
+  border: 2px solid #e6f4ea;
+  padding: clamp(20px, 4vw, 42px);
+  box-shadow: 0 16px 40px rgba(6, 78, 59, 0.06);
+  position: relative;
+}
+
+.materi-header-banner {
+  background: linear-gradient(135deg, #e8f8f0, #e0f2fe);
+  border-radius: 22px;
+  padding: 24px 28px;
+  border: 1px solid #ccebd7;
+  position: relative;
+  overflow: hidden;
+}
+
+.materi-header-banner::after {
+  content: "🌿";
+  position: absolute;
+  right: 15px;
+  bottom: -10px;
+  font-size: 5rem;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.kid-goal-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #065f46;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 6px 16px;
+  border-radius: 99px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  margin-bottom: 8px;
+}
+
+/* Sub-card Sections */
+.materi-subcard {
+  background: #fbfdfc;
+  border: 1px solid #dcf2e6;
+  border-radius: 20px;
+  padding: 22px;
+  margin-bottom: 24px;
+  transition: transform 0.2s ease;
+}
+
+.materi-subcard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.08);
+}
+
+.materi-subcard-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--primary-dark);
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+/* Species Spotlight Card */
+.species-card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #d4ece1;
+  padding: 16px;
+  text-align: center;
+  height: 100%;
+  transition: all 0.25s ease;
+}
+
+.species-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-green);
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15);
+}
+
+.species-icon-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: linear-gradient(135deg, #dcfce7, #dbeafe);
+}
+
+/* Interactive Food Chain Flow */
+.food-chain-interactive {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: linear-gradient(135deg, #f0fdf4, #f0f9ff);
+  padding: 24px;
+  border-radius: 22px;
+  border: 1.5px dashed #86efac;
+}
+
+.chain-item-node {
+  flex: 1;
+  min-width: 130px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px 12px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  border: 2px solid #e2e8f0;
+  transition: transform 0.2s ease;
+}
+
+.chain-item-node:hover {
+  transform: scale(1.05);
+  border-color: var(--primary-green);
+}
+
+.chain-arrow-icon {
+  font-size: 1.6rem;
+  color: var(--primary-green);
+  font-weight: 900;
+}
+
+/* Quick Check micro question */
+.quick-quiz-box {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 2px solid #fde68a;
+  border-radius: 20px;
+  padding: 20px 24px;
+  margin-top: 24px;
+}
+
+/* Audio Readout Pill */
+.audio-read-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  font-weight: 700;
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.audio-read-pill:hover {
+  background: #dbeafe;
+  color: #1e40af;
+  transform: scale(1.02);
+}
+
+/* ==========================================================================
+   Multi-Game Hub Elements
+   ========================================================================== */
+
+/* Game Arena Selection Tabs */
+.game-tabs-wrapper {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px 4px 18px;
+  scrollbar-width: thin;
+}
+
+.game-mode-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 18px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.game-mode-tab:hover {
+  border-color: var(--primary-green);
+  transform: translateY(-2px);
+}
+
+.game-mode-tab.active {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+}
+
+/* Game 2: Memory Matching Game */
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.memory-card {
+  aspect-ratio: 1;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.memory-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  border-radius: 18px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.memory-card.flipped .memory-card-inner,
+.memory-card.matched .memory-card-inner {
+  transform: rotateY(180deg);
+}
+
+.memory-card-front, .memory-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-weight: 700;
+}
+
+.memory-card-front {
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: #ffffff;
+  font-size: 2.2rem;
+  border: 3px solid #34d399;
+}
+
+.memory-card-back {
+  background: #ffffff;
+  color: #064e3b;
+  transform: rotateY(180deg);
+  border: 3px solid #10b981;
+  font-size: 0.85rem;
+  line-height: 1.25;
+}
+
+.memory-card.matched .memory-card-back {
+  background: #dcfce7;
+  border-color: #22c55e;
+}
+
+/* Game 3: Drag and Drop Rantai Makanan */
+.dnd-arena {
+  background: #f8fafc;
+  border: 2px dashed #94a3b8;
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.dnd-target-zone {
+  min-height: 110px;
+  background: #ffffff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 12px;
+  transition: all 0.2s ease;
+}
+
+.dnd-target-zone.dragover {
+  background: #dcfce7;
+  border-color: #10b981;
+  transform: scale(1.02);
+}
+
+.dnd-item {
+  background: #ffffff;
+  border: 2px solid #10b981;
+  border-radius: 14px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: grab;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  user-select: none;
+  touch-action: none;
+  transition: transform 0.15s ease;
+}
+
+.dnd-item:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+
+/* Game 4: Word Scramble / Susun Kata */
+.scramble-slots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.scramble-slot {
+  width: 48px;
+  height: 54px;
+  background: #f1f5f9;
+  border: 2px dashed #94a3b8;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--primary-dark);
+}
+
+.scramble-slot.filled {
+  background: #ecfdf5;
+  border: 2px solid #10b981;
+  color: #065f46;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.15);
+}
+
+.scramble-letters {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.letter-btn {
+  width: 50px;
+  height: 52px;
+  background: linear-gradient(135deg, #ffffff, #f0fdf4);
+  border: 2px solid #86efac;
+  border-radius: 14px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #065f46;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+}
+
+.letter-btn:hover {
+  transform: translateY(-3px);
+  border-color: #10b981;
+  background: #dcfce7;
+}
+
+.letter-btn.used {
+  opacity: 0.3;
+  pointer-events: none;
+  transform: scale(0.9);
+}
+
+/* Game 5: Hidden Object Scene */
+/* ==========================================================================
+   Mode 5: Detektif Satwa Lahan Basah (Multi-Layer Panorama Hidden Object Game)
+   ========================================================================== */
+.hidden-game-card {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1.5px solid rgba(16, 185, 129, 0.25);
+  box-shadow: 0 12px 36px rgba(6, 78, 59, 0.08);
+  padding: 24px;
+  margin: 0 auto;
+  max-width: 980px;
+}
+
+.hidden-checklist-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.hidden-target-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  padding: 6px 14px 6px 8px;
+  border-radius: 999px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.hidden-target-card .target-thumb {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 2px;
+  transition: transform 0.3s ease;
+}
+
+.hidden-target-card .target-label {
+  font-family: var(--font-display, sans-serif);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.hidden-target-card .target-status-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #64748b;
+  transition: all 0.3s ease;
+}
+
+.hidden-target-card.found {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #10b981;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.22);
+  transform: translateY(-2px);
+}
+
+.hidden-target-card.found .target-thumb {
+  border-color: #10b981;
+  transform: scale(1.12) rotate(6deg);
+  background: #ffffff;
+}
+
+.hidden-target-card.found .target-label {
+  color: #065f46;
+}
+
+.hidden-target-card.found .target-status-pill {
+  background: #10b981;
+  color: #ffffff;
+}
+
+/* 16:9 Multi-Layer Panorama Box */
+.eco-panorama-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(6, 78, 59, 0.16), 0 0 0 3px rgba(16, 185, 129, 0.35);
+  background: #50bbf8;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Multi-layer environment elements */
+.eco-pano-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.eco-pano-layer.pano-sky-bg {
+  position: absolute;
+  top: -14%;
+  left: -4%;
+  width: 108%;
+  height: 128%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.eco-pano-tree,
+.eco-pano-bg-tree,
+.eco-pano-rock {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  object-fit: contain;
+}
+
+/* Hidden Animal Target */
+.hidden-animal-wrap {
+  position: absolute;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.hidden-animal-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.22));
+}
+
+.hidden-animal-img.animal-ikan {
+  filter: drop-shadow(0 3px 6px rgba(6, 95, 70, 0.4)) saturate(1.15);
+  opacity: 0.92;
+}
+
+.hidden-animal-wrap.found .hidden-animal-img {
+  filter: drop-shadow(0 0 16px rgba(34, 197, 94, 0.95)) drop-shadow(0 0 28px rgba(134, 239, 172, 0.8)) brightness(1.1) !important;
+  animation: ecoAnimalFoundBounce 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes ecoAnimalFoundBounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.28) translateY(-6%); }
+  70% { transform: scale(0.96) translateY(2%); }
+  100% { transform: scale(1.12); }
+}
+
+/* Discovery floating badge */
+.hidden-animal-wrap .found-badge {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hidden-animal-wrap.found .found-badge {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+
+/* Hitbox overlay on Layer 10 */
+.hidden-hitbox {
+  position: absolute;
+  z-index: 10;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hidden-hitbox:hover:not(.found) {
+  background: rgba(254, 240, 138, 0.35);
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.75);
+}
+
+.hidden-hitbox.found {
+  pointer-events: none;
+}
+
+/* Radar pulse hint */
+.hint-radar-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3.5px solid #facc15;
+  box-shadow: 0 0 22px #facc15, inset 0 0 16px #facc15;
+  pointer-events: none;
+  z-index: 10;
+  animation: radarPulseAnim 1.1s ease-out infinite;
+}
+
+@keyframes radarPulseAnim {
+  0% { transform: scale(0.4); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Discovery Banner */
+.hidden-discovery-modal {
+  position: relative;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 2px solid #10b981;
+  border-radius: 18px;
+  padding: 16px 20px;
+  margin-top: 18px;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
+  animation: ecoBannerPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes ecoBannerPop {
+  0% { transform: translateY(12px) scale(0.96); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Game 6: Sliding Tile Puzzle */
+.puzzle-board {
+  width: 330px;
+  height: 330px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+  background: #0f172a;
+  border-radius: 20px;
+  padding: 8px;
+  margin: 0 auto;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+
+.puzzle-piece {
+  width: 100%;
+  height: 100%;
+  background-size: 314px 314px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 4px;
+}
+
+.puzzle-piece .piece-num {
+  font-size: 0.75rem;
+  background: rgba(0,0,0,0.65);
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.puzzle-piece.empty {
+  background: transparent !important;
+  cursor: default;
+}
+
+/* Media queries for child games */
+@media (max-width: 768px) {
+  .memory-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .food-chain-interactive {
+    flex-direction: column;
+  }
+  .chain-arrow-icon {
+    transform: rotate(90deg);
+    margin: 4px 0;
+  }
+  .puzzle-board {
+    width: 290px;
+    height: 290px;
+  }
+  .puzzle-piece {
+    background-size: 274px 274px;
+  }
+}
+
+/* Detektif Satwa Natural Animations */
+.hidden-animal-img.animal-bekantan {
+  filter: drop-shadow(2px 5px 10px rgba(0, 0, 0, 0.32));
+  animation: ecoBekantanPeek 4.5s ease-in-out infinite alternate;
+}
+@keyframes ecoBekantanPeek {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(1.2deg); }
+  100% { transform: translateY(0px) rotate(-0.8deg); }
+}
+
+.hidden-animal-img.animal-bangau {
+  filter: drop-shadow(2px 5px 8px rgba(0, 0, 0, 0.25));
+  animation: ecoBangauLook 5s ease-in-out infinite alternate;
+}
+@keyframes ecoBangauLook {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-2.5px); }
+  100% { transform: translateY(0px); }
+}
+
+.hidden-animal-img.animal-ikan {
+  filter: drop-shadow(0 3px 6px rgba(6, 95, 70, 0.4)) saturate(1.2);
+  animation: ecoFishLeap 3.5s ease-in-out infinite alternate;
+}
+@keyframes ecoFishLeap {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(-1.5deg); }
+}
+
+.hidden-animal-img.animal-katak {
+  filter: drop-shadow(0 3px 7px rgba(0, 0, 0, 0.28));
+  animation: ecoKatakBreathe 2.8s ease-in-out infinite alternate;
+}
+@keyframes ecoKatakBreathe {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.hidden-animal-img.animal-teratai {
+  filter: drop-shadow(0 4px 10px rgba(13, 148, 136, 0.35));
+  animation: ecoLotusFloat 4s ease-in-out infinite alternate;
+}
+@keyframes ecoLotusFloat {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-2px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(-0.5deg); }
 }

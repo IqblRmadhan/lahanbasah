@@ -11,7 +11,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
 
   <!-- Custom Design System -->
-  <link rel="stylesheet" href="custom.css" />
+  <link rel="stylesheet" href="custom.css?v=3.2" />
 
   <style>
     /* Specific styles for Proyek & Galeri */
@@ -28,29 +28,95 @@
       z-index: 10;
     }
 
-    /* Ide Inspirasi Cards */
+    /* STEM 4 Pillars & Idea Cards */
+    .stem-filter-pill {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 2px solid #e2e8f0;
+      background: #ffffff;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stem-filter-pill:hover {
+      border-color: #10b981;
+      color: #059669;
+      transform: translateY(-2px);
+    }
+
+    .stem-filter-pill.active {
+      background: linear-gradient(135deg, #059669, #10b981);
+      border-color: #059669;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+
     .idea-card {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: var(--radius-md);
-      padding: 16px;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.3s ease;
+      border: 2px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 6px 18px rgba(6, 78, 59, 0.05);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       height: 100%;
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
     }
 
     .idea-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-6px);
       border-color: #10b981;
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 12px 28px rgba(16, 185, 129, 0.16);
     }
 
-    .idea-icon {
-      font-size: 1.8rem;
-      flex-shrink: 0;
+    .idea-badge-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .idea-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+
+    .idea-guide-btn {
+      background: #f0fdf4;
+      color: #059669;
+      border: 1.5px solid #a7f3d0;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+      width: 100%;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .idea-guide-btn:hover {
+      background: #059669;
+      color: #ffffff;
+      border-color: #059669;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
     }
 
     /* Auth Box */
@@ -220,7 +286,7 @@
         <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
         <div class="brand-text">
           <span>Lahan Basah Hijau</span>
-          <span class="brand-badge">🌱 STEM Interaktif</span>
+          <span class="brand-badge"><i class="bi bi-tree-fill me-1"></i> STEM Interaktif</span>
         </div>
       </a>
 
@@ -230,12 +296,12 @@
 
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.html"><span>🏠</span> Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="materi.html"><span>📚</span> Materi</a></li>
-          <li class="nav-item"><a class="nav-link" href="kuis.html"><span>🧠</span> Kuis</a></li>
-          <li class="nav-item"><a class="nav-link" href="simulasi.html"><span>🧪</span> Simulasi</a></li>
-          <li class="nav-item"><a class="nav-link active" href="proyek.html"><span>💡</span> Proyek</a></li>
-          <li class="nav-item"><a class="nav-link" href="leaderboard.html"><span>🏆</span> Papan Peringkat</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="materi.php"><i class="bi bi-book-fill"></i> Materi</a></li>
+          <li class="nav-item"><a class="nav-link" href="kuis.php"><i class="bi bi-controller"></i> Kuis & Games</a></li>
+          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-flask-fill"></i> Simulasi</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyek.html"><i class="bi bi-lightbulb-fill"></i> Proyek</a></li>
+          <li class="nav-item"><a class="nav-link" href="leaderboard.html"><i class="bi bi-trophy-fill"></i> Papan Peringkat</a></li>
         </ul>
       </div>
     </div>
@@ -254,7 +320,7 @@
 
     <div class="container hero-content">
       <div class="hero-tag" data-aos="fade-down">
-        <span>💡</span> Kreasi Karya Ramah Lingkungan
+          <i class="bi bi-lightbulb-fill me-1"></i> Kreasi Karya Ramah Lingkungan
       </div>
 
       <h1 class="hero-title" data-aos="zoom-in">
@@ -284,79 +350,94 @@
   </section>
 
   <!-- ==========================================================================
-       INSPIRATION IDEAS SECTION
+       4 PILAR PROYEK STEM LAHAN BASAH & STUDIO KARYA
        ========================================================================== -->
-  <section class="container my-5">
+  <section class="container my-5" id="stemPillarsSection">
     <div class="text-center mb-4" data-aos="fade-up">
-      <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill mb-2">
-        ✨ Inspirasi Ide STEM
+      <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill mb-2 fw-bold">
+        <i class="bi bi-stars me-1"></i> Kurikulum Merdeka IPAS Bab 3 & Bab 4
       </span>
-      <h3 class="display-font text-success mb-2">Ide Proyek yang Bisa Kamu Coba di Rumah & Sekolah</h3>
-      <p class="text-muted small">Pilih satu ide yang aman dan mudah. Kegiatan di dekat sungai atau rawa harus mendapat izin dan pendampingan orang dewasa.</p>
+      <h2 class="display-font text-success mb-2">Studio Eksperimen & Proyek STEM Lahan Basah</h2>
+      <p class="text-muted small mx-auto" style="max-width: 680px;">
+        Pilih salah satu pilar STEM di bawah ini, pelajari panduan langkah kerjanya, lalu unggah dokumentasi hasil eksperimenmu ke galeri pameran karya!
+      </p>
+
+      <!-- Filter Kategori 4 Pilar STEM -->
+      <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+        <button class="stem-filter-pill active" onclick="filterStemProjects('all', this)">
+          <i class="bi bi-grid-fill me-1"></i> Semua Pilar
+        </button>
+        <button class="stem-filter-pill" onclick="filterStemProjects('sains', this)">
+          <i class="bi bi-search me-1"></i> Sains (Science)
+        </button>
+        <button class="stem-filter-pill" onclick="filterStemProjects('teknologi', this)">
+          <i class="bi bi-laptop me-1"></i> Teknologi (Technology)
+        </button>
+        <button class="stem-filter-pill" onclick="filterStemProjects('rekayasa', this)">
+          <i class="bi bi-gear-fill me-1"></i> Rekayasa (Engineering)
+        </button>
+        <button class="stem-filter-pill" onclick="filterStemProjects('matematika', this)">
+          <i class="bi bi-rulers me-1"></i> Matematika (Math)
+        </button>
+      </div>
     </div>
 
-    <div class="row g-3" data-aos="fade-up" data-aos-delay="100">
-      <div class="col-sm-6 col-lg-4">
-        <div class="idea-card">
-          <span class="idea-icon">🧪</span>
-          <div>
-            <strong class="d-block text-dark">Model Resapan Air</strong>
-            <small class="text-muted">Bandingkan aliran air pada wadah berisi tanah bervegetasi dan tanah terbuka. Lakukan bersama guru; air percobaan tidak untuk diminum.</small>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-lg-4">
-        <div class="idea-card">
-          <span class="idea-icon">🌱</span>
-          <div>
-            <strong class="d-block text-dark">Diagram Biotik-Abiotik</strong>
-            <small class="text-muted">Amati halaman rumah atau sekolah, lalu kelompokkan makhluk hidup dan benda alam tak hidup yang ditemukan.</small>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-lg-4">
-        <div class="idea-card">
-          <span class="idea-icon">♻️</span>
-          <div>
-            <strong class="d-block text-dark">Model Jaring Makanan</strong>
-            <small class="text-muted">Susun kartu produsen, konsumen, dan dekomposer lalu hubungkan dengan panah perpindahan energi.</small>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-lg-4">
-        <div class="idea-card">
-          <span class="idea-icon">🎨</span>
-          <div>
-            <strong class="d-block text-dark">Komik Sebab-Akibat</strong>
-            <small class="text-muted">Ceritakan apa yang terjadi pada jaring makanan ketika air tercemar atau salah satu populasi berkurang.</small>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-lg-4">
-        <div class="idea-card">
-          <span class="idea-icon">📸</span>
-          <div>
-            <strong class="d-block text-dark">Jurnal Pengamatan</strong>
-            <small class="text-muted">Catat satu habitat di sekitar, komponen penyusunnya, serta interaksi yang terlihat tanpa mengganggu makhluk hidup.</small>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-lg-4">
-        <div class="idea-card">
-          <span class="idea-icon">🚯</span>
-          <div>
-            <strong class="d-block text-dark">Komitmen 30 Hari</strong>
-            <small class="text-muted">Pilih dua kebiasaan, misalnya hemat air dan mengurangi plastik, lalu catat perubahan yang kamu rasakan.</small>
-          </div>
-        </div>
-      </div>
+    <!-- Grid Kartu Proyek STEM -->
+    <div class="row g-4" id="stemProjectsGrid" data-aos="fade-up" data-aos-delay="100">
+      <!-- Diinjeksi otomatis oleh script STEM -->
     </div>
   </section>
+
+  <!-- MODAL PANDUAN LANGKAH EKSPERIMEN STEM -->
+  <div class="modal fade" id="projectGuideModal" tabindex="-1" aria-labelledby="guideModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 border-0 shadow-lg">
+        <div class="modal-header bg-success text-white rounded-top-4 p-4">
+          <div>
+            <span class="badge bg-white text-success rounded-pill px-3 py-1 fw-bold mb-2" id="modalPilarBadge">Pilar STEM</span>
+            <h4 class="modal-title fw-bold mb-0" id="modalProjectTitle">Judul Proyek</h4>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <!-- Waktu & Kesulitan -->
+          <div class="d-flex flex-wrap gap-3 p-3 bg-light rounded-3 mb-4">
+            <div><i class="bi bi-clock-history text-success me-1"></i> <strong>Estimasi:</strong> <span id="modalProjectTime">30 Menit</span></div>
+            <div><i class="bi bi-bar-chart-fill text-warning me-1"></i> <strong>Tingkat:</strong> <span id="modalProjectLevel">Mudah</span></div>
+            <div><i class="bi bi-book-half text-primary me-1"></i> <strong>Materi:</strong> <span id="modalProjectBab">IPAS Bab 3 Ekosistem</span></div>
+          </div>
+
+          <!-- Alat & Bahan -->
+          <div class="mb-4">
+            <h6 class="fw-bold text-success mb-2"><i class="bi bi-tools text-success me-1"></i> Alat & Bahan yang Diperlukan:</h6>
+            <ul class="mb-0 text-muted small" id="modalProjectTools"></ul>
+          </div>
+
+          <!-- Langkah Kerja -->
+          <div class="mb-4">
+            <h6 class="fw-bold text-success mb-2"><i class="bi bi-list-ol text-success me-1"></i> Langkah-Langkah Eksperimen:</h6>
+            <ol class="mb-0 text-dark small" id="modalProjectSteps"></ol>
+          </div>
+
+          <!-- Tips Keselamatan -->
+          <div class="alert alert-warning border-2 rounded-3 mb-3 p-3">
+            <div class="fw-bold small text-warning-emphasis"><i class="bi bi-shield-exclamation me-1"></i> Tips Keselamatan & Etika:</div>
+            <p class="mb-0 small text-muted" id="modalProjectSafety"></p>
+          </div>
+
+          <!-- Pertanyaan Refleksi -->
+          <div class="p-3 bg-success-subtle rounded-3 border border-success-subtle">
+            <div class="fw-bold small text-success"><i class="bi bi-question-circle-fill me-1"></i> Pertanyaan Refleksi Ilmiah:</div>
+            <p class="mb-0 small text-dark" id="modalProjectReflection"></p>
+          </div>
+        </div>
+        <div class="modal-footer p-3 bg-light rounded-bottom-4">
+          <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-4" data-bs-dismiss="modal">Tutup Panduan</button>
+          <a href="#formProyekSection" class="btn btn-eco-primary btn-sm rounded-pill px-4" data-bs-dismiss="modal">Gunakan Ide Ini untuk Unggah Karya <i class="bi bi-rocket-takeoff-fill"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ==========================================================================
        PROJECT UPLOAD STUDIO (Auth & Upload Form)
@@ -367,16 +448,16 @@
       <!-- 1. AUTH SCREEN -->
       <div id="authContainer">
         <div class="text-center mb-4">
-          <span class="fs-1 d-inline-block mb-1">🔐</span>
+        <img src="foto/children.webp" class="ui-2d-thumb ui-2d-thumb-lg d-inline-block mb-1" alt="Ilustrasi akun siswa" />
           <h3 class="display-font text-success mb-1">Studio Kreator Lahan Basah</h3>
           <p class="text-muted small">Masuk atau buat akun lokal untuk menyimpan karya di browser perangkat ini.</p>
 
           <div class="d-inline-flex bg-light p-1 rounded-pill border my-3">
             <button class="auth-tab-btn active" id="tabLogin" onclick="switchAuthTab('login')">
-              🔓 Masuk
+              <i class="bi bi-box-arrow-in-right me-1"></i> Masuk
             </button>
             <button class="auth-tab-btn" id="tabSignup" onclick="switchAuthTab('signup')">
-              📝 Daftar Baru
+              <i class="bi bi-person-plus-fill me-1"></i> Daftar Baru
             </button>
           </div>
         </div>
@@ -403,7 +484,7 @@
 
           <div class="d-grid mt-4">
             <button class="btn-eco-primary justify-content-center py-3 fs-6" id="authSubmitBtn" onclick="submitAuth()">
-              🔓 Masuk Sekarang
+              <i class="bi bi-box-arrow-in-right me-1"></i> Masuk Sekarang
             </button>
           </div>
         </div>
@@ -413,7 +494,7 @@
       <div id="uploadContainer" style="display:none;">
         <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-4 border-bottom">
           <div class="d-flex align-items-center gap-2">
-            <span class="fs-2">👩‍🔬</span>
+          <img src="foto/children.webp" class="ui-2d-thumb" alt="Ilustrasi kreator" />
             <div>
               <h5 class="display-font text-success mb-0" id="userGreeting">Selamat Datang, Kreator Alam!</h5>
               <small class="text-muted" id="userEmailBadge">Terhubung sebagai Peneliti Muda</small>
@@ -425,6 +506,18 @@
         </div>
 
         <form id="formUploadProyek">
+          <div class="mb-3">
+            <label for="pilarSelect" class="form-label fw-bold small text-muted">
+              <i class="bi bi-tag-fill text-success"></i> Kategori Pilar STEM
+            </label>
+            <select class="form-select rounded-pill px-4 fs-6 border shadow-sm" id="pilarSelect" required>
+              <option value="Sains & Alam">Sains - Penyelidikan Alam & Ekosistem</option>
+              <option value="Teknologi Digital">Teknologi - Observasi & Sensor Digital</option>
+              <option value="Rekayasa Lingkungan">Rekayasa - Rancang Bangun & Sekat Kanal</option>
+              <option value="Matematika & Data">Matematika - Analisis Data & Curah Hujan</option>
+            </select>
+          </div>
+
           <div class="mb-3">
             <label for="nama" class="form-label fw-bold small text-muted">
               <i class="bi bi-person-fill text-success"></i> Nama Kamu / Tim
@@ -469,7 +562,7 @@
   <section class="container my-5" id="galeriSection">
     <div class="text-center mb-4" data-aos="fade-up">
       <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1 rounded-pill mb-2">
-        🖼️ Galeri Karya Sahabat
+        <i class="bi bi-images me-1"></i> Galeri Karya Sahabat
       </span>
       <h2 class="display-font text-success mb-2" style="font-size: 2.3rem;">
         Karya & Inovasi Sahabat Lahan Basah
@@ -525,25 +618,22 @@
   <!-- ==========================================================================
        FLOATING MUSIC DOCK & TOAST
        ========================================================================== -->
-  <audio id="bg-music" loop preload="auto">
-    <source src="sound/sound2.mp3" type="audio/mpeg">
-  </audio>
-
+  <!-- Floating Audio Dock -->
   <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
     <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
-      <span id="music-icon">🔊</span>
+      <i id="music-icon" class="bi bi-volume-mute-fill"></i>
     </button>
     <div class="sound-bars">
-      <span class="sound-bar"></span>
-      <span class="sound-bar"></span>
-      <span class="sound-bar"></span>
+      <div class="sound-bar"></div>
+      <div class="sound-bar"></div>
+      <div class="sound-bar"></div>
     </div>
-    <span class="music-label d-none d-sm-inline">Musik Alam</span>
+    <span class="music-label d-none d-sm-inline">Musik</span>
   </div>
-
-  <div id="music-toast" class="music-toast-popup">
-    Musik Dinyalakan
-  </div>
+  <audio id="bg-music" loop preload="auto">
+    <source src="sound/sound2.mp3" type="audio/mpeg" />
+  </audio>
+  <div id="music-toast" class="music-toast-popup"></div>
 
   <!-- ==========================================================================
        FOOTER
@@ -570,7 +660,7 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="sfx.js"></script>
+  <script src="sfx.js?v=3.2"></script>
 
   <script>
     AOS.init({ duration: 800, once: true });
@@ -626,11 +716,11 @@
       if (mode === "login") {
         tabLogin.classList.add("active");
         tabSignup.classList.remove("active");
-        submitBtn.innerHTML = `🔓 Masuk Sekarang`;
+          submitBtn.innerHTML = `<i class="bi bi-box-arrow-in-right me-1"></i> Masuk Sekarang`;
       } else {
         tabSignup.classList.add("active");
         tabLogin.classList.remove("active");
-        submitBtn.innerHTML = `📝 Daftarkan Akun Baru`;
+          submitBtn.innerHTML = `<i class="bi bi-person-plus-fill me-1"></i> Daftarkan Akun Baru`;
       }
     }
 
@@ -671,7 +761,7 @@
         localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(currentUser));
         updateAuthUI();
         SoundEffects.playCorrect();
-        showNotification("Berhasil masuk! Selamat berkarya 🎉", "success");
+          showNotification("Berhasil masuk! Selamat berkarya.", "success");
       } else {
         if (password.length < 6) {
           showNotification("Kata sandi minimal harus 6 karakter ya!", "warning");
@@ -689,7 +779,7 @@
         localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(currentUser));
         updateAuthUI();
         SoundEffects.playFanfare();
-        showNotification("Pendaftaran lokal berhasil! Selamat datang 🎉", "success");
+          showNotification("Pendaftaran lokal berhasil! Selamat datang.", "success");
       }
     }
 
@@ -770,10 +860,6 @@
       const newProject = {
         nama,
         deskripsi,
-        gambar: compressedBase64,
-        waktu: new Date().toISOString(),
-        userId: user.uid,
-        userEmail: user.email,
         likes: 1
       };
 
@@ -785,7 +871,7 @@
         localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects));
 
         SoundEffects.playFanfare();
-        showNotification("🎉 Karya berhasil disimpan ke Galeri lokal!", "success");
+        showNotification("Karya berhasil disimpan ke Galeri lokal!", "success");
         formProyek.reset();
         compressedBase64 = null;
         document.getElementById("imagePreview").style.display = "none";
@@ -813,7 +899,7 @@
         if (items.length === 0) {
           galeriContainer.innerHTML = `
             <div class="col-12 text-center py-5">
-              <span class="fs-1 d-block mb-2">🌱</span>
+            <img src="foto/asetgame/Teratai.png" class="ui-2d-thumb ui-2d-thumb-lg d-block mx-auto mb-2" alt="Ilustrasi karya" />
               <h5 class="text-muted">Belum ada karya yang tersimpan.</h5>
               <p class="small text-muted">Jadilah yang pertama membagikan kreasi perlindungan lahan basah!</p>
             </div>
@@ -848,8 +934,13 @@
         card.innerHTML = `
           <img src="${item.gambar}" alt="Karya ${item.nama}" class="gallery-card-img" onclick="openImageModal('${item.gambar}', '${escapeHtml(item.nama)}', '${escapeHtml(item.deskripsi)}')" />
           <div class="gallery-card-body">
+            <div class="mb-2">
+              <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill fw-bold" style="font-size:0.75rem;">
+                ${item.pilarBadge || 'Proyek STEM'}
+              </span>
+            </div>
             <div class="gallery-author">
-              <span>🌿</span> ${escapeHtml(item.nama)}
+              <i class="bi bi-tree-fill me-1"></i> ${escapeHtml(item.nama)}
             </div>
             <p class="gallery-desc-text">${escapeHtml(item.deskripsi)}</p>
             <div class="gallery-footer-info">
@@ -928,60 +1019,321 @@
       }, 4000);
     }
 
-    // Music
-    const music = document.getElementById('bg-music');
-    const toggleBtn = document.getElementById('music-toggle');
-    const icon = document.getElementById('music-icon');
-    const toast = document.getElementById('music-toast');
-    const musicDock = document.getElementById('music-dock');
-
-    function updateIcon() {
-      if (music.paused) {
-        icon.textContent = '🔇';
-        musicDock.classList.remove('playing');
-      } else {
-        icon.textContent = '🔊';
-        musicDock.classList.add('playing');
-      }
-    }
-
-    function showToast(message) {
-      toast.textContent = message;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.opacity = '1'; }, 10);
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => (toast.style.display = 'none'), 400);
-      }, 2000);
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      if (music.paused) {
-        music.play().then(() => {
-          updateIcon();
-          showToast('Musik Dinyalakan 🎵');
-        }).catch(() => {});
-      } else {
-        music.pause();
-        updateIcon();
-        showToast('Musik Dimatikan 🔇');
-      }
-    });
-
     document.addEventListener('DOMContentLoaded', () => {
       currentUser = readLocalData(CURRENT_USER_STORAGE_KEY, null);
       updateAuthUI();
       tampilkanGaleri();
-      const tryPlay = () => {
-        if (music.paused) {
-          music.play().then(updateIcon).catch(() => {});
-        } else {
-          updateIcon();
-        }
-        document.body.removeEventListener('click', tryPlay);
-      };
-      document.body.addEventListener('click', tryPlay);
     });
-  </script>
+  
+    // ==========================================================================
+document.addEventListener("DOMContentLoaded", () => {
+      currentUser = readLocalData(CURRENT_USER_STORAGE_KEY, null);
+      updateAuthUI();
+      tampilkanGaleri();
+    });
+
+
+    // ==========================================================================
+    // DATABASE 8 PROYEK STEM LAHAN BASAH (KURIKULUM MERDEKA IPAS SD)
+    // ==========================================================================
+    const stemProjectsData = [
+      {
+        id: 1,
+        pilar: "sains",
+        badge: "Sains & Alam",
+        title: "Model Resapan Spons Tanah Gambut",
+        shortDesc: "Membuktikan peran tanah gambut sebagai spons raksasa penyerap air pencegah banjir.",
+        time: "30 Menit",
+        level: "Mudah",
+        bab: "IPAS Bab 3 & 4 (Gambut & Siklus Air)",
+        icon: "foto/asetgame/Rawa.png",
+        tools: [
+          "2 Botol plastik bekas ukuran 1,5 liter (dipotong bagian atas)",
+          "Busa spons cuci piring (simulasi gambut berserat)",
+          "Tanah kebun biasa / tanah padat",
+          "Gelas ukur atau wadah penampung air",
+          "Air bersih 500 ml"
+        ],
+        steps: [
+          "Letakkan spons di wadah pertama, dan tanah padat di wadah kedua dengan volume seimbang.",
+          "Tuangkan 250 ml air secara perlahan ke atas spons, lalu amati air yang keluar menetes di bagian bawah.",
+          "Tuangkan 250 ml air ke wadah tanah padat, lalu ukur berapa banyak air yang langsung meluncur lolos.",
+          "Bandingkan air yang terserap spons vs tanah padat. Gambut mampu mengikat air berkali-kali lipat beratnya!"
+        ],
+        safety: "Gunakan gunting pemotong botol dengan bantuan orang tua/guru. Bersihkan tumpahan air agar lantai tidak licin.",
+        reflection: "Mengapa pembukaan kanal parit yang mengeringkan lahan gambut dapat memicu bencana banjir di musim hujan dan kebakaran hebat di musim kemarau?"
+      },
+      {
+        id: 2,
+        pilar: "rekayasa",
+        badge: "Rekayasa Lingkungan",
+        title: "Miniatur Sekat Kanal (Rewetting) Stik Es Krim",
+        shortDesc: "Merancang model bendungan sekat kanal parit rawa untuk menjaga kebasahan lahan gambut.",
+        time: "45 Menit",
+        level: "Menengah",
+        bab: "IPAS Bab 3 (Konservasi Lahan Basah)",
+        icon: "foto/asetgame/Pohon.png",
+        tools: [
+          "Stik es krim kayu (20-30 batang)",
+          "Lem tahan air / lem tembak / plastisin",
+          "Wadah nampan plastik panjang (simulasi saluran kanal)",
+          "Kerikil kecil dan tanah gambut/tanah gembur",
+          "Air dan pewarna makanan biru"
+        ],
+        steps: [
+          "Susun stik es krim menjadi dinding papan sekat berlapis ganda menyerupai sekat kanal kayu khas Kalimantan.",
+          "Pasang sekat di tengah nampan kanal, perkuat celah tepinya dengan plastisin atau tanah liat.",
+          "Alirkan air dari satu sisi. Amati bagaimana sekat kanal menahan laju air sehingga permukaan air gambut tetap tinggi.",
+          "Uji apa yang terjadi jika salah satu celah pelimpah air (spillway) dibuka saat debit air tinggi."
+        ],
+        safety: "Hati-hati saat menggunakan lem tembak panas atau gunting stik kayu. Lakukan di atas alas koran bekas.",
+        reflection: "Bagaimana cara kerja sekat kanal kayu oleh Badan Restorasi Gambut dalam mencegah kebakaran hutan rawa Kalimantan?"
+      },
+      {
+        id: 3,
+        pilar: "rekayasa",
+        badge: "Rekayasa Lingkungan",
+        title: "Filter Air Rawa Alami 3 Tahap",
+        shortDesc: "Menjernihkan air rawa keruh menjadi air bening menggunakan bahan-bahan alami di sekitar kita.",
+        time: "40 Menit",
+        level: "Mudah",
+        bab: "IPAS Bab 4 (Siklus & Kejernihan Air)",
+        icon: "foto/asetgame/Rawa.png",
+        tools: [
+          "Botol plastik bekas 1,5 liter (potong bagian bawahnya)",
+          "Kapas atau kain kasa bersih (lapisan paling dasar)",
+          "Arang kayu aktif yang dihaluskan (penyerap bau dan zat warna)",
+          "Pasir bersih halus (penyaring kotoran mikro)",
+          "Kerikil kecil bersih (penyaring partikel besar)",
+          "Air rawa atau air cucian tanah keruh untuk diuji"
+        ],
+        steps: [
+          "Posisikan botol terbalik (mulut botol di bawah menghadap ke gelas penampung).",
+          "Masukkan kapas pada mulut botol, lapisi dengan arang, pasir halus, dan kerikil di bagian paling atas.",
+          "Tuangkan air keruh perlahan-lahan ke atas lapisan kerikil.",
+          "Amati tetesan air yang keluar di dasar botol. Air menjadi jauh lebih jernih dan tidak berbau!"
+        ],
+        safety: "Air hasil saringan percobaan ini hanya untuk pembuktian ilmiah, tidak untuk diminum sebelum dimasak mendidih.",
+        reflection: "Lapisan bahan manakah yang paling berperan menghilangkan partikel keruh dan bau air rawa?"
+      },
+      {
+        id: 4,
+        pilar: "teknologi",
+        badge: "Teknologi & Observasi",
+        title: "Jurnal Digital Observasi Satwa Lahan Basah",
+        shortDesc: "Mendokumentasikan satwa liar dan tumbuhan air menggunakan kamera dan menyusun infografis digital.",
+        time: "60 Menit",
+        level: "Mudah",
+        bab: "IPAS Bab 3 (Biodiversitas Lahan Basah)",
+        icon: "foto/puzzle.webp",
+        tools: [
+          "Kamera ponsel pintar atau tablet",
+          "Aplikasi presentasi / catatan / Canva",
+          "Buku catatan lapangan kecil dan pensil",
+          "Topi penjelajah dan teropong (opsional)"
+        ],
+        steps: [
+          "Jelajahi taman sekolah, tepi sungai, atau rawa terdekat didampingi orang tua/guru.",
+          "Ambil foto 3 jenis tumbuhan (misal: teratai, purun) dan 3 jenis satwa (burung, serangga, katak).",
+          "Catat habitat, warna, perilaku, dan peran mereka dalam ekosistem (produsen/konsumen).",
+          "Susun foto dan hasil pengamatan ke dalam poster digital bertema 'Satwa Sahabat Rawa'."
+        ],
+        safety: "Jangan mendekati tepi air yang dalam atau licin sendirian. Jangan menyentuh satwa liar yang belum dikenal.",
+        reflection: "Apa hubungan antara ketersediaan tumbuhan air dengan keberadaan burung dan serangga di lokasi yang kamu amati?"
+      },
+      {
+        id: 5,
+        pilar: "sains",
+        badge: "Sains & Alam",
+        title: "Maket 3D Piramida Rantai Makanan Rawa",
+        shortDesc: "Merakit miniatur piramida taraf trofik energi ekosistem rawa dari kardus bekas.",
+        time: "45 Menit",
+        level: "Mudah",
+        bab: "IPAS Bab 3 (Rantai Makanan & Taraf Trofik)",
+        icon: "foto/asetgame/Katak.png",
+        tools: [
+          "Kardus bekas kemasan makanan / karton tebal",
+          "Gunting aman dan lem kertas",
+          "Pensil warna, spidol, dan gambar cetak satwa rawa",
+          "Penggaris dan selotip kertas"
+        ],
+        steps: [
+          "Bentuk kardus menjadi segitiga piramida bertingkat 4 tingkat (Tingkat 1 dasar paling lebar, Tingkat 4 puncak).",
+          "Tingkat dasar: Tempelkan gambar Teratai & Purun (Produsen Fotosintesis).",
+          "Tingkat 2: Tempelkan gambar Keong Mas & Serangga (Konsumen I Herbivora).",
+          "Tingkat 3: Tempelkan gambar Katak Rawa & Ikan Kecil (Konsumen II Karnivora).",
+          "Tingkat 4: Tempelkan gambar Burung Bangau Tongtong / Elang (Konsumen Puncak).",
+          "Beri panah perpindahan energi dari bawah ke atas."
+        ],
+        safety: "Gunakan gunting tumpul berujung bundar untuk keamanan anak.",
+        reflection: "Mengapa jumlah produsen di dasar piramida harus jauh lebih banyak daripada jumlah konsumen puncak di puncak piramida?"
+      },
+      {
+        id: 6,
+        pilar: "matematika",
+        badge: "Matematika & Data",
+        title: "Penakar Curah Hujan & Grafik Fluktuasi Rawa",
+        shortDesc: "Mengukur volume air hujan harian dan menyajikan data fluktuasi air rawa dalam diagram batang.",
+        time: "1 Minggu Pengamatan",
+        level: "Mudah",
+        bab: "IPAS Bab 4 & Matematika Data",
+        icon: "foto/kuis.webp",
+        tools: [
+          "Botol plastik lurus bening dengan corong di atasnya",
+          "Penggaris transparan dengan skala milimeter (mm)",
+          "Buku berpetak / spreadsheet digital",
+          "Spidol permanen tahan air"
+        ],
+        steps: [
+          "Pasang penggaris di dinding botol penakar, letakkan di area terbuka sekolah atau halaman rumah.",
+          "Setiap pagi pukul 07.00, catat tinggi air hujan yang tertampung dalam satuan milimeter (mm).",
+          "Kosongkan kembali botol untuk penampungan hari berikutnya selama 7 hari berturut-turut.",
+          "Buat diagram batang (bar chart) curah hujan mingguan dan hitung rata-rata curah hujan harian."
+        ],
+        safety: "Pastikan wadah ditaruh stabil dengan pemberat batu agar tidak tumbang tertiup angin kencang.",
+        reflection: "Pada hari dengan curah hujan tertinggi, apakah terlihat kenaikan tinggi genangan air di rawa atau saluran terdekat?"
+      },
+      {
+        id: 7,
+        pilar: "teknologi",
+        badge: "Teknologi & Sensor",
+        title: "Sensor Sederhana Kelembaban Tanah Gambut",
+        shortDesc: "Merangkai detektor kelembaban tanah elektrik dengan lampu LED dan baterai.",
+        time: "60 Menit",
+        level: "Menengah",
+        bab: "IPAS Bab 3 & STEM Fisika Cilik",
+        icon: "foto/puzzle.webp",
+        tools: [
+          "Baterai kotak 9 Volt dan soket kancing baterai",
+          "1 Buah lampu LED kecil (warna hijau atau merah)",
+          "2 Batang paku bersih atau kawat tembaga (sebagai elektroda)",
+          "Kabel kecil 20 cm dan selotip isolasi",
+          "Wadah berisi tanah gambut kering dan wadah tanah gambut basah"
+        ],
+        steps: [
+          "Hubungkan kutub positif baterai ke salah satu kaki paku pertama.",
+          "Hubungkan kaki lampu LED ke paku kedua dan kutub negatif baterai.",
+          "Tancapkan kedua paku ke tanah gambut basah berjarak 3 cm. Lampu LED akan menyala karena air menghantarkan arus listrik!",
+          "Pindahkan kedua paku ke tanah kering. Lampu meredup atau mati menandakan tanah butuh dialiri air."
+        ],
+        safety: "Eksperimen ini hanya menggunakan baterai 9V tegangan rendah yang aman bagi anak. Jangan pernah mencoba dengan listrik stopkontak dinding!",
+        reflection: "Bagaimana teknologi sensor digital modern membantu petugas pemadam kebakaran hutan memantau titik kekeringan gambut?"
+      },
+      {
+        id: 8,
+        pilar: "matematika",
+        badge: "Sains & Matematika",
+        title: "Miniatur Terrarium Siklus Hujan Lahan Basah",
+        shortDesc: "Membuktikan proses evaporasi, kondensasi, dan presipitasi dalam toples kaca tertutup.",
+        time: "35 Menit",
+        level: "Mudah",
+        bab: "IPAS Bab 4 (Siklus Air Lahan Basah)",
+        icon: "foto/asetgame/Teratai.png",
+        tools: [
+          "Toples kaca bening dengan penutup kedap",
+          "Kerikil kecil dan tanah gambut lembap",
+          "Tanaman lumut atau pakis rawa kecil",
+          "Air hangat 50 ml",
+          "Es batu diletakkan di atas penutup toples"
+        ],
+        steps: [
+          "Masukkan kerikil di dasar toples, lapisi tanah gambut dan tanaman kecil.",
+          "Tuangkan sedikit air hangat ke dasar toples, lalu tutup rapat toples.",
+          "Letakkan 3 butir es batu di atas permukaan tutup toples.",
+          "Amati: Air hangat menguap (evaporasi), uap air menyentuh tutup dingin membentuk tetesan air (kondensasi), lalu jatuh membasahi tanaman seperti hujan (presipitasi)!"
+        ],
+        safety: "Hati-hati saat menuangkan air hangat. Lakukan bersama orang tua atau guru.",
+        reflection: "Apakah air di dalam toples tertutup tersebut akan habis atau terus berputar kembali dalam siklus tak terhingga?"
+      }
+    ];
+
+    // Render STEM Projects Grid
+    function renderStemProjects(filter = 'all') {
+      const grid = document.getElementById('stemProjectsGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const filtered = (filter === 'all') 
+        ? stemProjectsData 
+        : stemProjectsData.filter(p => p.pilar === filter);
+
+      filtered.forEach((proj, idx) => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6 col-lg-3';
+        col.innerHTML = `
+          <div class="idea-card">
+            <div>
+              <div class="idea-badge-bar">
+                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill fw-bold" style="font-size:0.75rem;">${proj.badge}</span>
+                <span class="badge bg-light text-muted border" style="font-size:0.7rem;">${proj.level}</span>
+              </div>
+              <div class="idea-icon-wrap"><img src="${proj.icon}" class="ui-2d-thumb" alt="" /></div>
+              <h5 class="fw-bold text-dark fs-6 mb-2 lh-sm">${proj.title}</h5>
+              <p class="small text-muted mb-3" style="font-size:0.8rem; line-height:1.4;">${proj.shortDesc}</p>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between align-items-center text-muted small mb-2" style="font-size:0.75rem;">
+                <span><i class="bi bi-clock me-1"></i>${proj.time}</span>
+                <span class="text-success fw-bold">Kurikulum Merdeka</span>
+              </div>
+              <button class="idea-guide-btn" onclick="openProjectGuide(${proj.id})">
+                <i class="bi bi-book me-1"></i> Buka Panduan Langkah ➔
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(col);
+      });
+    }
+
+    // Filter STEM Projects
+    function filterStemProjects(pilar, btn) {
+      document.querySelectorAll('.stem-filter-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderStemProjects(pilar);
+      if (typeof SoundEffects !== 'undefined') SoundEffects.playPop();
+    }
+
+    // Open Project Guide Modal
+    function openProjectGuide(id) {
+      const proj = stemProjectsData.find(p => p.id === id);
+      if (!proj) return;
+
+      document.getElementById('modalPilarBadge').textContent = proj.badge;
+      document.getElementById('modalProjectTitle').textContent = proj.title;
+      document.getElementById('modalProjectTime').textContent = proj.time;
+      document.getElementById('modalProjectLevel').textContent = proj.level;
+      document.getElementById('modalProjectBab').textContent = proj.bab;
+
+      const toolsList = document.getElementById('modalProjectTools');
+      toolsList.innerHTML = '';
+      proj.tools.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        toolsList.appendChild(li);
+      });
+
+      const stepsList = document.getElementById('modalProjectSteps');
+      stepsList.innerHTML = '';
+      proj.steps.forEach(s => {
+        const li = document.createElement('li');
+        li.className = 'mb-2';
+        li.textContent = s;
+        stepsList.appendChild(li);
+      });
+
+      document.getElementById('modalProjectSafety').textContent = proj.safety;
+      document.getElementById('modalProjectReflection').textContent = proj.reflection;
+
+      const modalEl = document.getElementById('projectGuideModal');
+      const bsModal = new bootstrap.Modal(modalEl);
+      bsModal.show();
+      if (typeof SoundEffects !== 'undefined') SoundEffects.playPop();
+    }
+
+    // Panggil saat render
+    renderStemProjects('all');
+
+</script>
 </body>
 </html>

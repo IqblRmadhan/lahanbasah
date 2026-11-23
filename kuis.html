@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kuis Interaktif - Lahan Basah Hijau</title>
+  <meta name="description" content="Taman Bermain Kuis & Game Edukasi Ekosistem Lahan Basah - IPAS Kelas V SD Kurikulum Merdeka" />
+  <title>Arena Kuis & Games Ekosistem - Lahan Basah Hijau</title>
 
   <!-- CSS Framework & Libraries -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -11,225 +12,605 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
   
   <!-- Custom Design System -->
-  <link rel="stylesheet" href="custom.css" />
+  <link rel="stylesheet" href="custom.css?v=3.3" />
 
   <style>
-    /* Specific styles for Quiz Arena */
-    .quiz-card-wrapper {
-      max-width: 840px;
-      margin: -40px auto 50px;
+    /* Styling Spesifik Game Hub */
+    .game-hero {
+      background: radial-gradient(circle at 80% 20%, #dcfce7 0%, #e0f2fe 50%, #fffbeb 100%);
+      padding: 40px 0 60px;
+      border-bottom: 2px solid #bbf7d0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-arena-card {
+      max-width: 900px;
+      margin: -35px auto 60px;
       position: relative;
       z-index: 10;
       padding: 0 15px;
     }
 
-    .glass-quiz-card {
-      background: rgba(255, 255, 255, 0.95);
+    .game-stage-box {
+      background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(16px);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      border-radius: var(--radius-xl);
-      padding: 38px 32px;
-      box-shadow: 0 15px 35px rgba(6, 78, 59, 0.1);
-      transition: all 0.3s ease;
+      border: 2px solid #ccebd7;
+      border-radius: 28px;
+      padding: clamp(20px, 4vw, 36px);
+      box-shadow: 0 16px 40px rgba(6, 78, 59, 0.08);
+      min-height: 520px;
     }
 
-    .level-badge-pill {
-      font-family: var(--font-display);
-      font-size: 0.9rem;
+    .player-dock {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: 20px;
+      padding: 14px 20px;
+      margin-bottom: 20px;
+    }
+
+    .score-chip {
+      background: #ffffff;
+      border: 1px solid #d1fae5;
+      padding: 6px 14px;
+      border-radius: 99px;
       font-weight: 700;
-      padding: 6px 18px;
-      border-radius: var(--radius-pill);
+      color: #065f46;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     }
 
-    .level-mudah-pill {
-      background: #e0f2fe;
-      color: #0369a1;
-      border: 1px solid #bae6fd;
-    }
-
-    .level-sedang-pill {
-      background: #fef3c7;
-      color: #b45309;
-      border: 1px solid #fde68a;
-    }
-
-    .level-sulit-pill {
-      background: #ffe4e6;
-      color: #be123c;
-      border: 1px solid #fecdd3;
-    }
-
-    .streak-badge {
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
-      color: #ffffff;
-      font-family: var(--font-display);
-      font-weight: 700;
-      padding: 5px 14px;
-      border-radius: var(--radius-pill);
-      font-size: 0.85rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-      animation: floatSubtle 2s ease-in-out infinite;
-    }
-
-    .quiz-progress-bar {
-      height: 10px;
-      border-radius: var(--radius-pill);
-      background-color: #e2e8f0;
-      overflow: hidden;
-      margin: 15px 0 25px;
-    }
-
-    .quiz-progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #10b981, #0284c7);
-      border-radius: var(--radius-pill);
-      transition: width 0.4s ease;
-    }
-
-    .question-title {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #0f172a;
-      line-height: 1.4;
-      margin-bottom: 24px;
-    }
-
+    /* Game 1: Pilihan Ganda styles */
     .option-btn {
       width: 100%;
       text-align: left;
+      padding: 14px 18px;
+      margin-bottom: 12px;
       background: #ffffff;
       border: 2px solid #e2e8f0;
-      border-radius: var(--radius-md);
-      padding: 14px 20px;
-      margin-bottom: 12px;
-      font-family: var(--font-body);
-      font-size: 1.05rem;
+      border-radius: 16px;
       font-weight: 600;
-      color: #334155;
+      color: #1e293b;
+      transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 14px;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      gap: 12px;
       cursor: pointer;
     }
 
     .option-btn:hover:not(:disabled) {
       border-color: #10b981;
-      background-color: #f0fdf4;
-      transform: translateX(6px);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+      background: #f0fdf4;
+      transform: translateX(4px);
     }
 
-    .option-letter {
-      width: 34px;
-      height: 34px;
-      border-radius: var(--radius-pill);
-      background: #f1f5f9;
-      color: #0f172a;
-      font-family: var(--font-display);
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.25s ease;
-    }
-
-    .option-btn:hover:not(:disabled) .option-letter {
-      background: #10b981;
-      color: #ffffff;
-    }
-
-    /* Option States */
-    .option-btn.btn-correct {
+    .option-btn.correct {
       background: #dcfce7 !important;
       border-color: #22c55e !important;
-      color: #15803d !important;
-      font-weight: 700;
-      transform: scale(1.02);
-    }
-    .option-btn.btn-correct .option-letter {
-      background: #22c55e !important;
-      color: #ffffff !important;
+      color: #14532d !important;
     }
 
-    .option-btn.btn-wrong {
+    .option-btn.wrong {
       background: #fee2e2 !important;
       border-color: #ef4444 !important;
-      color: #b91c1c !important;
-      opacity: 0.9;
-    }
-    .option-btn.btn-wrong .option-letter {
-      background: #ef4444 !important;
-      color: #ffffff !important;
+      color: #991b1b !important;
     }
 
-    .option-btn.btn-eliminated {
-      opacity: 0.3 !important;
-      pointer-events: none !important;
-      text-decoration: line-through;
+    .lifeline-btn {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: 16px;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
+    .lifeline-btn:hover:not(:disabled) {
+      border-color: #f59e0b;
+      background: #fffbeb;
+      color: #b45309;
+      transform: translateY(-2px);
+    }
+
+    .lifeline-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      border-color: #e2e8f0;
+    }
+
+    /* Explanation alert */
     .explanation-box {
-      border-radius: var(--radius-md);
+      border-radius: 18px;
       padding: 16px 20px;
-      margin-top: 18px;
+      margin-top: 16px;
       font-size: 0.95rem;
-      animation: fadeIn 0.4s ease;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Results Card */
-    .trophy-glow-icon {
-      font-size: 5rem;
-      animation: floatSubtle 3s ease-in-out infinite;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-
-    .score-circle {
-      width: 140px;
-      height: 140px;
-      border-radius: var(--radius-pill);
-      background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
-      color: #ffffff;
+    /* Game 3: Drag and Drop Dropzone highlight */
+    .chain-drop-slot {
+      min-height: 100px;
+      border: 2px dashed #94a3b8;
+      border-radius: 16px;
+      background: #f8fafc;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 20px auto;
-      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+      padding: 10px;
+      text-align: center;
+      transition: all 0.2s ease;
     }
 
-    .score-circle-num {
-      font-family: var(--font-display);
-      font-size: 2.8rem;
+    .chain-drop-slot.active-over {
+      border-color: #10b981;
+      background: #ecfdf5;
+      transform: scale(1.03);
+    }
+
+    .chain-drop-slot.filled-correct {
+      border: 2px solid #22c55e;
+      background: #dcfce7;
+    }
+
+    .draggable-card {
+      background: #ffffff;
+      border: 2px solid #10b981;
+      border-radius: 14px;
+      padding: 8px 16px;
       font-weight: 700;
-      line-height: 1;
+      cursor: grab;
+      user-select: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s ease;
     }
 
-    .score-circle-total {
-      font-size: 0.9rem;
-      opacity: 0.9;
+    .draggable-card:active {
+      cursor: grabbing;
+      transform: scale(1.06);
+    }
+
+    /* Hidden Object Canvas scene */
+    .hidden-scene-wrapper {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 3px solid #10b981;
+      background: linear-gradient(180deg, #7dd3fc 0%, #38bdf8 30%, #15803d 70%, #064e3b 100%);
+      height: 380px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      cursor: crosshair;
+    }
+
+    .hidden-item-spot {
+      position: absolute;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .hidden-item-spot:hover {
+      background: rgba(255, 255, 255, 0.45);
+      transform: scale(1.15);
+      box-shadow: 0 0 16px #facc15;
+    }
+
+    .hidden-item-spot.found-spot {
+      background: rgba(34, 197, 94, 0.85);
+      border: 3px solid #ffffff;
+      pointer-events: none;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Mode switcher bar */
+    .game-tab-badge {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: rgba(0,0,0,0.08);
+      margin-left: 6px;
+    }
+
+    .game-tabs-wrapper {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 10px 4px 18px;
+      scrollbar-width: thin;
+    }
+
+    .game-mode-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 18px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #1e293b;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    .game-mode-tab:hover {
+      border-color: #10b981;
+      transform: translateY(-2px);
+    }
+
+    .game-mode-tab.active {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+    }
+
+    /* Game 2: Memory Matching Game */
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .memory-card {
+      aspect-ratio: 1;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .memory-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      border-radius: 18px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    .memory-card.flipped .memory-card-inner,
+    .memory-card.matched .memory-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .memory-card-front, .memory-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      font-weight: 700;
+    }
+
+    .memory-card-front {
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: #ffffff;
+      font-size: 2.2rem;
+      border: 3px solid #34d399;
+    }
+
+    .memory-card-back {
+      background: #ffffff;
+      color: #064e3b;
+      transform: rotateY(180deg);
+      border: 3px solid #10b981;
+      font-size: 0.85rem;
+      line-height: 1.25;
+    }
+
+    .memory-card.matched .memory-card-back {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+
+    /* Game 4: Word Scramble */
+    .scramble-slots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .scramble-slot {
+      width: 48px;
+      height: 54px;
+      background: #f1f5f9;
+      border: 2px dashed #94a3b8;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: #064e3b;
+    }
+
+    .scramble-slot.filled {
+      background: #ecfdf5;
+      border: 2px solid #10b981;
+      color: #065f46;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.15);
+    }
+
+    .scramble-letters {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .letter-btn {
+      width: 50px;
+      height: 52px;
+      background: linear-gradient(135deg, #ffffff, #f0fdf4);
+      border: 2px solid #86efac;
+      border-radius: 14px;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #065f46;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+    }
+
+    .letter-btn:hover {
+      transform: translateY(-3px);
+      border-color: #10b981;
+      background: #dcfce7;
+    }
+
+    .letter-btn.used {
+      opacity: 0.3;
+      pointer-events: none;
+      transform: scale(0.9);
+    }
+
+    /* Game 6: Sliding Tile Puzzle */
+    .puzzle-board {
+      width: 330px;
+      height: 330px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 4px;
+      background: #0f172a;
+      border-radius: 20px;
+      padding: 8px;
+      margin: 0 auto;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+
+    .puzzle-piece {
+      width: 100%;
+      height: 100%;
+      background-size: 300% 300%;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 4px;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
+    }
+
+    .puzzle-piece:hover:not(.empty) {
+      filter: brightness(1.08);
+      transform: scale(0.97);
+    }
+
+    .puzzle-piece.empty {
+      background: rgba(15, 23, 42, 0.45) !important;
+      border: 2px dashed rgba(255,255,255,0.25);
+      cursor: default;
+    }
+
+    .memory-card-thumb {
+      width: 52px;
+      height: 52px;
+      max-width: 80%;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 3px auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+    }
+
+    .dnd-item-thumb {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.12));
+    }
+
+    .puzzle-piece .piece-num {
+      font-size: 0.75rem;
+      background: rgba(0,0,0,0.65);
+      color: #ffffff;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .puzzle-piece.empty {
+      background: transparent !important;
+      cursor: default;
+    }
+
+    /* Floating Music Dock & Button Styles (Embedded to prevent cache bugs) */
+    .music-dock {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(16, 185, 129, 0.4);
+      padding: 6px 14px 6px 6px;
+      border-radius: 999px;
+      box-shadow: 0 8px 25px rgba(6, 78, 59, 0.15);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .music-dock:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.25);
+      border-color: #10b981;
+    }
+
+    .music-btn,
+    .music-toggle-btn {
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50% !important;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+      color: #ffffff !important;
+      border: none !important;
+      outline: none !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 1.2rem !important;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35) !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      flex-shrink: 0 !important;
+    }
+
+    .music-btn:hover,
+    .music-toggle-btn:hover {
+      transform: scale(1.1);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    }
+
+    .music-dock.playing .music-btn,
+    .music-dock.playing .music-toggle-btn {
+      background: linear-gradient(135deg, #10b981 0%, #0284c7 100%) !important;
+      animation: pulseEco 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseEco {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+    }
+
+    .sound-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 18px;
+    }
+
+    .sound-bar {
+      width: 3.5px;
+      background-color: #10b981;
+      border-radius: 99px;
+      height: 4px;
+      transition: height 0.2s ease;
+    }
+
+    .music-dock.playing .sound-bar:nth-child(1) {
+      animation: eqBar1 0.8s ease-in-out infinite alternate;
+    }
+    .music-dock.playing .sound-bar:nth-child(2) {
+      animation: eqBar2 0.7s ease-in-out infinite alternate 0.2s;
+    }
+    .music-dock.playing .sound-bar:nth-child(3) {
+      animation: eqBar3 0.9s ease-in-out infinite alternate 0.4s;
+    }
+
+    @keyframes eqBar1 { 0% { height: 4px; } 100% { height: 16px; } }
+    @keyframes eqBar2 { 0% { height: 6px; } 100% { height: 18px; } }
+    @keyframes eqBar3 { 0% { height: 3px; } 100% { height: 14px; } }
+
+    .music-label {
+      font-family: var(--font-display, sans-serif);
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #064e3b;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .music-toast,
+    .music-toast-popup {
+      position: fixed;
+      bottom: 84px;
+      right: 24px;
+      z-index: 9999;
+      background: rgba(15, 23, 42, 0.92);
+      color: #ffffff;
+      backdrop-filter: blur(12px);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
   </style>
 </head>
 <body>
 
-  <!-- ==========================================================================
-       NAVBAR
-       ========================================================================== -->
+  <!-- Floating Audio Dock -->
+  <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
+    <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
+      <span id="music-icon">🔇</span>
+    </button>
+    <div class="sound-bars">
+      <div class="sound-bar"></div>
+      <div class="sound-bar"></div>
+      <div class="sound-bar"></div>
+    </div>
+    <span class="music-label d-none d-sm-inline">Musik</span>
+  </div>
+  <audio id="bg-music" loop preload="auto">
+    <source src="sound/sound2.mp3" type="audio/mpeg" />
+  </audio>
+  <div id="music-toast" class="music-toast-popup"></div>
+
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
     <div class="container">
       <a class="brand-wrapper" href="index.html">
@@ -239,839 +620,1583 @@
           <span class="brand-badge">🌱 STEM Interaktif</span>
         </div>
       </a>
-
-      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Buka navigasi">
         <i class="bi bi-list fs-2 text-success"></i>
       </button>
-
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
           <li class="nav-item"><a class="nav-link" href="index.html"><span>🏠</span> Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="materi.html"><span>📚</span> Materi</a></li>
-          <li class="nav-item"><a class="nav-link active" href="kuis.html"><span>🧠</span> Kuis</a></li>
+          <li class="nav-item"><a class="nav-link" href="materi.php"><span>📚</span> Materi</a></li>
+          <li class="nav-item"><a class="nav-link active" href="kuis.html"><span>🧠</span> Kuis & Games</a></li>
           <li class="nav-item"><a class="nav-link" href="simulasi.html"><span>🧪</span> Simulasi</a></li>
           <li class="nav-item"><a class="nav-link" href="proyek.html"><span>💡</span> Proyek</a></li>
-          <li class="nav-item"><a class="nav-link" href="leaderboard.html"><span>🏆</span> Papan Peringkat</a></li>
+          <li class="nav-item"><a class="nav-link" href="leaderboard.html"><span>🏆</span> Peringkat</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- ==========================================================================
-       HERO SECTION
-       ========================================================================== -->
-  <section class="hero-section">
-    <img src="foto/cloud1.webp" class="hero-cloud c1" alt="Awan Cantik" />
-    <img src="foto/cloud2.webp" class="hero-cloud c2" alt="Awan Cantik" />
-    <img src="foto/daun1.webp" class="hero-floating-leaf leaf1" alt="Daun Hijau" />
-    <img src="foto/daun2.webp" class="hero-floating-leaf leaf2" alt="Daun Hijau" />
-
-    <img src="foto/kuis.webp" class="hero-mascot-right" alt="Maskot Kuis" style="max-height: 250px;" data-aos="fade-left" />
-
-    <div class="container hero-content">
-      <div class="hero-tag" data-aos="fade-down">
-        <span>🧠</span> Asah Wawasan Sains & Lingkungan
-      </div>
-
-      <h1 class="hero-title" data-aos="zoom-in">
-        Kuis Interaktif <br><span class="highlight">Lahan Basah</span>
+  <!-- Hero Header -->
+  <header class="game-hero text-center">
+    <div class="container" data-aos="fade-down">
+      <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fw-bold mb-2">
+        <i class="bi bi-joystick me-1"></i> Taman Bermain Edukasi Ramah Anak
+      </span>
+      <h1 class="display-5 fw-bolder text-success-emphasis mb-2">
+        Arena Game Kuis Ekosistem Lahan Basah
       </h1>
-
-      <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
-        Uji pemahamanmu tentang komponen ekosistem, rantai makanan, keseimbangan, peran manusia, dan siklus air sesuai IPAS Kelas V.
+      <p class="lead text-muted mx-auto mb-0" style="max-width: 680px; font-size: 1.05rem;">
+        Pilih permainan favoritmu! Uji pengetahuanmu tentang harmoni alam, rantai makanan, dan satwa khas Kalimantan dengan berbagai game interaktif yang seru.
       </p>
-
-      <div class="d-flex flex-wrap justify-content-center gap-3" data-aos="fade-up" data-aos-delay="200">
-        <a href="#quizArena" class="btn-eco-primary">
-          <i class="bi bi-play-circle-fill"></i> Mulai Kuis Sekarang
-        </a>
-        <a href="leaderboard.html" class="btn-eco-outline">
-          <i class="bi bi-trophy-fill"></i> Lihat Papan Peringkat
-        </a>
-      </div>
     </div>
+  </header>
 
-    <!-- Organic Wave Divider -->
-    <div class="hero-wave-divider">
-      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.31,200,105,242.79,94.92,284.28,74.58,321.39,56.44Z" class="shape-fill"></path>
-      </svg>
-    </div>
-  </section>
+  <!-- Main Game Arena Wrapper -->
+  <main class="game-arena-card">
+    <div class="game-stage-box" data-aos="fade-up">
 
-  <!-- ==========================================================================
-       QUIZ CONTAINER
-       ========================================================================== -->
-  <div class="quiz-card-wrapper" id="quizArena">
-
-    <!-- 1. REGISTRATION FORM (Initial Screen) -->
-    <div id="mulaiForm" class="glass-quiz-card text-center" data-aos="fade-up">
-      <div class="mb-4">
-        <span class="fs-1 d-inline-block mb-2">🎯</span>
-        <h3 class="display-font text-success mb-2">Registrasi Peserta Kuis</h3>
-        <p class="text-muted">Masukkan data dirimu untuk mencatatkan namamu di Papan Peringkat Lahan Basah!</p>
-      </div>
-
-      <!-- Level Information Preview -->
-      <div class="row g-3 mb-4 text-start">
-        <div class="col-sm-4">
-          <div class="p-3 rounded-4 bg-primary-subtle border border-primary-subtle text-center">
-            <span class="fs-4 d-block mb-1">🟢</span>
-            <strong class="text-primary d-block">Level Mudah</strong>
-            <small class="text-muted">Soal 1 s/d 4 (Komponen Ekosistem)</small>
+      <!-- Player Identity Bar -->
+      <div class="player-dock d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-2">
+          <span class="fs-3">🦸‍♂️</span>
+          <div>
+            <div class="small text-muted fw-bold">Penjelajah Cilik:</div>
+            <div class="fw-bold text-success fs-6" id="playerDisplay">Belum Terdaftar</div>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="p-3 rounded-4 bg-warning-subtle border border-warning-subtle text-center">
-            <span class="fs-4 d-block mb-1">🟡</span>
-            <strong class="text-warning-emphasis d-block">Level Sedang</strong>
-            <small class="text-muted">Soal 5 s/d 8 (Rantai Makanan)</small>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="p-3 rounded-4 bg-danger-subtle border border-danger-subtle text-center">
-            <span class="fs-4 d-block mb-1">🔴</span>
-            <strong class="text-danger d-block">Level Sulit</strong>
-            <small class="text-muted">Soal 9 s/d 12 (Sebab-Akibat & Air)</small>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-9 mx-auto text-start">
-        <div class="mb-3">
-          <label for="nama" class="form-label fw-bold small text-muted">
-            <i class="bi bi-person-fill text-success"></i> Nama Lengkap
-          </label>
-          <input type="text" class="form-control form-control-lg rounded-pill px-4 fs-6 border-success-subtle shadow-sm" id="nama" placeholder="Contoh: Luna Amanda" required />
-        </div>
-
-        <div class="mb-4">
-          <label for="sekolah" class="form-label fw-bold small text-muted">
-            <i class="bi bi-mortarboard-fill text-primary"></i> Nama Sekolah / Instansi
-          </label>
-          <input type="text" class="form-control form-control-lg rounded-pill px-4 fs-6 border-primary-subtle shadow-sm" id="sekolah" placeholder="Contoh: SD Negeri 2 Banjarmasin" required />
-        </div>
-
-        <div class="d-grid mt-4">
-          <button class="btn-eco-primary py-3 fs-5 justify-content-center" onclick="mulaiKuis()">
-            🚀 Mulai Kuis Sekarang
+        <div class="d-flex flex-wrap align-items-center gap-2">
+          <span class="score-chip"><i class="bi bi-star-fill text-warning"></i> XP: <strong id="playerXp">0</strong></span>
+          <span class="score-chip"><i class="bi bi-trophy-fill text-warning"></i> Skor Kuis: <strong id="bestQuizScore">0</strong>/12</span>
+          <button class="btn btn-outline-success btn-sm rounded-pill fw-bold" onclick="promptPlayerName()">
+            <i class="bi bi-pencil-square"></i> Ganti Nama
           </button>
         </div>
       </div>
-    </div>
 
-    <!-- 2. QUESTION ARENA (During Quiz) -->
-    <div id="soalContainer" class="glass-quiz-card" style="display:none;">
-      
-      <!-- Quiz Status Header -->
-      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
-        <div class="d-flex align-items-center gap-2">
-          <span class="level-badge-pill" id="badgeLevel">
-            <span id="levelDot">🟢</span> <span id="levelTitle">Level Mudah</span>
-          </span>
-          <span class="streak-badge" id="streakBadge" style="display:none;">
-            🔥 Streak <span id="streakNum">0</span>
-          </span>
+      <!-- Game Mode Selection Navigation Bar -->
+      <div class="game-tabs-wrapper mb-4">
+        <button class="game-mode-tab active" onclick="switchGameMode('pilihanGanda', this)">
+          <span>🎯</span> Kuis Detektif <span class="game-tab-badge">12 Soal</span>
+        </button>
+        <button class="game-mode-tab" onclick="switchGameMode('memoryMatch', this)">
+          <span>🃏</span> Mencocokan Kartu <span class="game-tab-badge">6 Pasang</span>
+        </button>
+        <button class="game-mode-tab" onclick="switchGameMode('dragDrop', this)">
+          <span>🧩</span> Susun Rantai <span class="game-tab-badge">Taraf Trofik</span>
+        </button>
+        <button class="game-mode-tab" onclick="switchGameMode('wordScramble', this)">
+          <span>🔤</span> Susun Kata <span class="game-tab-badge">Kosakata STEM</span>
+        </button>
+        <button class="game-mode-tab" onclick="switchGameMode('hiddenObject', this)">
+          <span>🔍</span> Cari Hewan Rawa <span class="game-tab-badge">Detektif</span>
+        </button>
+        <button class="game-mode-tab" onclick="switchGameMode('puzzle', this)">
+          <span>🖼️</span> Puzzle Gambar <span class="game-tab-badge">3x3</span>
+        </button>
+      </div>
+
+      <!-- MODE 1: PILIHAN GANDA DETEKTIF EKOSISTEM -->
+      <section id="arena-pilihanGanda" class="game-section">
+        
+        <!-- Welcome Screen Kuis -->
+        <div id="quizStartView" class="text-center py-4">
+          <div class="display-1 mb-2">🎯</div>
+          <h3 class="fw-bold text-dark mb-2">Tantangan Kuis Detektif Ekosistem</h3>
+          <p class="text-muted mx-auto mb-4" style="max-width: 540px;">
+            Selesaikan 12 soal bertingkat (Mudah, Sedang, Sulit). Gunakan bantuan 50:50 dan Hint, kumpulkan streak jawaban benar untuk meraih skor tertinggi di Papan Peringkat!
+          </p>
+          <div class="d-flex justify-content-center gap-3">
+            <button class="btn btn-eco-primary" onclick="startMultipleChoiceQuiz()">
+              <i class="bi bi-play-circle-fill"></i> Mulai Kuis Sekarang
+            </button>
+            <a href="leaderboard.html" class="btn btn-eco-outline">
+              <i class="bi bi-trophy-fill"></i> Lihat Peringkat
+            </a>
+          </div>
         </div>
 
-        <div class="d-flex align-items-center gap-2">
-          <!-- 50:50 Lifeline Button -->
-          <button class="btn btn-sm btn-outline-warning rounded-pill px-3 fw-bold" id="btnLifeline" onclick="use5050Lifeline()" title="Hapus 2 pilihan salah (1x pakai)">
-            💡 Bantuan 50:50
+        <!-- Quiz Gameplay Screen -->
+        <div id="quizPlayView" class="d-none">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 pb-2 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+              <span id="levelBadge" class="level-badge-pill level-mudah-pill">Level 1: Mudah</span>
+              <span class="badge bg-light text-dark border fw-bold rounded-pill px-3 py-2">
+                Soal <span id="currentQuestionNum">1</span> / 12
+              </span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span id="streakBadge" class="streak-badge px-3 py-1 rounded-pill small" style="display: none;">
+                🔥 Streak x<span id="streakCount">0</span>
+              </span>
+              <button class="lifeline-btn" id="btn5050" onclick="use5050()">
+                ✂️ 50:50
+              </button>
+              <button class="lifeline-btn" id="btnHint" onclick="useHint()">
+                💡 Petunjuk
+              </button>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="progress mb-4" style="height: 10px; border-radius: 99px;">
+            <div id="quizProgressBar" class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 8%;"></div>
+          </div>
+
+          <!-- Question Text -->
+          <div class="mb-4">
+            <h4 class="fw-bold text-dark lh-base" id="questionText">
+              Pertanyaan kuis sedang disiapkan...
+            </h4>
+            <div id="hintAlert" class="alert alert-warning border-2 rounded-4 small fw-bold d-none mt-2">
+              <i class="bi bi-lightbulb-fill me-1"></i> <span id="hintText"></span>
+            </div>
+          </div>
+
+          <!-- Option Buttons -->
+          <div id="optionsContainer"></div>
+
+          <!-- Explanation & Next Button -->
+          <div id="explanationContainer" class="d-none">
+            <div id="explanationBox" class="explanation-box mb-3"></div>
+            <div class="text-end">
+              <button class="btn btn-eco-primary" id="btnNextQuestion" onclick="goToNextQuestion()">
+                Lanjut Soal Berikutnya <i class="bi bi-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Result Screen -->
+        <div id="quizResultView" class="text-center py-4 d-none">
+          <div class="display-1 mb-2" id="resultEmoji">🏆</div>
+          <h3 class="fw-bold text-dark mb-1" id="resultTitle">Selamat! Kuis Selesai!</h3>
+          <p class="text-muted mb-3" id="resultSub">Kerja bagus, kamu berhasil menyelesaikan seluruh soal.</p>
+
+          <div class="p-4 bg-light rounded-4 d-inline-block border mb-4 text-center" style="min-width: 280px;">
+            <div class="display-4 fw-bolder text-success mb-1" id="finalScoreVal">10/12</div>
+            <div class="badge bg-success-subtle text-success fw-bold px-3 py-2 rounded-pill fs-6" id="finalRankBadge">
+              🌿 Penjaga Lahan Basah Teladan
+            </div>
+          </div>
+
+          <div class="d-flex flex-wrap justify-content-center gap-3">
+            <button class="btn btn-eco-primary" onclick="startMultipleChoiceQuiz()">
+              <i class="bi bi-arrow-repeat"></i> Coba Lagi
+            </button>
+            <a href="leaderboard.html" class="btn btn-eco-outline">
+              <i class="bi bi-trophy-fill"></i> Papan Peringkat
+            </a>
+            <button class="btn btn-outline-secondary rounded-pill px-4 fw-bold" onclick="switchGameMode('memoryMatch')">
+              Main Game Kartu ➔
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- MODE 2: MENCOCOKAN KARTU (MEMORY MATCH PAIRS) -->
+      <section id="arena-memoryMatch" class="game-section d-none">
+        <div class="text-center mb-3">
+          <h4 class="fw-bold text-success-emphasis mb-1">🃏 Mencocokan Kartu Ekosistem</h4>
+          <p class="text-muted small mb-3">Balik kartu dan temukan pasangan organisme lahan basah dengan perannya!</p>
+          <div class="d-flex justify-content-center gap-3 mb-3">
+            <span class="score-chip"><i class="bi bi-cursor-fill text-primary"></i> Gerakan: <strong id="memoryMoves">0</strong></span>
+            <span class="score-chip"><i class="bi bi-check2-circle text-success"></i> Cocok: <strong id="memoryMatches">0</strong>/6</span>
+            <button class="btn btn-outline-success btn-sm rounded-pill fw-bold" onclick="initMemoryGame()">
+              <i class="bi bi-arrow-clockwise"></i> Acak Ulang
+            </button>
+          </div>
+        </div>
+
+        <div class="memory-grid" id="memoryGrid"></div>
+
+        <div id="memoryVictory" class="text-center p-4 bg-light rounded-4 border border-success mt-4 d-none">
+          <div class="fs-1 mb-1">🎉</div>
+          <h4 class="fw-bold text-success mb-1">Luar Biasa! Semua Pasangan Ditemukan!</h4>
+          <p class="text-muted small mb-3">Kamu berhasil menyelesaikan permainan dalam <strong id="victoryMoves"></strong> gerakan!</p>
+          <button class="btn btn-eco-primary btn-sm" onclick="initMemoryGame()">
+            <i class="bi bi-play-fill"></i> Main Lagi
           </button>
-          <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fs-7 fw-bold" id="soalCounter">
-            Soal 1 / 12
-          </span>
-          <span class="badge bg-success-subtle text-success border border-success px-3 py-2 rounded-pill fs-7 fw-bold" id="liveScoreCounter">
-            Skor: 0
-          </span>
         </div>
-      </div>
+      </section>
 
-      <!-- Animated Progress Bar -->
-      <div class="quiz-progress-bar">
-        <div class="quiz-progress-fill" id="quizProgressBar" style="width: 8%;"></div>
-      </div>
+      <!-- MODE 3: DRAG AND DROP RANTAI MAKANAN -->
+      <section id="arena-dragDrop" class="game-section d-none">
+        <div class="text-center mb-4">
+          <h4 class="fw-bold text-success-emphasis mb-1">🧩 Susun Rantai Makanan Lahan Basah</h4>
+          <p class="text-muted small mb-2">Tarik dan letakkan organisme ke dalam kotak taraf trofik yang tepat sesuai aliran energi!</p>
+          <button class="btn btn-outline-success btn-sm rounded-pill fw-bold" onclick="initDragDropGame()">
+            <i class="bi bi-arrow-repeat"></i> Reset Susunan
+          </button>
+        </div>
 
-      <!-- Question Text -->
-      <div class="question-title" id="teksSoal">
-        Memuat soal kuis...
-      </div>
-
-      <!-- Options -->
-      <div id="opsiJawaban">
-        <!-- Buttons injected dynamically by JS -->
-      </div>
-
-      <!-- Instant Feedback Box -->
-      <div id="feedback" class="explanation-box" style="display:none;"></div>
-
-      <!-- Next Button -->
-      <div class="text-end mt-4">
-        <button class="btn-eco-primary" id="btnLanjut" onclick="lanjutSoal()" style="display:none;">
-          <span>Soal Berikutnya</span> <i class="bi bi-arrow-right-circle-fill"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- 3. RESULT CARD (Quiz Finished) -->
-    <div id="hasilContainer" class="glass-quiz-card text-center" style="display:none;">
-      <div class="trophy-glow-icon" id="resultTrophy">🏆</div>
-      <h2 class="display-font text-success mb-1" id="hasilTitle">Luar Biasa!</h2>
-      <p class="text-muted" id="pesanHasil">Kamu telah menyelesaikan seluruh kuis dengan gemilang.</p>
-
-      <div class="score-circle">
-        <div class="score-circle-num" id="skorAngka">0</div>
-        <div class="score-circle-total">dari 12 Benar</div>
-      </div>
-
-      <div class="p-3 bg-light rounded-4 border mx-auto mb-4" style="max-width: 500px;">
-        <div class="d-flex justify-content-around text-center">
-          <div>
-            <small class="text-muted d-block">Persentase</small>
-            <strong class="fs-5 text-primary" id="scorePercent">0%</strong>
+        <div class="row g-2 mb-4 text-center">
+          <div class="col">
+            <div class="chain-drop-slot" data-slot="produsen" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'produsen')">
+              <span class="badge bg-success-subtle text-success mb-1">1. Produsen</span>
+              <div class="slot-content text-muted small">Tarik ke sini</div>
+            </div>
           </div>
-          <div class="border-start"></div>
-          <div>
-            <small class="text-muted d-block">Peringkat Predikat</small>
-            <strong class="fs-5 text-success" id="scoreGrade">Juara</strong>
+          <div class="col-auto d-flex align-items-center">➔</div>
+          <div class="col">
+            <div class="chain-drop-slot" data-slot="konsumen1" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'konsumen1')">
+              <span class="badge bg-primary-subtle text-primary mb-1">2. Konsumen I</span>
+              <div class="slot-content text-muted small">Tarik ke sini</div>
+            </div>
           </div>
-          <div class="border-start"></div>
-          <div>
-            <small class="text-muted d-block">Max Streak</small>
-            <strong class="fs-5 text-warning" id="scoreMaxStreak">0🔥</strong>
+          <div class="col-auto d-flex align-items-center">➔</div>
+          <div class="col">
+            <div class="chain-drop-slot" data-slot="konsumen2" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'konsumen2')">
+              <span class="badge bg-warning-subtle text-warning-emphasis mb-1">3. Konsumen II</span>
+              <div class="slot-content text-muted small">Tarik ke sini</div>
+            </div>
+          </div>
+          <div class="col-auto d-flex align-items-center">➔</div>
+          <div class="col">
+            <div class="chain-drop-slot" data-slot="puncak" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'puncak')">
+              <span class="badge bg-danger-subtle text-danger mb-1">4. Konsumen Puncak</span>
+              <div class="slot-content text-muted small">Tarik ke sini</div>
+            </div>
+          </div>
+          <div class="col-auto d-flex align-items-center">➔</div>
+          <div class="col">
+            <div class="chain-drop-slot" data-slot="pengurai" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'pengurai')">
+              <span class="badge bg-secondary-subtle text-secondary mb-1">5. Dekomposer</span>
+              <div class="slot-content text-muted small">Tarik ke sini</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-        <button class="btn-eco-outline" id="btnCobaLagi" onclick="cobaLagi()">
-          <i class="bi bi-arrow-repeat"></i> Coba Kuis Lagi
-        </button>
-        <button class="btn btn-light border rounded-pill px-4 fw-bold text-primary shadow-sm" onclick="bukaReviewModal()">
-          <i class="bi bi-card-checklist"></i> Tinjau Kunci Jawaban
-        </button>
-        <button class="btn btn-warning rounded-pill px-4 fw-bold text-dark shadow-sm" onclick="shareScore()">
-          <i class="bi bi-share-fill"></i> Bagikan Hasil
-        </button>
-        <a href="leaderboard.html" class="btn-eco-primary">
-          <i class="bi bi-trophy-fill"></i> Lihat Papan Peringkat
-        </a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Review Modal (Tinjau Kunci Jawaban) -->
-  <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-      <div class="modal-content rounded-4 border-0 shadow-lg">
-        <div class="modal-header border-bottom">
-          <h5 class="modal-title fw-bold text-success">
-            <i class="bi bi-journal-check"></i> Tinjauan Jawaban Kuis
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="p-3 bg-light rounded-4 border text-center mb-3">
+          <div class="small fw-bold text-muted mb-2">Pilihan Organisme (Tarik kartu atau klik untuk memasukkan):</div>
+          <div id="dragItemsPool" class="d-flex flex-wrap justify-content-center gap-2"></div>
         </div>
-        <div class="modal-body p-4" id="reviewModalBody">
-          <!-- Diinjeksi otomatis via JS -->
+
+        <div id="dndCelebration" class="alert alert-success rounded-4 fw-bold text-center d-none">
+          🌟 <strong>Hebat Sekali!</strong> Rantai makanan tersusun sempurna dari fotosintesis hingga penguraian! (+50 XP)
         </div>
-      </div>
+      </section>
+
+      <!-- MODE 4: SUSUN KATA STEM (WORD SCRAMBLE) -->
+      <section id="arena-wordScramble" class="game-section d-none">
+        <div class="text-center mb-4">
+          <h4 class="fw-bold text-success-emphasis mb-1">🔤 Susun Kata STEM Ekosistem</h4>
+          <p class="text-muted small mb-2">Susun kembali huruf-huruf acak menjadi kosakata ilmiah ekosistem yang tepat!</p>
+          <div class="d-flex justify-content-center gap-3">
+            <span class="score-chip"><i class="bi bi-award-fill text-warning"></i> Level: <strong id="scrambleLevel">1</strong>/6</span>
+            <span class="score-chip"><i class="bi bi-star-fill text-warning"></i> Skor Kata: <strong id="scrambleScore">0</strong></span>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-center gap-3 p-3 bg-white border border-2 border-primary-subtle rounded-4 shadow-sm mb-4">
+          <img id="scrambleImage" src="foto/game/puzzle_ekosistem.jpg" alt="Visual Clue" style="width: 72px; height: 72px; object-fit: contain; border-radius: 12px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12)); flex-shrink: 0;">
+          <div class="text-start">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 mb-1 fw-bold">Petunjuk Visual & Definisi:</span>
+            <div class="fw-bold fs-6 text-dark" id="scrambleClue">
+              Memuat petunjuk kosakata...
+            </div>
+          </div>
+        </div>
+
+        <div class="scramble-slots" id="scrambleSlots"></div>
+        <div class="scramble-letters mb-4" id="scrambleLetters"></div>
+
+        <div class="d-flex justify-content-center gap-2">
+          <button class="btn btn-outline-danger btn-sm rounded-pill fw-bold" onclick="resetCurrentWord()">
+            <i class="bi bi-arrow-counterclockwise"></i> Ulangi Huruf
+          </button>
+          <button class="btn btn-outline-primary btn-sm rounded-pill fw-bold" onclick="skipWord()">
+            Kata Berikutnya ➔
+          </button>
+        </div>
+
+        <div id="scrambleFeedback" class="text-center fw-bold mt-3" style="min-height: 30px;"></div>
+      </section>
+
+      <!-- MODE 5: HIDDEN OBJECT (DETEKTIF SATWA LAHAN BASAH) -->
+      <section id="arena-hiddenObject" class="game-section d-none">
+        <div class="hidden-game-card">
+          <!-- Game Header -->
+          <div class="text-center mb-3">
+            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill fw-bold mb-2">
+              <i class="bi bi-search"></i> Eksplorasi Visual IPAS Bab 3
+            </span>
+            <h3 class="fw-bolder text-success-emphasis mb-1">🔍 Detektif Satwa Lahan Basah</h3>
+            <p class="text-muted small mb-3">
+              Temukan 5 objek tersembunyi di ekosistem rawa Kalimantan! Perhatikan balik dedaunan pohon, bebatuan, dan perairan rawa.
+            </p>
+
+            <!-- Target Checklist Grid with Real PNG Thumbnails -->
+            <div class="hidden-checklist-grid" id="hiddenChecklistGrid">
+              <!-- Dynamically populated by renderHiddenChecklist() -->
+            </div>
+          </div>
+
+          <!-- 16:9 Multi-Layer Panoramic Arena -->
+          <div class="eco-panorama-box" id="ecoPanoramaBox">
+            <!-- Layer 1: Langit (Edge-to-edge seamless sky & clouds) -->
+            <img src="foto/asetgame/Langit.png" class="eco-pano-layer pano-sky-bg" alt="Langit Rawa" />
+
+            <!-- Layer 2: Halaman / Perbukitan Hijau -->
+            <img src="foto/asetgame/Halaman.png" class="eco-pano-layer" style="z-index: 2;" alt="Daratan Lahan Basah" />
+
+            <!-- Layer 3: Pohon Alami di Bukit Kanan Belakang (Distant hillside landscape tree) -->
+            <!-- Optional distant tree disabled for cleaner sunlight horizon: <img src="foto/asetgame/Pohon.png" class="eco-pano-bg-tree" style="right: 14%; top: 18%; width: 20%; z-index: 3; opacity: 0.88; filter: brightness(0.95);" alt="Pohon Bukit Belakang" /> -->
+
+            <!-- Layer 4: Rawa / Air Jernih Mengalir -->
+            <img src="foto/asetgame/Rawa.png" class="eco-pano-layer" style="z-index: 4;" alt="Perairan Rawa" />
+
+            <!-- Container for Layer 5 (Animals in water / background) -->
+            <div id="hiddenLayer5" style="position: absolute; inset: 0; z-index: 5; pointer-events: none;"></div>
+
+            <!-- Layer 6: Batu Alami Pinggir Rawa -->
+            <img src="foto/asetgame/Batu.png" class="eco-pano-rock" style="left: 17%; bottom: 12%; width: 17%; z-index: 6;" alt="Batu Tepi Rawa Kiri" />
+            <img src="foto/asetgame/Batu.png" class="eco-pano-rock" style="right: 18%; bottom: 13%; width: 16%; transform: scaleX(-1); z-index: 6;" alt="Batu Tepi Rawa Kanan" />
+
+            <!-- Container for Layer 7 (Animals in midground bank) -->
+            <div id="hiddenLayer7" style="position: absolute; inset: 0; z-index: 7; pointer-events: none;"></div>
+
+            <!-- Layer 8: Pohon Mangrove Utama Kiri & Vegetasi Rumput Tropis Depan -->
+            <img src="foto/asetgame/Pohon.png" class="eco-pano-tree" style="left: -4%; top: -6%; width: 38%; z-index: 8; filter: drop-shadow(4px 4px 12px rgba(0,0,0,0.18));" alt="Pohon Mangrove Kiri" />
+            <img src="foto/asetgame/Rumput.png" class="eco-pano-layer" style="z-index: 8;" alt="Rerumputan & Daun Tropis Depan" />
+
+            <!-- Container for Layer 9 (Animals in foreground) -->
+            <div id="hiddenLayer9" style="position: absolute; inset: 0; z-index: 9; pointer-events: none;"></div>
+
+            <!-- Layer 10: Interactive Hitboxes & Hints -->
+            <div id="hiddenHitboxLayer" style="position: absolute; inset: 0; z-index: 10;"></div>
+          </div>
+
+          <!-- Bottom Control Bar -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mt-3 pt-2 border-top">
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-success text-white px-3 py-2 rounded-pill fw-bold">
+                <i class="bi bi-check2-circle me-1"></i> Progres: <span id="hiddenFoundCount">0</span>/5 Ditemukan
+              </span>
+              <span id="hiddenFoundScore" class="badge bg-light text-dark border px-3 py-2 rounded-pill fw-bold">
+                🎯 0 XP
+              </span>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-warning text-dark fw-bold rounded-pill px-3 py-2 shadow-sm" onclick="useHiddenHint()" id="btnHiddenHint">
+                <i class="bi bi-lightbulb-fill text-warning me-1"></i> Petunjuk
+              </button>
+              <button class="btn btn-eco-primary fw-bold rounded-pill px-3 py-2 shadow-sm" onclick="resetHiddenObjectGame()">
+                <i class="bi bi-arrow-repeat me-1"></i> Main Lagi
+              </button>
+            </div>
+          </div>
+
+          <!-- Discovery Feedback & Educational Fact Banner -->
+          <div id="hiddenDiscoveryBanner" class="hidden-discovery-modal d-none">
+            <div class="d-flex align-items-center gap-3">
+              <div id="hiddenDiscoveryIcon" class="fs-1 flex-shrink-0">🎉</div>
+              <div>
+                <h5 class="fw-bold text-success mb-1" id="hiddenDiscoveryTitle">Hebat! Kamu menemukan Bekantan!</h5>
+                <p class="mb-0 text-dark small" id="hiddenDiscoveryFact">Fakta sains ekosistem...</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- MODE 6: PUZZLE GAMBAR EKOSISTEM (3x3 SLIDING TILES) -->
+      <section id="arena-puzzle" class="game-section d-none">
+        <div class="text-center mb-3">
+          <h4 class="fw-bold text-success-emphasis mb-1">🖼️ Puzzle Geser Ekosistem</h4>
+          <p class="text-muted small mb-2">Klik petak puzzle yang berada di samping kotak kosong untuk menggesernya hingga gambar utuh!</p>
+          <div class="d-flex justify-content-center gap-3 mb-3">
+            <span class="score-chip"><i class="bi bi-hand-index-thumb text-primary"></i> Langkah: <strong id="puzzleMoves">0</strong></span>
+            <button class="btn btn-outline-success btn-sm rounded-pill fw-bold" onclick="initPuzzleGame()">
+              <i class="bi bi-shuffle"></i> Acak Puzzle
+            </button>
+          </div>
+        </div>
+
+        <div class="puzzle-board" id="puzzleBoard"></div>
+
+        <div id="puzzleVictory" class="text-center p-3 bg-light rounded-4 border border-success mt-3 d-none">
+          <div class="fs-2 mb-1">🎉</div>
+          <h5 class="fw-bold text-success mb-1">Selamat! Puzzle Tersusun Rapi!</h5>
+          <img src="foto/game/puzzle_ekosistem.jpg" alt="Master Puzzle Lahan Basah" class="rounded-3 shadow-sm mx-auto my-2" style="max-width: 220px; display: block; border: 2px solid #10b981;">
+          <p class="text-muted small mb-2">Kamu berhasil menyusun ekosistem lahan basah dalam <strong id="finalPuzzleMoves"></strong> langkah!</p>
+          <button class="btn btn-eco-primary btn-sm rounded-pill px-4" onclick="initPuzzleGame()"><i class="bi bi-arrow-clockwise"></i> Mainkan Lagi</button>
+        </div>
+      </section>
+
     </div>
-  </div>
+  </main>
 
-  <!-- Notification Toast Area -->
-  <div id="notifArea" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 10050; max-width: 90%;"></div>
-
-  <!-- ==========================================================================
-       FLOATING MUSIC DOCK & TOAST
-       ========================================================================== -->
-  <audio id="bg-music" loop preload="auto">
-    <source src="sound/sound2.mp3" type="audio/mpeg">
-  </audio>
-
-  <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
-    <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
-      <span id="music-icon">🔊</span>
-    </button>
-    <div class="sound-bars">
-      <span class="sound-bar"></span>
-      <span class="sound-bar"></span>
-      <span class="sound-bar"></span>
-    </div>
-    <span class="music-label d-none d-sm-inline">Musik Alam</span>
-  </div>
-
-  <div id="music-toast" class="music-toast-popup">
-    Musik Dinyalakan
-  </div>
-
-  <!-- ==========================================================================
-       FOOTER
-       ========================================================================== -->
+  <!-- Footer -->
   <footer class="custom-footer">
-    <div class="footer-top-wave">
-      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
-      </svg>
-    </div>
-
-    <div class="container footer-content text-center">
-      <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
-        <img src="foto/logo.webp" alt="Logo" width="40" height="40" />
-        <span class="footer-brand">Lahan Basah Hijau</span>
-      </div>
-      <p class="small text-muted mb-3">Aplikasi pembelajaran interaktif berbasis STEM untuk mengenal, menjaga, dan mencintai lahan basah.</p>
-      <div class="footer-bottom">
-        <small>© 2025 Lahan Basah Hijau. Semua hak dilindungi.</small>
-      </div>
+    <div class="container py-4 text-center">
+      <p class="fw-bold mb-1">🌿 Lahan Basah Hijau - Media Edukasi STEM Kurikulum Merdeka</p>
+      <p class="text-muted small mb-0">Disusun berdasarkan IPAS Kelas V SD Bab 3 (Harmoni dalam Ekosistem) & Bab 4 (Siklus Air)</p>
     </div>
   </footer>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-  <script src="sfx.js"></script>
-
+  <script src="sfx.js?v=3.2"></script>
   <script>
-    AOS.init({ duration: 800, once: true });
-
-    // Bank Soal
-    const soalMudah = [
-      {
-        pertanyaan: "Manakah yang termasuk komponen biotik di ekosistem rawa?",
-        opsi: [
-          "Ikan, teratai, dan jamur",
-          "Air, lumpur, dan cahaya matahari",
-          "Batu, udara, dan mineral",
-          "Tanah, suhu, dan air hujan"
-        ],
-        jawaban: "Ikan, teratai, dan jamur",
-        penjelasan: "Komponen biotik adalah semua makhluk hidup. Air, tanah, udara, cahaya, dan mineral termasuk komponen abiotik."
-      },
-      {
-        pertanyaan: "Apa yang dimaksud dengan habitat?",
-        opsi: ["Tempat makhluk hidup tinggal dan memenuhi kebutuhannya", "Sekumpulan hewan yang berbeda jenis", "Proses makan dan dimakan", "Benda tak hidup yang terkena cahaya"],
-        jawaban: "Tempat makhluk hidup tinggal dan memenuhi kebutuhannya",
-        penjelasan: "Habitat adalah lingkungan tempat makhluk hidup tinggal, memperoleh makanan, air, perlindungan, dan berkembang biak."
-      },
-      {
-        pertanyaan: "Kumpulan ikan seluang sejenis yang hidup di satu rawa disebut...",
-        opsi: [
-          "Populasi",
-          "Individu",
-          "Komponen abiotik",
-          "Habitat"
-        ],
-        jawaban: "Populasi",
-        penjelasan: "Satu makhluk hidup disebut individu. Sekumpulan makhluk hidup sejenis yang tinggal bersama disebut populasi."
-      },
-      {
-        pertanyaan: "Mengapa rawa dapat disebut sebagai ekosistem?",
-        opsi: ["Karena komponen biotik dan abiotiknya saling berinteraksi", "Karena hanya berisi air", "Karena tidak ada perubahan di dalamnya", "Karena semua hewannya sejenis"],
-        jawaban: "Karena komponen biotik dan abiotiknya saling berinteraksi",
-        penjelasan: "Ekosistem terbentuk ketika makhluk hidup berinteraksi dengan air, tanah, udara, cahaya, dan komponen lain di habitatnya."
-      }
-    ];
-
-    const soalSedang = [
-      {
-        pertanyaan: "Dalam rantai makanan fitoplankton → zooplankton → ikan seluang → bangau, organisme yang menjadi produsen adalah...",
-        opsi: [
-          "Fitoplankton",
-          "Zooplankton",
-          "Ikan seluang",
-          "Bangau"
-        ],
-        jawaban: "Fitoplankton",
-        penjelasan: "Fitoplankton mampu membuat makanan dengan bantuan cahaya matahari, sehingga berperan sebagai produsen."
-      },
-      {
-        pertanyaan: "Apa arti arah panah dalam rantai makanan?",
-        opsi: [
-          "Menunjukkan perpindahan energi dari makanan kepada pemakannya",
-          "Menunjukkan tempat tinggal hewan",
-          "Menunjukkan arah aliran sungai",
-          "Menunjukkan jumlah populasi"
-        ],
-        jawaban: "Menunjukkan perpindahan energi dari makanan kepada pemakannya",
-        penjelasan: "Anak panah mengarah dari makhluk hidup yang dimakan menuju makhluk hidup yang memperoleh energi dengan memakannya."
-      },
-      {
-        pertanyaan: "Apa peran jamur dan bakteri sebagai dekomposer?",
-        opsi: [
-          "Menguraikan sisa makhluk hidup dan mengembalikan unsur hara",
-          "Membuat cahaya matahari",
-          "Menjadi produsen utama di semua habitat",
-          "Menghentikan aliran air"
-        ],
-        jawaban: "Menguraikan sisa makhluk hidup dan mengembalikan unsur hara",
-        penjelasan: "Dekomposer menguraikan bangkai dan sisa organisme. Hasil penguraian membantu menyuburkan lingkungan bagi produsen."
-      },
-      {
-        pertanyaan: "Jika jumlah ikan kecil menurun tajam, dampak yang paling mungkin pada bangau adalah...",
-        opsi: [
-          "Bangau lebih sulit memperoleh makanan",
-          "Bangau langsung menjadi produsen",
-          "Jumlah air rawa selalu bertambah",
-          "Jamur berhenti menjadi dekomposer"
-        ],
-        jawaban: "Bangau lebih sulit memperoleh makanan",
-        penjelasan: "Perubahan jumlah satu populasi dapat memengaruhi populasi lain yang bergantung padanya dalam jaring-jaring makanan."
-      }
-    ];
-
-    const soalSulit = [
-      {
-        pertanyaan: "Jika pemangsa ikan kecil menghilang dari suatu jaring-jaring makanan, apa yang mungkin terjadi lebih dahulu?",
-        opsi: [
-          "Populasi ikan kecil dapat bertambah dan kebutuhan makanannya meningkat",
-          "Semua air langsung menguap",
-          "Ikan kecil berubah menjadi produsen",
-          "Seluruh dekomposer menghilang"
-        ],
-        jawaban: "Populasi ikan kecil dapat bertambah dan kebutuhan makanannya meningkat",
-        penjelasan: "Berkurangnya pemangsa dapat membuat populasi mangsa meningkat. Perubahan ini dapat memicu persaingan makanan dan mengganggu keseimbangan."
-      },
-      {
-        pertanyaan: "Tindakan manusia yang paling jelas mengganggu keseimbangan ekosistem lahan basah adalah...",
-        opsi: [
-          "Membuang sampah plastik ke sungai dan merusak vegetasi tepi rawa",
-          "Mengamati burung dari jarak aman",
-          "Menghemat air di rumah",
-          "Membuat poster rantai makanan"
-        ],
-        jawaban: "Membuang sampah plastik ke sungai dan merusak vegetasi tepi rawa",
-        penjelasan: "Sampah dapat mencemari habitat dan melukai hewan, sedangkan hilangnya vegetasi mengurangi tempat hidup serta sumber makanan."
-      },
-      {
-        pertanyaan: "Dalam siklus air, proses masuknya air hujan ke dalam tanah disebut...",
-        opsi: [
-          "Infiltrasi",
-          "Evaporasi",
-          "Kondensasi",
-          "Presipitasi"
-        ],
-        jawaban: "Infiltrasi",
-        penjelasan: "Infiltrasi adalah penyerapan air hujan oleh tanah dan akar. Proses ini membantu ketersediaan air tanah dan habitat lahan basah."
-      },
-      {
-        pertanyaan: "Rencana tindakan siswa yang paling tepat untuk membantu ekosistem dan ketersediaan air adalah...",
-        opsi: [
-          "Menghemat air, mengurangi sampah, dan mengamati lingkungan bersama pendamping",
-          "Membuang minyak bekas ke selokan agar cepat hilang",
-          "Menangkap semua hewan kecil di rawa",
-          "Mengeringkan genangan agar tidak ada tumbuhan air"
-        ],
-        jawaban: "Menghemat air, mengurangi sampah, dan mengamati lingkungan bersama pendamping",
-        penjelasan: "Tindakan sederhana yang aman dan dilakukan rutin dapat membantu menjaga kualitas habitat, ketersediaan air, dan keseimbangan ekosistem."
-      }
-    ];
+    AOS.init({ duration: 600, once: true });
 
     const QUIZ_STORAGE_KEY = "lahanBasahQuizResults";
+    let currentUser = {
+      nama: "Siswa Cerdas",
+      sekolah: "SD Negeri Lahan Basah",
+      xp: 0,
+      bestScore: 0
+    };
 
-    function getQuizResults() {
+    function loadUserData() {
       try {
-        return JSON.parse(localStorage.getItem(QUIZ_STORAGE_KEY)) || {};
-      } catch (error) {
-        console.error("Gagal membaca hasil kuis lokal:", error);
-        return {};
+        const saved = JSON.parse(localStorage.getItem('currentUserProfile'));
+        if (saved && saved.nama) {
+          currentUser = saved;
+        }
+        const allScores = JSON.parse(localStorage.getItem(QUIZ_STORAGE_KEY)) || {};
+        const key = `${currentUser.nama.toLowerCase().replace(/\s+/g, '_')}_${currentUser.sekolah.toLowerCase().replace(/\s+/g, '_')}`;
+        if (allScores[key]) {
+          currentUser.bestScore = allScores[key].skor || 0;
+        }
+      } catch (e) {}
+
+      document.getElementById('playerDisplay').textContent = `${currentUser.nama} (${currentUser.sekolah})`;
+      document.getElementById('playerXp').textContent = currentUser.xp;
+      document.getElementById('bestQuizScore').textContent = currentUser.bestScore;
+    }
+
+    function promptPlayerName() {
+      const nama = prompt("Masukkan Nama Lengkapmu:", currentUser.nama);
+      if (!nama || !nama.trim()) return;
+      const sekolah = prompt("Masukkan Nama Sekolahmu:", currentUser.sekolah);
+      currentUser.nama = nama.trim();
+      currentUser.sekolah = (sekolah && sekolah.trim()) ? sekolah.trim() : "SD Kelas V";
+      try {
+        localStorage.setItem('currentUserProfile', JSON.stringify(currentUser));
+      } catch (e) {}
+      loadUserData();
+      SoundEffects.playPop();
+    }
+
+    function addPlayerXp(amount) {
+      currentUser.xp += amount;
+      document.getElementById('playerXp').textContent = currentUser.xp;
+      try {
+        localStorage.setItem('currentUserProfile', JSON.stringify(currentUser));
+      } catch (e) {}
+    }
+
+    function switchGameMode(modeId, tabElem) {
+      SoundEffects.playPop();
+      document.querySelectorAll('.game-section').forEach(sec => sec.classList.add('d-none'));
+      document.querySelectorAll('.game-mode-tab').forEach(tab => tab.classList.remove('active'));
+
+      const target = document.getElementById(`arena-${modeId}`);
+      if (target) target.classList.remove('d-none');
+      if (tabElem) tabElem.classList.add('active');
+
+      if (modeId === 'memoryMatch') initMemoryGame();
+      if (modeId === 'dragDrop') initDragDropGame();
+      if (modeId === 'wordScramble') initWordScrambleGame();
+      if (modeId === 'hiddenObject') initHiddenObjectGame();
+      if (modeId === 'puzzle') initPuzzleGame();
+    }
+
+    // 12 Soal Kuis
+    const quizQuestions = [
+      {
+        level: "mudah",
+        levelLabel: "Level 1: Mudah",
+        levelClass: "level-mudah-pill",
+        pertanyaan: "Dalam ekosistem lahan basah rawa gambut, manakah di bawah ini yang merupakan contoh komponen abiotik?",
+        opsi: ["Ikan Haruan dan Katak Rawa", "Air Rawa, Tanah Gambut, dan Cahaya Matahari", "Rumput Purun dan Teratai", "Bekantan dan Burung Bangau"],
+        kunci: 1,
+        hint: "Ingat, komponen abiotik adalah benda-benda tak hidup yang sangat diperlukan oleh makhluk hidup.",
+        penjelasan: "Tepat sekali! Komponen abiotik adalah unsur tak hidup seperti air, tanah gambut, udara, dan sinar matahari."
+      },
+      {
+        level: "mudah",
+        levelLabel: "Level 1: Mudah",
+        levelClass: "level-mudah-pill",
+        pertanyaan: "Makhluk hidup di lahan basah yang mampu membuat makanannya sendiri melalui fotosintesis dengan bantuan sinar matahari disebut...",
+        opsi: ["Konsumen Puncak", "Produsen", "Dekomposer", "Herbivora"],
+        kunci: 1,
+        hint: "Tumbuhan hijau dan alga memproduksi zat makanan untuk dirinya sendiri dan makhluk lain.",
+        penjelasan: "Benar! Tumbuhan hijau seperti teratai dan lumut air adalah produsen karena memproduksi makanan sendiri."
+      },
+      {
+        level: "mudah",
+        levelLabel: "Level 1: Mudah",
+        levelClass: "level-mudah-pill",
+        pertanyaan: "Satwa endemik Kalimantan berhidung panjang dan berbulu kemerahan yang hidup di pohon rambai tepi sungai adalah...",
+        opsi: ["Orangutan", "Bekantan", "Burung Cendrawasih", "Harimau"],
+        kunci: 1,
+        hint: "Satwa ini menjadi maskot provinsi Kalimantan Selatan.",
+        penjelasan: "Tepat! Bekantan (Nasalis larvatus) adalah primata khas lahan basah dan mangrove Kalimantan Selatan."
+      },
+      {
+        level: "mudah",
+        levelLabel: "Level 1: Mudah",
+        levelClass: "level-mudah-pill",
+        pertanyaan: "Perhatikan rantai makanan rawa: Teratai ➔ Keong Mas ➔ Katak ➔ Ikan Haruan. Hewan yang berperan sebagai Konsumen Tingkat I adalah...",
+        opsi: ["Teratai", "Keong Mas", "Katak", "Ikan Haruan"],
+        kunci: 1,
+        hint: "Konsumen tingkat I adalah hewan herbivora yang langsung memakan produsen (tumbuhan).",
+        penjelasan: "Hebat! Keong Mas memakan langsung daun teratai sehingga berstatus Konsumen I (Herbivora)."
+      },
+      {
+        level: "sedang",
+        levelLabel: "Level 2: Sedang",
+        levelClass: "level-sedang-pill",
+        pertanyaan: "Apa peran krusial organisme pengurai (dekomposer) seperti jamur dan bakteri dalam ekosistem lahan basah?",
+        opsi: [
+          "Memangsa ikan-ikan kecil yang sedang sakit",
+          "Menguraikan sisa organisme mati menjadi unsur hara yang menyuburkan tanah gambut",
+          "Menyerap seluruh air rawa hingga kering",
+          "Membuat air sungai menjadi berbuih detergen"
+        ],
+        kunci: 1,
+        hint: "Pengurai mendaur ulang bangkai dan daun kering kembali ke alam.",
+        penjelasan: "Sempurna! Dekomposer mengembalikan nutrisi dari bangkai dan sisa tanaman mati ke dalam tanah dan air rawa."
+      },
+      {
+        level: "sedang",
+        levelLabel: "Level 2: Sedang",
+        levelClass: "level-sedang-pill",
+        pertanyaan: "Jika pemburu menangkap ikan haruan dan katak rawa secara berlebihan, peristiwa apa yang akan terjadi pada rantai makanan?",
+        opsi: [
+          "Populasi serangga dan keong mas melonjak drastis merusak tanaman purun dan padi",
+          "Tanaman teratai menjadi punah seketika",
+          "Semua air rawa berubah menjadi jernih",
+          "Tidak ada pengaruh apa-apa terhadap ekosistem"
+        ],
+        kunci: 0,
+        hint: "Pikirkan tentang predator alami: jika pemangsanya hilang, mangsanya akan berkembang biak tanpa kendali.",
+        penjelasan: "Tepat! Hilangnya predator puncak memicu ledakan populasi herbivora (hama) yang merusak tanaman."
+      },
+      {
+        level: "sedang",
+        levelLabel: "Level 2: Sedang",
+        levelClass: "level-sedang-pill",
+        pertanyaan: "Hubungan antara burung kuntul putih yang memakan kutu di punggung kerbau rawa Amuntai merupakan contoh simbiosis...",
+        opsi: ["Parasitisme", "Mutualisme", "Komensalisme", "Netralisme"],
+        kunci: 1,
+        hint: "Kedua pihak sama-sama mendapatkan keuntungan: kerbau bebas gatal, burung kuntul kenyang.",
+        penjelasan: "Benar sekali! Simbiosis mutualisme adalah hubungan yang saling menguntungkan kedua belah pihak."
+      },
+      {
+        level: "sedang",
+        levelLabel: "Level 2: Sedang",
+        levelClass: "level-sedang-pill",
+        pertanyaan: "Mengapa menangkap ikan di rawa dengan menggunakan alat setrum listrik atau racun kimia dilarang keras oleh hukum?",
+        opsi: [
+          "Karena membuat harga ikan di pasar terlalu murah",
+          "Karena mematikan bibit ikan kecil, plankton, dan merusak habitat air secara luas",
+          "Karena membuat nelayan lain malas bekerja",
+          "Karena rasa ikannya menjadi terlalu gurih"
+        ],
+        kunci: 1,
+        hint: "Setrum dan racun membunuh segala makhluk tanpa pandang bulu, termasuk generasi penerus ikan.",
+        penjelasan: "Hebat! Menyetrum membunuh benih ikan kecil dan jentik plankton, sehingga memutus rantai makanan secara permanen."
+      },
+      {
+        level: "sulit",
+        levelLabel: "Level 3: Sulit",
+        levelClass: "level-sulit-pill",
+        pertanyaan: "Mengapa kebakaran pada lahan gambut Kalimantan sangat sulit dipadamkan saat musim kemarau?",
+        opsi: [
+          "Karena air di Kalimantan tidak bisa memadamkan api",
+          "Karena api membakar lapisan bahan organik tebal di bawah permukaan tanah (smoldering)",
+          "Karena lahan gambut terbuat dari batu bara keras",
+          "Karena hewan rawa meniupkan api ke tempat lain"
+        ],
+        kunci: 1,
+        hint: "Gambut terbentuk dari daun membusuk ribuan tahun; api bisa hidup di kedalaman 1-2 meter di bawah tanah.",
+        penjelasan: "Tepat sekali! Api merambat di bawah tanah (smoldering) pada lapisan gambut kering tebal yang kaya karbon."
+      },
+      {
+        level: "sulit",
+        levelLabel: "Level 3: Sulit",
+        levelClass: "level-sulit-pill",
+        pertanyaan: "Teknik konservasi 'Rewetting' (pembasahan kembali) pada lahan gambut dilakukan dengan cara...",
+        opsi: [
+          "Mengeringkan parit agar lahan bisa ditanami kelapa sawit",
+          "Membangun sekat kanal (canal blocking) agar air tertahan dan gambut tetap basah sepanjang tahun",
+          "Menimbun rawa gambut dengan pasir bangunan",
+          "Membakar daun kering setiap pagi"
+        ],
+        kunci: 1,
+        hint: "Sekat kanal berfungsi menahan air agar tidak lari ke sungai besar dan laut.",
+        penjelasan: "Benar! Sekat kanal menjaga muka air tanah gambut tetap tinggi dan basah, sehingga kebal terhadap api."
+      },
+      {
+        level: "sulit",
+        levelLabel: "Level 3: Sulit",
+        levelClass: "level-sulit-pill",
+        pertanyaan: "Dalam siklus air (Bab 4), proses keluarnya uap air dari pori-pori daun tumbuhan rawa ke atmosfer disebut...",
+        opsi: ["Kondensasi", "Transpirasi", "Presipitasi", "Infiltrasi"],
+        kunci: 1,
+        hint: "Penguapan dari daun tumbuhan memiliki istilah khusus yang berawalan huruf T.",
+        penjelasan: "Luar biasa! Penguapan dari tumbuhan disebut Transpirasi, sedangkan dari permukaan air disebut Evaporasi."
+      },
+      {
+        level: "sulit",
+        levelLabel: "Level 3: Sulit",
+        levelClass: "level-sulit-pill",
+        pertanyaan: "Lahan basah dan rawa gambut sering disebut sebagai 'Spons Alami Raksasa' karena kemampuannya...",
+        opsi: [
+          "Mengeluarkan busa sabun untuk mencuci baju",
+          "Menyerap air berlebih saat hujan lebat dan melepaskannya perlahan saat musim kemarau",
+          "Mengapungkan perahu tanpa memerlukan dayung",
+          "Menyaring ikan agar tidak masuk ke laut"
+        ],
+        kunci: 1,
+        hint: "Spons menyerap air saat basah dan mengeluarkan air saat diperas atau kering.",
+        penjelasan: "Tepat sekali! Lahan basah menyerap banjir saat musim hujan dan mempertahankan aliran air saat kemarau."
+      }
+    ];
+
+    let currentQIdx = 0;
+    let quizScore = 0;
+    let streakCount = 0;
+    let used5050 = false;
+    let usedHint = false;
+
+    function startMultipleChoiceQuiz() {
+      currentQIdx = 0;
+      quizScore = 0;
+      streakCount = 0;
+      used5050 = false;
+      usedHint = false;
+
+      document.getElementById('quizStartView').classList.add('d-none');
+      document.getElementById('quizResultView').classList.add('d-none');
+      document.getElementById('quizPlayView').classList.remove('d-none');
+
+      document.getElementById('btn5050').disabled = false;
+      document.getElementById('btnHint').disabled = false;
+
+      renderCurrentQuestion();
+      SoundEffects.playPop();
+    }
+
+    function renderCurrentQuestion() {
+      const q = quizQuestions[currentQIdx];
+      document.getElementById('currentQuestionNum').textContent = currentQIdx + 1;
+      
+      const levelBadge = document.getElementById('levelBadge');
+      levelBadge.textContent = q.levelLabel;
+      levelBadge.className = `level-badge-pill ${q.levelClass}`;
+
+      document.getElementById('quizProgressBar').style.width = `${((currentQIdx + 1) / quizQuestions.length) * 100}%`;
+      document.getElementById('questionText').textContent = q.pertanyaan;
+
+      document.getElementById('hintAlert').classList.add('d-none');
+      document.getElementById('explanationContainer').classList.add('d-none');
+
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+
+      q.opsi.forEach((optText, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.id = `optBtn_${idx}`;
+        btn.innerHTML = `<span class="badge bg-light text-dark border rounded-circle p-2" style="width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center;">${String.fromCharCode(65 + idx)}</span> <span>${optText}</span>`;
+        btn.onclick = () => selectOption(idx);
+        container.appendChild(btn);
+      });
+    }
+
+    function use5050() {
+      if (used5050) return;
+      used5050 = true;
+      document.getElementById('btn5050').disabled = true;
+      SoundEffects.playPop();
+
+      const q = quizQuestions[currentQIdx];
+      let wrongIndices = [0, 1, 2, 3].filter(i => i !== q.kunci);
+      wrongIndices.sort(() => Math.random() - 0.5);
+      const toHide = wrongIndices.slice(0, 2);
+
+      toHide.forEach(idx => {
+        const btn = document.getElementById(`optBtn_${idx}`);
+        if (btn) {
+          btn.style.opacity = '0.3';
+          btn.disabled = true;
+        }
+      });
+    }
+
+    function useHint() {
+      if (usedHint) return;
+      usedHint = true;
+      document.getElementById('btnHint').disabled = true;
+      SoundEffects.playPop();
+
+      const q = quizQuestions[currentQIdx];
+      const alertBox = document.getElementById('hintAlert');
+      document.getElementById('hintText').textContent = q.hint;
+      alertBox.classList.remove('d-none');
+    }
+
+    function selectOption(selectedIdx) {
+      const q = quizQuestions[currentQIdx];
+      const isCorrect = (selectedIdx === q.kunci);
+
+      document.querySelectorAll('.option-btn').forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.kunci) {
+          btn.classList.add('correct');
+        } else if (idx === selectedIdx) {
+          btn.classList.add('wrong');
+        }
+      });
+
+      const explBox = document.getElementById('explanationBox');
+      const streakElem = document.getElementById('streakBadge');
+
+      if (isCorrect) {
+        quizScore++;
+        streakCount++;
+        SoundEffects.playCorrect();
+        addPlayerXp(15 * streakCount);
+
+        explBox.className = 'explanation-box bg-success-subtle text-success border border-success-subtle';
+        explBox.innerHTML = `<strong>🎉 Jawaban Benar!</strong><br>${q.penjelasan}`;
+
+        if (streakCount > 1) {
+          streakElem.style.display = 'inline-flex';
+          document.getElementById('streakCount').textContent = streakCount;
+        }
+      } else {
+        streakCount = 0;
+        streakElem.style.display = 'none';
+        SoundEffects.playWrong();
+
+        explBox.className = 'explanation-box bg-danger-subtle text-danger border border-danger-subtle';
+        explBox.innerHTML = `<strong>❌ Kurang Tepat!</strong><br>${q.penjelasan}`;
+      }
+
+      document.getElementById('explanationContainer').classList.remove('d-none');
+    }
+
+    function goToNextQuestion() {
+      currentQIdx++;
+      if (currentQIdx < quizQuestions.length) {
+        renderCurrentQuestion();
+      } else {
+        finishQuiz();
       }
     }
 
-    // Quiz State
-    let indexSoal = 0;
-    let skor = 0;
-    let currentStreak = 0;
-    let maxStreak = 0;
-    let usedLifeline = false;
-    let seluruhSoal = [];
-    let riwayatJawaban = [];
-    const letters = ["A", "B", "C", "D"];
+    function finishQuiz() {
+      document.getElementById('quizPlayView').classList.add('d-none');
+      document.getElementById('quizResultView').classList.remove('d-none');
 
-    function acakArray(arr) {
-      return [...arr].sort(() => Math.random() - 0.5);
+      document.getElementById('finalScoreVal').textContent = `${quizScore}/12`;
+      const rankBadge = document.getElementById('finalRankBadge');
+      const emojiElem = document.getElementById('resultEmoji');
+
+      if (quizScore >= 11) {
+        emojiElem.textContent = '👑';
+        rankBadge.textContent = '🌟 Mahaguru Ekosistem Lahan Basah';
+        rankBadge.className = 'badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill fs-6';
+        SoundEffects.playFanfare();
+        addPlayerXp(100);
+      } else if (quizScore >= 8) {
+        emojiElem.textContent = '🌿';
+        rankBadge.textContent = '🌱 Penjaga Lahan Basah Teladan';
+        rankBadge.className = 'badge bg-success text-white fw-bold px-3 py-2 rounded-pill fs-6';
+        SoundEffects.playCorrect();
+        addPlayerXp(50);
+      } else {
+        emojiElem.textContent = '📚';
+        rankBadge.textContent = '🔍 Penjelajah Cilik Bersemangat';
+        rankBadge.className = 'badge bg-info text-white fw-bold px-3 py-2 rounded-pill fs-6';
+        SoundEffects.playPop();
+      }
+
+      try {
+        const results = JSON.parse(localStorage.getItem(QUIZ_STORAGE_KEY)) || {};
+        const userKey = `${currentUser.nama.toLowerCase().replace(/\s+/g, '_')}_${currentUser.sekolah.toLowerCase().replace(/\s+/g, '_')}`;
+        
+        if (!results[userKey] || quizScore > results[userKey].skor) {
+          results[userKey] = {
+            nama: currentUser.nama,
+            sekolah: currentUser.sekolah,
+            skor: quizScore,
+            totalSoal: 12,
+            tanggal: new Date().toISOString(),
+            predikat: rankBadge.textContent
+          };
+          localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(results));
+        }
+      } catch (e) {}
+
+      loadUserData();
     }
 
-    function mulaiKuis() {
-      const nama = document.getElementById("nama").value.trim();
-      const sekolah = document.getElementById("sekolah").value.trim();
+    // 2. Memory Match Pairs
+    const memoryPairsData = [
+      { id: 1, front: "Teratai Rawa", back: "Produsen (Fotosintesis)", image: "foto/asetgame/Teratai.png" },
+      { id: 1, front: "Purun & Rumput", back: "Produsen (Fotosintesis)", image: "foto/asetgame/Rumput.png" },
+      { id: 2, front: "Keong Mas", back: "Konsumen I (Herbivora)", image: "foto/game/keong_kartu.png" },
+      { id: 2, front: "Pemakan Daun", back: "Konsumen I (Herbivora)", image: "foto/game/keong_kartu.png" },
+      { id: 3, front: "Ikan Haruan", back: "Konsumen Karnivora", image: "foto/asetgame/Ikan.png" },
+      { id: 3, front: "Katak Rawa", back: "Konsumen Karnivora", image: "foto/asetgame/Katak.png" },
+      { id: 4, front: "Jamur Lapuk", back: "Pengurai (Dekomposer)", image: "foto/game/jamur_kartu.png" },
+      { id: 4, front: "Bakteri Tanah", back: "Pengurai (Dekomposer)", image: "foto/game/bakteri_kartu.png" },
+      { id: 5, front: "Bekantan", back: "Satwa Maskot Kalsel", image: "foto/asetgame/Bekantan.png" },
+      { id: 5, front: "Pohon Rambai", back: "Pohon Pakan Kalsel", image: "foto/asetgame/Pohon.png" },
+      { id: 6, front: "Spons Gambut", back: "Penyimpan Air Alami", image: "foto/game/gambut_kartu.png" },
+      { id: 6, front: "Sinar Mentari", back: "Energi Utama Ekosistem", image: "foto/game/matahari_kartu.png" }
+    ];
 
-      if (!nama || !sekolah) {
-        showNotification("Yuk isi nama lengkap dan asal sekolahmu terlebih dahulu!", "warning");
+    let memoryCards = [];
+    let flippedCards = [];
+    let matchedPairs = 0;
+    let memoryMovesCount = 0;
+    let isMemoryLocked = false;
+
+    function initMemoryGame() {
+      matchedPairs = 0;
+      memoryMovesCount = 0;
+      flippedCards = [];
+      isMemoryLocked = false;
+
+      document.getElementById('memoryMoves').textContent = '0';
+      document.getElementById('memoryMatches').textContent = '0';
+      document.getElementById('memoryVictory').classList.add('d-none');
+
+      memoryCards = [...memoryPairsData].sort(() => Math.random() - 0.5);
+
+      const grid = document.getElementById('memoryGrid');
+      grid.innerHTML = '';
+
+      memoryCards.forEach((card, idx) => {
+        const cardElem = document.createElement('div');
+        cardElem.className = 'memory-card';
+        cardElem.dataset.index = idx;
+        cardElem.dataset.pairId = card.id;
+
+        cardElem.innerHTML = `
+          <div class="memory-card-inner">
+            <div class="memory-card-front">
+              <span style="font-size: 2.2rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">🌿</span>
+              <div style="font-size: 0.72rem; font-weight: 800; letter-spacing: 1px; opacity: 0.95; margin-top: 2px;">RAWA</div>
+            </div>
+            <div class="memory-card-back">
+              <img src="${card.image}" alt="${card.front}" class="memory-card-thumb">
+              <div class="fw-bold text-dark text-truncate w-100" style="font-size: 0.82rem; line-height: 1.2;">${card.front}</div>
+              <div class="text-success text-truncate w-100" style="font-size: 0.68rem; font-weight: 600;">${card.back}</div>
+            </div>
+          </div>
+        `;
+
+        cardElem.onclick = () => flipMemoryCard(cardElem, idx);
+        grid.appendChild(cardElem);
+      });
+    }
+
+    function flipMemoryCard(cardElem, idx) {
+      if (isMemoryLocked) return;
+      if (cardElem.classList.contains('flipped') || cardElem.classList.contains('matched')) return;
+
+      SoundEffects.playFlip();
+      cardElem.classList.add('flipped');
+      flippedCards.push({ elem: cardElem, data: memoryCards[idx] });
+
+      if (flippedCards.length === 2) {
+        memoryMovesCount++;
+        document.getElementById('memoryMoves').textContent = memoryMovesCount;
+        checkMemoryMatch();
+      }
+    }
+
+    function checkMemoryMatch() {
+      isMemoryLocked = true;
+      const [card1, card2] = flippedCards;
+
+      if (card1.data.id === card2.data.id) {
+        setTimeout(() => {
+          SoundEffects.playMatch();
+          card1.elem.classList.add('matched');
+          card2.elem.classList.add('matched');
+          matchedPairs++;
+          document.getElementById('memoryMatches').textContent = matchedPairs;
+          flippedCards = [];
+          isMemoryLocked = false;
+
+          if (matchedPairs === 6) {
+            handleMemoryVictory();
+          }
+        }, 500);
+      } else {
+        setTimeout(() => {
+          SoundEffects.playWrong();
+          card1.elem.classList.remove('flipped');
+          card2.elem.classList.remove('flipped');
+          flippedCards = [];
+          isMemoryLocked = false;
+        }, 900);
+      }
+    }
+
+    function handleMemoryVictory() {
+      SoundEffects.playFanfare();
+      addPlayerXp(40);
+      document.getElementById('victoryMoves').textContent = memoryMovesCount;
+      document.getElementById('memoryVictory').classList.remove('d-none');
+    }
+
+    // 3. Drag and Drop
+    const chainItemsData = [
+      { id: "teratai", slot: "produsen", label: "Teratai Rawa", role: "Produsen", image: "foto/asetgame/Teratai.png" },
+      { id: "keong", slot: "konsumen1", label: "Keong Mas", role: "Konsumen I", image: "foto/game/keong_kartu.png" },
+      { id: "katak", slot: "konsumen2", label: "Katak Rawa", role: "Konsumen II", image: "foto/asetgame/Katak.png" },
+      { id: "bangau", slot: "puncak", label: "Bangau Tongtong", role: "Konsumen Puncak", image: "foto/asetgame/Bangau.png" },
+      { id: "jamur", slot: "pengurai", label: "Jamur Pengurai", role: "Dekomposer", image: "foto/game/jamur_kartu.png" }
+    ];
+
+    let currentDraggedItem = null;
+    let placedSlots = {};
+
+    function initDragDropGame() {
+      placedSlots = {};
+      document.getElementById('dndCelebration').classList.add('d-none');
+
+      document.querySelectorAll('.chain-drop-slot').forEach(slot => {
+        slot.classList.remove('filled-correct');
+        const role = slot.querySelector('.badge').textContent;
+        slot.innerHTML = `<span class="badge bg-light text-dark mb-1">${role}</span><div class="slot-content text-muted small">Tarik ke sini</div>`;
+      });
+
+      const pool = document.getElementById('dragItemsPool');
+      pool.innerHTML = '';
+      const shuffled = [...chainItemsData].sort(() => Math.random() - 0.5);
+
+      shuffled.forEach(item => {
+        const itemElem = document.createElement('div');
+        itemElem.className = 'draggable-card';
+        itemElem.draggable = true;
+        itemElem.innerHTML = `<img src="${item.image}" alt="${item.label}" class="dnd-item-thumb"><div class="text-start"><div class="fw-bold lh-sm">${item.label}</div><div class="text-muted" style="font-size: 0.72rem;">${item.role}</div></div>`;
+        itemElem.dataset.id = item.id;
+        itemElem.dataset.slot = item.slot;
+
+        itemElem.ondragstart = (e) => {
+          currentDraggedItem = item;
+          e.dataTransfer.setData('text/plain', item.id);
+          SoundEffects.playPop();
+        };
+
+        itemElem.onclick = () => handleTapItemPlacement(item, itemElem);
+        pool.appendChild(itemElem);
+      });
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('active-over');
+    }
+
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove('active-over');
+    }
+
+    function handleDrop(e, targetSlotName) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('active-over');
+
+      if (!currentDraggedItem) return;
+
+      if (currentDraggedItem.slot === targetSlotName) {
+        SoundEffects.playCorrect();
+        placedSlots[targetSlotName] = currentDraggedItem;
+
+        e.currentTarget.classList.add('filled-correct');
+        e.currentTarget.innerHTML = `
+          <span class="badge bg-success text-white mb-1">✅ Tepat!</span>
+          <img src="${currentDraggedItem.image}" alt="${currentDraggedItem.label}" style="width: 44px; height: 44px; object-fit: contain; margin: 4px auto; display: block;">
+          <div class="fw-bold text-success lh-sm">${currentDraggedItem.label}</div>
+          <div class="text-muted" style="font-size: 0.72rem;">${currentDraggedItem.role}</div>
+        `;
+
+        const poolItems = document.querySelectorAll('#dragItemsPool .draggable-card');
+        poolItems.forEach(el => {
+          if (el.dataset.id === currentDraggedItem.id) el.remove();
+        });
+
+        checkDnDCompletion();
+      } else {
+        SoundEffects.playWrong();
+      }
+      currentDraggedItem = null;
+    }
+
+    function handleTapItemPlacement(item, itemElem) {
+      const slotElem = document.querySelector(`.chain-drop-slot[data-slot="${item.slot}"]`);
+      if (slotElem && !placedSlots[item.slot]) {
+        SoundEffects.playCorrect();
+        placedSlots[item.slot] = item;
+        slotElem.classList.add('filled-correct');
+        slotElem.innerHTML = `
+          <span class="badge bg-success text-white mb-1">✅ Tepat!</span>
+          <img src="${item.image}" alt="${item.label}" style="width: 44px; height: 44px; object-fit: contain; margin: 4px auto; display: block;">
+          <div class="fw-bold text-success lh-sm">${item.label}</div>
+          <div class="text-muted" style="font-size: 0.72rem;">${item.role}</div>
+        `;
+        itemElem.remove();
+        checkDnDCompletion();
+      } else {
+        SoundEffects.playWrong();
+      }
+    }
+
+    function checkDnDCompletion() {
+      if (Object.keys(placedSlots).length === 5) {
+        SoundEffects.playFanfare();
+        addPlayerXp(50);
+        document.getElementById('dndCelebration').classList.remove('d-none');
+      }
+    }
+
+    // 4. Word Scramble
+    const scrambleVocab = [
+      { word: "EKOSISTEM", clue: "Hubungan timbal balik antara makhluk hidup dengan lingkungan alamnya.", image: "foto/game/puzzle_ekosistem.jpg" },
+      { word: "PRODUSEN", clue: "Tumbuhan atau alga yang mampu membuat makanannya sendiri melalui fotosintesis.", image: "foto/asetgame/Teratai.png" },
+      { word: "KARNIVORA", clue: "Golongan hewan pemakan daging seperti ikan haruan dan katak rawa.", image: "foto/asetgame/Ikan.png" },
+      { word: "DEKOMPOSER", clue: "Bakteri dan jamur pengurai bangkai serta daun lapuk di rawa.", image: "foto/game/jamur_kartu.png" },
+      { word: "BEKANTAN", clue: "Monyet unik berhidung panjang yang menjadi satwa maskot Kalimantan Selatan.", image: "foto/asetgame/Bekantan.png" },
+      { word: "GAMBUT", clue: "Lahan basah kaya bahan organik yang menyimpan air seperti spons raksasa.", image: "foto/game/gambut_kartu.png" }
+    ];
+
+    let currentWordIdx = 0;
+    let currentInputWord = [];
+    let scrambledLetterSet = [];
+
+    function initWordScrambleGame() {
+      currentWordIdx = 0;
+      loadWordLevel();
+    }
+
+    function loadWordLevel() {
+      const target = scrambleVocab[currentWordIdx];
+      document.getElementById('scrambleLevel').textContent = currentWordIdx + 1;
+      document.getElementById('scrambleClue').textContent = target.clue;
+      const imgEl = document.getElementById('scrambleImage');
+      if (imgEl && target.image) imgEl.src = target.image;
+      document.getElementById('scrambleFeedback').textContent = '';
+
+      currentInputWord = [];
+      const slotsContainer = document.getElementById('scrambleSlots');
+      slotsContainer.innerHTML = '';
+
+      for (let i = 0; i < target.word.length; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'scramble-slot';
+        slot.id = `slot_${i}`;
+        slotsContainer.appendChild(slot);
+      }
+
+      scrambledLetterSet = target.word.split('').map((char, index) => ({ id: index, char: char }));
+      scrambledLetterSet.sort(() => Math.random() - 0.5);
+
+      const lettersContainer = document.getElementById('scrambleLetters');
+      lettersContainer.innerHTML = '';
+
+      scrambledLetterSet.forEach((item, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'letter-btn';
+        btn.textContent = item.char;
+        btn.id = `letterBtn_${idx}`;
+        btn.onclick = () => handleLetterClick(item, btn);
+        lettersContainer.appendChild(btn);
+      });
+    }
+
+    function handleLetterClick(item, btnElem) {
+      const target = scrambleVocab[currentWordIdx];
+      if (currentInputWord.length >= target.word.length) return;
+
+      SoundEffects.playLetter();
+      btnElem.classList.add('used');
+
+      const nextSlotIdx = currentInputWord.length;
+      currentInputWord.push({ char: item.char, btnElem: btnElem });
+
+      const slotElem = document.getElementById(`slot_${nextSlotIdx}`);
+      if (slotElem) {
+        slotElem.textContent = item.char;
+        slotElem.classList.add('filled');
+      }
+
+      if (currentInputWord.length === target.word.length) {
+        const formed = currentInputWord.map(x => x.char).join('');
+        if (formed === target.word) {
+          SoundEffects.playCorrect();
+          document.getElementById('scrambleFeedback').innerHTML = `<span class="text-success fs-5">🎉 Hebat! "${target.word}" Tersusun Benar!</span>`;
+          addPlayerXp(30);
+
+          setTimeout(() => {
+            currentWordIdx = (currentWordIdx + 1) % scrambleVocab.length;
+            loadWordLevel();
+          }, 1400);
+        } else {
+          SoundEffects.playWrong();
+          document.getElementById('scrambleFeedback').innerHTML = `<span class="text-danger">Susunan huruf belum tepat. Coba ulangi!</span>`;
+        }
+      }
+    }
+
+    function resetCurrentWord() {
+      SoundEffects.playPop();
+      currentInputWord = [];
+      document.querySelectorAll('.scramble-slot').forEach(s => {
+        s.textContent = '';
+        s.classList.remove('filled');
+      });
+      document.querySelectorAll('.letter-btn').forEach(b => b.classList.remove('used'));
+      document.getElementById('scrambleFeedback').textContent = '';
+    }
+
+    function skipWord() {
+      SoundEffects.playPop();
+      currentWordIdx = (currentWordIdx + 1) % scrambleVocab.length;
+      loadWordLevel();
+    }
+
+    // ==========================================================================
+    // 5. GAME MODE 5: HIDDEN OBJECT (DETEKTIF SATWA LAHAN BASAH)
+    // Multi-Layer Panorama & Realistic Wildlife Occlusion
+    // ==========================================================================
+    const HIDDEN_OBJECTS_DATA = [
+      {
+        id: "bekantan",
+        name: "Bekantan",
+        iconImg: "foto/asetgame/Bekantan.png",
+        fact: "🐒 Bekantan (Nasalis larvatus) adalah primata endemik Kalimantan berhidung unik yang suka memakan pucuk dedaunan pohon rambai di tepi rawa dan sungai!",
+        spots: [
+          {
+            // Spot 0 (Kiri): Duduk santai di dahan pohon bakau kiri utama
+            left: 8.5, top: 20, width: 10.5, zIndex: 9, rotate: -4, flip: false,
+            hitbox: { left: 8, top: 19, width: 11.5, height: 12 }
+          },
+          {
+            // Spot 1 (Kiri-Atas): Mengintip dari balik kanopi dedaunan rimbun
+            left: 14, top: 8, width: 9.5, zIndex: 9, rotate: 6, flip: false,
+            hitbox: { left: 13.5, top: 7.5, width: 10.5, height: 11 }
+          },
+          {
+            // Spot 2 (Kanan): Duduk di dahan pohon bakau kanan dekat matahari
+            left: 77, top: 22, width: 10, zIndex: 9, rotate: -5, flip: true,
+            hitbox: { left: 76.5, top: 21, width: 11, height: 12 }
+          }
+        ]
+      },
+      {
+        id: "bangau",
+        name: "Burung Bangau",
+        iconImg: "foto/asetgame/Bangau.png",
+        fact: "🪶 Burung Bangau Tongtong memiliki kaki jangkung dan paruh runcing yang kokoh untuk menyambar ikan serta katak di rawa dangkal.",
+        spots: [
+          {
+            // Spot 0 (Kiri): Berdiri anggun di tepian daratan rumput kiri
+            left: 21, top: 40, width: 9, zIndex: 7, rotate: 0, flip: false,
+            hitbox: { left: 20.5, top: 39.5, width: 10, height: 14 }
+          },
+          {
+            // Spot 1 (Tengah): Berdiri di tepian daratan seberang air tenang
+            left: 45, top: 35, width: 8.5, zIndex: 5, rotate: 0, flip: true,
+            hitbox: { left: 44.5, top: 34.5, width: 9.5, height: 13.5 }
+          },
+          {
+            // Spot 2 (Kanan): Berdiri di tepian rawa kanan dekat bebatuan
+            left: 67, top: 43, width: 9, zIndex: 7, rotate: 0, flip: true,
+            hitbox: { left: 66.5, top: 42.5, width: 10, height: 14 }
+          }
+        ]
+      },
+      {
+        id: "katak",
+        name: "Katak Rawa",
+        iconImg: "foto/asetgame/Katak.png",
+        fact: "🐸 Katak Rawa memangsa serangga air dan menjadi mangsa bergizi bagi ikan predator serta burung air dalam jejaring makanan lahan basah.",
+        spots: [
+          {
+            // Spot 0 (Kiri): Duduk santai di atas batu lumut kiri bawah
+            left: 23, top: 69, width: 6.5, zIndex: 7, rotate: -3, flip: false,
+            hitbox: { left: 22.5, top: 68.5, width: 7.5, height: 7.5 }
+          },
+          {
+            // Spot 1 (Tengah): Duduk di tepian rumput hijau tengah
+            left: 53, top: 70, width: 6.5, zIndex: 7, rotate: 0, flip: true,
+            hitbox: { left: 52.5, top: 69.5, width: 7.5, height: 7.5 }
+          },
+          {
+            // Spot 2 (Kanan): Duduk di atas batu lumut kanan bawah
+            left: 65, top: 69, width: 6.5, zIndex: 7, rotate: 4, flip: false,
+            hitbox: { left: 64.5, top: 68.5, width: 7.5, height: 7.5 }
+          }
+        ]
+      },
+      {
+        id: "ikan",
+        name: "Ikan Seluang",
+        iconImg: "foto/asetgame/Ikan.png",
+        fact: "🐟 Ikan Seluang berenang lincah secara berkelompok di perairan rawa dan sungai gambut yang bersih, memakan mikroorganisme serta lumut air.",
+        spots: [
+          {
+            // Spot 0 (Kiri): Melompat lincah di perairan rawa kiri
+            left: 33, top: 56, width: 7.5, zIndex: 5, rotate: -8, flip: false,
+            hitbox: { left: 32.5, top: 55, width: 8.5, height: 7.5 }
+          },
+          {
+            // Spot 1 (Tengah): Meluncur gesit di perairan rawa tengah
+            left: 49, top: 58, width: 7.5, zIndex: 5, rotate: 6, flip: true,
+            hitbox: { left: 48.5, top: 57, width: 8.5, height: 7.5 }
+          },
+          {
+            // Spot 2 (Kanan): Berenang di perairan tenang sisi kanan
+            left: 63, top: 57, width: 7.5, zIndex: 5, rotate: -4, flip: false,
+            hitbox: { left: 62.5, top: 56, width: 8.5, height: 7.5 }
+          }
+        ]
+      },
+      {
+        id: "teratai",
+        name: "Teratai Mekar",
+        iconImg: "foto/asetgame/Teratai.png",
+        fact: "🪷 Teratai adalah tanaman air produsen utama yang meneduhkan dasar rawa dengan daunnya dan memekarkan bunga indah untuk fauna air.",
+        spots: [
+          {
+            // Spot 0 (Kiri): Mengapung di permukaan air rawa kiri
+            left: 17, top: 62, width: 10, zIndex: 5, rotate: 0, flip: false,
+            hitbox: { left: 16.5, top: 61.5, width: 11, height: 9.5 }
+          },
+          {
+            // Spot 1 (Tengah): Mekar indah di pusat perairan rawa
+            left: 40, top: 64, width: 10.5, zIndex: 5, rotate: 0, flip: true,
+            hitbox: { left: 39.5, top: 63.5, width: 11.5, height: 10 }
+          },
+          {
+            // Spot 2 (Kanan): Mengapung di perairan tenang sisi kanan
+            left: 71, top: 61, width: 9.5, zIndex: 5, rotate: 0, flip: false,
+            hitbox: { left: 70.5, top: 60.5, width: 10.5, height: 9.5 }
+          }
+        ]
+      }
+    ];
+
+    let hiddenGameState = {
+      foundIds: new Set(),
+      assignedSpots: {},
+      isInitialized: false,
+      hintTimeout: null
+    };
+
+    function initHiddenObjectGame(forceReset = false) {
+      if (hiddenGameState.isInitialized && !forceReset) return;
+      hiddenGameState.isInitialized = true;
+      hiddenGameState.foundIds = new Set();
+      hiddenGameState.assignedSpots = {};
+
+      if (hiddenGameState.hintTimeout) {
+        clearTimeout(hiddenGameState.hintTimeout);
+        hiddenGameState.hintTimeout = null;
+      }
+
+      const banner = document.getElementById('hiddenDiscoveryBanner');
+      if (banner) banner.classList.add('d-none');
+
+      // Sebaran Seimbang (Balanced Zone Distribution: Left, Center, Right)
+      // Mencegah semua hewan menumpuk di satu sisi
+      const zonePermutations = [
+        [0, 1, 2, 0, 1],
+        [1, 0, 2, 1, 0],
+        [2, 0, 1, 2, 0],
+        [0, 2, 1, 0, 2],
+        [1, 2, 0, 1, 2]
+      ];
+      const chosenZones = zonePermutations[Math.floor(Math.random() * zonePermutations.length)];
+
+      HIDDEN_OBJECTS_DATA.forEach((obj, idx) => {
+        const spotIdx = chosenZones[idx % chosenZones.length];
+        hiddenGameState.assignedSpots[obj.id] = obj.spots[spotIdx] || obj.spots[0];
+      });
+
+      renderHiddenChecklist();
+      renderHiddenLayers();
+      updateHiddenProgressUI();
+    }
+
+    function renderHiddenChecklist() {
+      const grid = document.getElementById('hiddenChecklistGrid');
+      if (!grid) return;
+
+      grid.innerHTML = HIDDEN_OBJECTS_DATA.map(item => {
+        const isFound = hiddenGameState.foundIds.has(item.id);
+        return `
+          <div class="hidden-target-card ${isFound ? 'found' : ''}" id="targetCard-${item.id}">
+            <img src="${item.iconImg}" class="target-thumb" alt="${item.name}" />
+            <span class="target-label">${item.name}</span>
+            <span class="target-status-pill">${isFound ? '✅ Ditemukan' : 'Belum'}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderHiddenLayers() {
+      const layer5 = document.getElementById('hiddenLayer5');
+      const layer7 = document.getElementById('hiddenLayer7');
+      const layer9 = document.getElementById('hiddenLayer9');
+      const hitboxLayer = document.getElementById('hiddenHitboxLayer');
+
+      if (!layer5 || !layer7 || !layer9 || !hitboxLayer) return;
+
+      layer5.innerHTML = '';
+      layer7.innerHTML = '';
+      layer9.innerHTML = '';
+      hitboxLayer.innerHTML = '';
+
+      HIDDEN_OBJECTS_DATA.forEach(item => {
+        const spot = hiddenGameState.assignedSpots[item.id];
+        if (!spot) return;
+
+        const isFound = hiddenGameState.foundIds.has(item.id);
+        const transformStyle = [
+          spot.flip ? 'scaleX(-1)' : '',
+          spot.rotate ? `rotate(${spot.rotate}deg)` : ''
+        ].filter(Boolean).join(' ');
+
+        const animalHtml = `
+          <div class="hidden-animal-wrap ${isFound ? 'found' : ''}" id="animalWrap-${item.id}"
+               style="left: ${spot.left}%; top: ${spot.top}%; width: ${spot.width}%; transform: ${transformStyle};">
+            <span class="found-badge">✅ ${item.name}</span>
+            <img src="${item.iconImg}" class="hidden-animal-img animal-${item.id}" alt="${item.name}" />
+          </div>
+        `;
+
+        if (spot.zIndex <= 5) {
+          layer5.insertAdjacentHTML('beforeend', animalHtml);
+        } else if (spot.zIndex <= 7) {
+          layer7.insertAdjacentHTML('beforeend', animalHtml);
+        } else {
+          layer9.insertAdjacentHTML('beforeend', animalHtml);
+        }
+
+        const hb = spot.hitbox || { left: spot.left, top: spot.top, width: spot.width, height: spot.width };
+        const hitboxHtml = `
+          <div class="hidden-hitbox ${isFound ? 'found' : ''}" id="hitbox-${item.id}"
+               style="left: ${hb.left}%; top: ${hb.top}%; width: ${hb.width}%; height: ${hb.height}%;"
+               onclick="clickHiddenObject('${item.id}')"
+               title="Klik untuk menemukan ${item.name}">
+          </div>
+        `;
+        hitboxLayer.insertAdjacentHTML('beforeend', hitboxHtml);
+      });
+    }
+
+    function clickHiddenObject(itemId) {
+      if (hiddenGameState.foundIds.has(itemId)) return;
+
+      const item = HIDDEN_OBJECTS_DATA.find(x => x.id === itemId);
+      if (!item) return;
+
+      SoundEffects.playFound();
+      hiddenGameState.foundIds.add(itemId);
+
+      const wrap = document.getElementById(`animalWrap-${itemId}`);
+      if (wrap) wrap.classList.add('found');
+
+      const hitbox = document.getElementById(`hitbox-${itemId}`);
+      if (hitbox) hitbox.classList.add('found');
+
+      const card = document.getElementById(`targetCard-${itemId}`);
+      if (card) {
+        card.classList.add('found');
+        const pill = card.querySelector('.target-status-pill');
+        if (pill) pill.textContent = '✅ Ditemukan';
+      }
+
+      addPlayerXp(25);
+      showHiddenDiscovery(item);
+      updateHiddenProgressUI();
+
+      if (hiddenGameState.foundIds.size === HIDDEN_OBJECTS_DATA.length) {
+        setTimeout(() => {
+          SoundEffects.playFanfare();
+          addPlayerXp(100);
+          showHiddenVictory();
+        }, 600);
+      }
+    }
+
+    function showHiddenDiscovery(item) {
+      const banner = document.getElementById('hiddenDiscoveryBanner');
+      const title = document.getElementById('hiddenDiscoveryTitle');
+      const fact = document.getElementById('hiddenDiscoveryFact');
+      const icon = document.getElementById('hiddenDiscoveryIcon');
+
+      if (!banner || !title || !fact) return;
+
+      icon.innerHTML = `<img src="${item.iconImg}" style="width: 44px; height: 44px; object-fit: contain;" alt="${item.name}" />`;
+      title.textContent = `Hebat! Kamu menemukan ${item.name}! (+25 XP)`;
+      fact.textContent = item.fact;
+
+      banner.classList.remove('d-none');
+    }
+
+    function showHiddenVictory() {
+      const banner = document.getElementById('hiddenDiscoveryBanner');
+      const title = document.getElementById('hiddenDiscoveryTitle');
+      const fact = document.getElementById('hiddenDiscoveryFact');
+      const icon = document.getElementById('hiddenDiscoveryIcon');
+
+      if (!banner || !title || !fact) return;
+
+      icon.textContent = '🏆';
+      title.innerHTML = `🌟 LUAR BIASA! SEMUA 5 SATWA DITEMUKAN! (+100 XP Bonus)`;
+      fact.innerHTML = `Kamu telah membuktikan ketelitian detektif sains sejati dalam memahami harmoni ekosistem lahan basah Kalimantan! Seluruh satwa hidup rukun di habitat aslinya.`;
+
+      banner.classList.remove('d-none');
+    }
+
+    function updateHiddenProgressUI() {
+      const countEl = document.getElementById('hiddenFoundCount');
+      if (countEl) countEl.textContent = hiddenGameState.foundIds.size;
+
+      const scoreEl = document.getElementById('hiddenFoundScore');
+      if (scoreEl) {
+        const earned = hiddenGameState.foundIds.size * 25 + (hiddenGameState.foundIds.size === 5 ? 100 : 0);
+        scoreEl.textContent = `🎯 ${earned} XP`;
+      }
+    }
+
+    function useHiddenHint() {
+      SoundEffects.playLetter();
+
+      const unfoundItem = HIDDEN_OBJECTS_DATA.find(x => !hiddenGameState.foundIds.has(x.id));
+      if (!unfoundItem) {
+        alert("Semua satwa sudah berhasil kamu temukan! Hebat!");
         return;
       }
 
-      SoundEffects.playPop();
+      const spot = hiddenGameState.assignedSpots[unfoundItem.id];
+      if (!spot) return;
 
-      const userId = `${nama.toLowerCase().replace(/\s+/g, '_')}_${sekolah.toLowerCase().replace(/\s+/g, '_')}`;
+      const hb = spot.hitbox || { left: spot.left, top: spot.top, width: spot.width, height: spot.width };
+      const hitboxLayer = document.getElementById('hiddenHitboxLayer');
+      if (!hitboxLayer) return;
 
-      const previousResult = getQuizResults()[userId];
-      if (previousResult) {
-        showNotification(`Halo ${nama}! Skor terbaikmu (${previousResult.skor}/12) tersimpan di perangkat ini.`, "info");
-      }
+      document.querySelectorAll('.hint-radar-ring').forEach(el => el.remove());
 
-      document.getElementById("mulaiForm").style.display = "none";
-      document.getElementById("soalContainer").style.display = "block";
+      const radar = document.createElement('div');
+      radar.className = 'hint-radar-ring';
+      radar.style.left = `${hb.left}%`;
+      radar.style.top = `${hb.top}%`;
+      radar.style.width = `${hb.width}%`;
+      radar.style.height = `${hb.height}%`;
 
-      seluruhSoal = [
-        ...acakArray(soalMudah),
-        ...acakArray(soalSedang),
-        ...acakArray(soalSulit)
-      ];
+      hitboxLayer.appendChild(radar);
 
-      indexSoal = 0;
-      skor = 0;
-      currentStreak = 0;
-      maxStreak = 0;
-      usedLifeline = false;
-      riwayatJawaban = [];
-      document.getElementById("btnLifeline").disabled = false;
-      tampilkanSoal();
+      if (hiddenGameState.hintTimeout) clearTimeout(hiddenGameState.hintTimeout);
+      hiddenGameState.hintTimeout = setTimeout(() => {
+        radar.remove();
+      }, 3200);
     }
 
-    function tampilkanSoal() {
-      if (!seluruhSoal[indexSoal]) return;
+    function resetHiddenObjectGame() {
+      SoundEffects.playFlip();
+      initHiddenObjectGame(true);
+    }
 
-      const soal = seluruhSoal[indexSoal];
-      const totalSoal = seluruhSoal.length;
+    // 6. Sliding Tile Puzzle
+    let puzzleTiles = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+    let puzzleMovesCount = 0;
 
-      document.getElementById("soalCounter").textContent = `Soal ${indexSoal + 1} / ${totalSoal}`;
-      document.getElementById("liveScoreCounter").textContent = `Skor: ${skor}`;
+    function initPuzzleGame() {
+      puzzleMovesCount = 0;
+      document.getElementById('puzzleMoves').textContent = '0';
+      document.getElementById('puzzleVictory').classList.add('d-none');
 
-      const progressPercent = Math.round(((indexSoal + 1) / totalSoal) * 100);
-      document.getElementById("quizProgressBar").style.width = `${progressPercent}%`;
-
-      // Update Streak
-      const streakBadge = document.getElementById("streakBadge");
-      if (currentStreak >= 2) {
-        streakBadge.style.display = "inline-flex";
-        document.getElementById("streakNum").textContent = currentStreak;
-      } else {
-        streakBadge.style.display = "none";
+      puzzleTiles = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+      for (let i = 0; i < 40; i++) {
+        const emptyIdx = puzzleTiles.indexOf(0);
+        const validMoves = getAdjacentIndices(emptyIdx);
+        const randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+        [puzzleTiles[emptyIdx], puzzleTiles[randomMove]] = [puzzleTiles[randomMove], puzzleTiles[emptyIdx]];
       }
 
-      // Update Level Badge
-      const badgeLevel = document.getElementById("badgeLevel");
-      const levelDot = document.getElementById("levelDot");
-      const levelTitle = document.getElementById("levelTitle");
+      renderPuzzleBoard();
+    }
 
-      if (indexSoal < 4) {
-        badgeLevel.className = "level-badge-pill level-mudah-pill";
-        levelDot.textContent = "🟢";
-        levelTitle.textContent = "Level 1: Dasar";
-      } else if (indexSoal < 8) {
-        badgeLevel.className = "level-badge-pill level-sedang-pill";
-        levelDot.textContent = "🟡";
-        levelTitle.textContent = "Level 2: Ekologi";
-      } else {
-        badgeLevel.className = "level-badge-pill level-sulit-pill";
-        levelDot.textContent = "🔴";
-        levelTitle.textContent = "Level 3: Konservasi";
-      }
+    function getAdjacentIndices(idx) {
+      const valid = [];
+      const row = Math.floor(idx / 3);
+      const col = idx % 3;
 
-      document.getElementById("teksSoal").innerHTML = `${indexSoal + 1}. ${soal.pertanyaan}`;
+      if (row > 0) valid.push(idx - 3);
+      if (row < 2) valid.push(idx + 3);
+      if (col > 0) valid.push(idx - 1);
+      if (col < 2) valid.push(idx + 1);
 
-      const opsiContainer = document.getElementById("opsiJawaban");
-      const feedback = document.getElementById("feedback");
-      const btnLanjut = document.getElementById("btnLanjut");
+      return valid;
+    }
 
-      opsiContainer.innerHTML = "";
-      feedback.style.display = "none";
-      btnLanjut.style.display = "none";
+    function renderPuzzleBoard() {
+      const board = document.getElementById('puzzleBoard');
+      board.innerHTML = '';
 
-      const opsiAcak = acakArray(soal.opsi);
-      opsiAcak.forEach((pilihan, i) => {
-        const btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.innerHTML = `
-          <span class="option-letter">${letters[i] || '•'}</span>
-          <span class="flex-grow-1">${pilihan}</span>
-        `;
-        btn.onclick = () => cekJawaban(btn, pilihan, soal);
-        opsiContainer.appendChild(btn);
+      puzzleTiles.forEach((val, idx) => {
+        const piece = document.createElement('div');
+        piece.className = 'puzzle-piece';
+
+        if (val === 0) {
+          piece.classList.add('empty');
+        } else {
+          const origRow = Math.floor((val - 1) / 3);
+          const origCol = (val - 1) % 3;
+          piece.style.backgroundImage = 'url("foto/game/puzzle_ekosistem.jpg")';
+          piece.style.backgroundPosition = `${origCol * 50}% ${origRow * 50}%`;
+          piece.innerHTML = `<span class="piece-num">${val}</span>`;
+          piece.onclick = () => handlePuzzleClick(idx);
+        }
+
+        board.appendChild(piece);
       });
     }
 
-    function use5050Lifeline() {
-      if (usedLifeline) return;
-      usedLifeline = true;
-      document.getElementById("btnLifeline").disabled = true;
+    function handlePuzzleClick(idx) {
+      const emptyIdx = puzzleTiles.indexOf(0);
+      const adjacent = getAdjacentIndices(emptyIdx);
 
-      const soal = seluruhSoal[indexSoal];
-      const allButtons = Array.from(document.querySelectorAll(".option-btn"));
-      const wrongButtons = allButtons.filter(btn => {
-        const text = btn.querySelector("span:not(.option-letter)").textContent.trim();
-        return text !== soal.jawaban;
-      });
+      if (adjacent.includes(idx)) {
+        SoundEffects.playSlide();
+        [puzzleTiles[emptyIdx], puzzleTiles[idx]] = [puzzleTiles[idx], puzzleTiles[emptyIdx]];
+        puzzleMovesCount++;
+        document.getElementById('puzzleMoves').textContent = puzzleMovesCount;
+        renderPuzzleBoard();
 
-      // Acak dan eliminasi 2 tombol salah
-      const toEliminate = acakArray(wrongButtons).slice(0, 2);
-      toEliminate.forEach(btn => btn.classList.add("btn-eliminated"));
-      SoundEffects.playPop();
-      showNotification("💡 2 pilihan yang salah telah dieliminasi!", "info");
-    }
-
-    function cekJawaban(selectedBtn, pilihanUser, soal) {
-      const benar = pilihanUser === soal.jawaban;
-
-      if (benar) {
-        skor++;
-        currentStreak++;
-        maxStreak = Math.max(maxStreak, currentStreak);
-        SoundEffects.playCorrect();
+        const isSolved = puzzleTiles.every((val, i) => (i === 8 ? val === 0 : val === i + 1));
+        if (isSolved) {
+          SoundEffects.playFanfare();
+          addPlayerXp(60);
+          document.getElementById('finalPuzzleMoves').textContent = puzzleMovesCount;
+          document.getElementById('puzzleVictory').classList.remove('d-none');
+        }
       } else {
-        currentStreak = 0;
         SoundEffects.playWrong();
       }
-
-      // Catat riwayat
-      riwayatJawaban.push({
-        soal: soal.pertanyaan,
-        pilihanUser,
-        jawabanBenar: soal.jawaban,
-        benar,
-        penjelasan: soal.penjelasan
-      });
-
-      // Update Opsi Buttons
-      const allButtons = document.querySelectorAll(".option-btn");
-      allButtons.forEach(btn => {
-        btn.disabled = true;
-        const textSpan = btn.querySelector("span:not(.option-letter)").textContent.trim();
-        if (textSpan === soal.jawaban) {
-          btn.classList.add("btn-correct");
-        }
-      });
-
-      if (!benar) {
-        selectedBtn.classList.add("btn-wrong");
-      }
-
-      // Feedback Box
-      const feedback = document.getElementById("feedback");
-      feedback.style.display = "block";
-      if (benar) {
-        feedback.className = "explanation-box bg-success-subtle text-success border border-success-subtle";
-        feedback.innerHTML = `<strong><i class="bi bi-check-circle-fill"></i> Tepat Sekali!</strong> ${soal.penjelasan}`;
-      } else {
-        feedback.className = "explanation-box bg-danger-subtle text-danger border border-danger-subtle";
-        feedback.innerHTML = `<strong><i class="bi bi-x-circle-fill"></i> Kurang Tepat.</strong> ${soal.penjelasan}`;
-      }
-
-      const btnLanjut = document.getElementById("btnLanjut");
-      btnLanjut.style.display = "inline-flex";
-      if (indexSoal === seluruhSoal.length - 1) {
-        btnLanjut.innerHTML = `<span>Selesai & Lihat Skor</span> <i class="bi bi-award-fill"></i>`;
-      } else {
-        btnLanjut.innerHTML = `<span>Soal Berikutnya</span> <i class="bi bi-arrow-right-circle-fill"></i>`;
-      }
-    }
-
-    function lanjutSoal() {
-      SoundEffects.playPop();
-      indexSoal++;
-      if (indexSoal < seluruhSoal.length) {
-        tampilkanSoal();
-      } else {
-        selesaikanKuis();
-      }
-    }
-
-    function selesaikanKuis() {
-      document.getElementById("soalContainer").style.display = "none";
-      const hasilContainer = document.getElementById("hasilContainer");
-      hasilContainer.style.display = "block";
-
-      const total = seluruhSoal.length;
-      const persentase = Math.round((skor / total) * 100);
-
-      document.getElementById("skorAngka").textContent = skor;
-      document.getElementById("scorePercent").textContent = `${persentase}%`;
-      document.getElementById("scoreMaxStreak").textContent = `${maxStreak}🔥`;
-
-      const hasilTitle = document.getElementById("hasilTitle");
-      const pesanHasil = document.getElementById("pesanHasil");
-      const trophyIcon = document.getElementById("resultTrophy");
-      const scoreGrade = document.getElementById("scoreGrade");
-
-      if (skor >= 10) {
-        trophyIcon.textContent = "🏆";
-        hasilTitle.textContent = "Fantastis! Juara Ekosistem!";
-        pesanHasil.textContent = "Pemahamanmu tentang lahan basah luar biasa. Pertahankan prestasimu!";
-        scoreGrade.textContent = "Juara Emas ⭐⭐⭐";
-        SoundEffects.playFanfare();
-
-        if (typeof confetti === 'function') {
-          confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
-        }
-      } else if (skor >= 7) {
-        trophyIcon.textContent = "🥈";
-        hasilTitle.textContent = "Hebat! Pejuang Lingkungan!";
-        pesanHasil.textContent = "Kamu memahami konsep penting lahan basah dengan sangat baik.";
-        scoreGrade.textContent = "Juara Perak ⭐⭐";
-        SoundEffects.playCorrect();
-      } else {
-        trophyIcon.textContent = "🌱";
-        hasilTitle.textContent = "Ayo Semangat Belajar Lagi!";
-        pesanHasil.textContent = "Bagus sudah mencoba! Baca kembali modul pembelajaran dan coba lagi ya.";
-        scoreGrade.textContent = "Sahabat Pemula ⭐";
-      }
-
-      // Simpan skor terbaik ke browser pengguna
-      const nama = document.getElementById("nama").value.trim();
-      const sekolah = document.getElementById("sekolah").value.trim();
-      const userId = `${nama.toLowerCase().replace(/\s+/g, '_')}_${sekolah.toLowerCase().replace(/\s+/g, '_')}`;
-      const results = getQuizResults();
-      const previousResult = results[userId];
-
-      if (!previousResult || skor >= Number(previousResult.skor || 0)) {
-        results[userId] = {
-          nama,
-          sekolah,
-          skor,
-          total,
-          persentase,
-          maxStreak,
-          waktu: new Date().toISOString()
-        };
-
-        try {
-          localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(results));
-        } catch (error) {
-          console.error("Gagal menyimpan hasil kuis lokal:", error);
-          showNotification("Skor tidak dapat disimpan. Penyimpanan browser mungkin penuh.", "warning");
-        }
-      }
-    }
-
-    // Modal Review Kunci Jawaban
-    function bukaReviewModal() {
-      const modalBody = document.getElementById("reviewModalBody");
-      modalBody.innerHTML = "";
-
-      riwayatJawaban.forEach((item, idx) => {
-        const div = document.createElement("div");
-        div.className = `p-3 rounded-4 mb-3 border ${item.benar ? 'bg-success-subtle border-success-subtle' : 'bg-danger-subtle border-danger-subtle'}`;
-        div.innerHTML = `
-          <div class="d-flex align-items-center justify-content-between mb-1">
-            <strong>Soal ${idx + 1}</strong>
-            <span class="badge ${item.benar ? 'bg-success' : 'bg-danger'}">${item.benar ? 'Benar (+1)' : 'Salah (0)'}</span>
-          </div>
-          <p class="mb-2 fw-semibold">${item.soal}</p>
-          <div class="small mb-1"><strong>Jawabanmu:</strong> ${item.pilihanUser}</div>
-          <div class="small mb-2 text-success"><strong>Kunci Jawaban:</strong> ${item.jawabanBenar}</div>
-          <div class="small text-muted bg-white p-2 rounded-3">💡 ${item.penjelasan}</div>
-        `;
-        modalBody.appendChild(div);
-      });
-
-      const modal = new bootstrap.Modal(document.getElementById("reviewModal"));
-      modal.show();
-    }
-
-    // Share Hasil Kuis
-    function shareScore() {
-      const nama = document.getElementById("nama").value.trim() || "Saya";
-      const shareText = `🌱 ${nama} baru saja meraih skor ${skor}/12 (${Math.round((skor/12)*100)}%) di Kuis Interaktif Lahan Basah Hijau! 🏆 Yuk uji wawasan lingkunganmu juga!`;
-
-      if (navigator.share) {
-        navigator.share({
-          title: "Kuis Lahan Basah Hijau",
-          text: shareText,
-          url: window.location.href
-        }).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(shareText);
-        showNotification("📋 Teks hasil kuis telah disalin ke clipboard! Siap dibagikan ke WhatsApp / medsos.", "success");
-      }
-    }
-
-    function cobaLagi() {
-      indexSoal = 0;
-      skor = 0;
-      currentStreak = 0;
-      maxStreak = 0;
-      usedLifeline = false;
-      riwayatJawaban = [];
-      document.getElementById("btnLifeline").disabled = false;
-      document.getElementById("hasilContainer").style.display = "none";
-      document.getElementById("soalContainer").style.display = "block";
-
-      seluruhSoal = [
-        ...acakArray(soalMudah),
-        ...acakArray(soalSedang),
-        ...acakArray(soalSulit)
-      ];
-
-      tampilkanSoal();
-    }
-
-    function showNotification(pesan, tipe = "info") {
-      const notifArea = document.getElementById("notifArea");
-      const notif = document.createElement("div");
-      notif.className = `alert alert-${tipe} shadow-lg rounded-pill px-4 py-3 text-center fw-bold animate__animated animate__fadeInDown`;
-      notif.style.backdropFilter = "blur(10px)";
-      notif.textContent = pesan;
-
-      notifArea.appendChild(notif);
-      setTimeout(() => {
-        notif.style.opacity = "0";
-        notif.style.transition = "opacity 0.5s ease";
-        setTimeout(() => notif.remove(), 500);
-      }, 4000);
     }
 
     // Music
-    const music = document.getElementById('bg-music');
-    const toggleBtn = document.getElementById('music-toggle');
-    const icon = document.getElementById('music-icon');
-    const toast = document.getElementById('music-toast');
-    const musicDock = document.getElementById('music-dock');
-
-    function updateIcon() {
-      if (music.paused) {
-        icon.textContent = '🔇';
-        musicDock.classList.remove('playing');
-      } else {
-        icon.textContent = '🔊';
-        musicDock.classList.add('playing');
-      }
-    }
-
-    function showToast(message) {
-      toast.textContent = message;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.opacity = '1'; }, 10);
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => (toast.style.display = 'none'), 400);
-      }, 2000);
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      if (music.paused) {
-        music.play().then(() => {
-          updateIcon();
-          showToast('Musik Dinyalakan 🎵');
-        }).catch(() => {});
-      } else {
-        music.pause();
-        updateIcon();
-        showToast('Musik Dimatikan 🔇');
-      }
-    });
-
     document.addEventListener('DOMContentLoaded', () => {
-      const tryPlay = () => {
-        if (music.paused) {
-          music.play().then(updateIcon).catch(() => {});
-        } else {
-          updateIcon();
-        }
-        document.body.removeEventListener('click', tryPlay);
-      };
-      document.body.addEventListener('click', tryPlay);
+      loadUserData();
+      initHiddenObjectGame();
     });
   </script>
 </body>

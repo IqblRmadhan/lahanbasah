@@ -532,11 +532,6 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <script src="sfx.js"></script>
 
-  <!-- Firebase Compat Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-
   <script>
     AOS.init({ duration: 800, once: true });
 
@@ -672,19 +667,16 @@
       }
     ];
 
-    // Firebase Init
-    const firebaseConfig = {
-      apiKey: "AIzaSyDguvGwMNqADw8vC2877IDvoxmnTvj1txU",
-      authDomain: "inovasi-stem-lahan-basah.firebaseapp.com",
-      databaseURL: "https://inovasi-stem-lahan-basah-default-rtdb.firebaseio.com",
-      projectId: "inovasi-stem-lahan-basah",
-      storageBucket: "inovasi-stem-lahan-basah.appspot.com",
-      messagingSenderId: "853863316290",
-      appId: "1:853863316290:web:721e94519c84e725f1a6db"
-    };
+    const QUIZ_STORAGE_KEY = "lahanBasahQuizResults";
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    function getQuizResults() {
+      try {
+        return JSON.parse(localStorage.getItem(QUIZ_STORAGE_KEY)) || {};
+      } catch (error) {
+        console.error("Gagal membaca hasil kuis lokal:", error);
+        return {};
+      }
+    }
 
     // Quiz State
     let indexSoal = 0;
@@ -713,29 +705,28 @@
 
       const userId = `${nama.toLowerCase().replace(/\s+/g, '_')}_${sekolah.toLowerCase().replace(/\s+/g, '_')}`;
 
-      db.ref(`kuis/${userId}`).once("value", (snapshot) => {
-        if (snapshot.exists()) {
-          showNotification(`Halo ${nama}! Skor lamamu (${snapshot.val().skor}/12) tersimpan. Kamu boleh mengulang kuis untuk meraih skor lebih tinggi!`, "info");
-        }
+      const previousResult = getQuizResults()[userId];
+      if (previousResult) {
+        showNotification(`Halo ${nama}! Skor terbaikmu (${previousResult.skor}/12) tersimpan di perangkat ini.`, "info");
+      }
 
-        document.getElementById("mulaiForm").style.display = "none";
-        document.getElementById("soalContainer").style.display = "block";
+      document.getElementById("mulaiForm").style.display = "none";
+      document.getElementById("soalContainer").style.display = "block";
 
-        seluruhSoal = [
-          ...acakArray(soalMudah),
-          ...acakArray(soalSedang),
-          ...acakArray(soalSulit)
-        ];
+      seluruhSoal = [
+        ...acakArray(soalMudah),
+        ...acakArray(soalSedang),
+        ...acakArray(soalSulit)
+      ];
 
-        indexSoal = 0;
-        skor = 0;
-        currentStreak = 0;
-        maxStreak = 0;
-        usedLifeline = false;
-        riwayatJawaban = [];
-        document.getElementById("btnLifeline").disabled = false;
-        tampilkanSoal();
-      });
+      indexSoal = 0;
+      skor = 0;
+      currentStreak = 0;
+      maxStreak = 0;
+      usedLifeline = false;
+      riwayatJawaban = [];
+      document.getElementById("btnLifeline").disabled = false;
+      tampilkanSoal();
     }
 
     function tampilkanSoal() {
@@ -926,20 +917,31 @@
         scoreGrade.textContent = "Sahabat Pemula ⭐";
       }
 
-      // Simpan ke Firebase
+      // Simpan skor terbaik ke browser pengguna
       const nama = document.getElementById("nama").value.trim();
       const sekolah = document.getElementById("sekolah").value.trim();
       const userId = `${nama.toLowerCase().replace(/\s+/g, '_')}_${sekolah.toLowerCase().replace(/\s+/g, '_')}`;
+      const results = getQuizResults();
+      const previousResult = results[userId];
 
-      db.ref(`kuis/${userId}`).set({
-        nama,
-        sekolah,
-        skor,
-        total,
-        persentase,
-        maxStreak,
-        waktu: new Date().toISOString()
-      }).catch(err => console.error("Firebase save error:", err));
+      if (!previousResult || skor >= Number(previousResult.skor || 0)) {
+        results[userId] = {
+          nama,
+          sekolah,
+          skor,
+          total,
+          persentase,
+          maxStreak,
+          waktu: new Date().toISOString()
+        };
+
+        try {
+          localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(results));
+        } catch (error) {
+          console.error("Gagal menyimpan hasil kuis lokal:", error);
+          showNotification("Skor tidak dapat disimpan. Penyimpanan browser mungkin penuh.", "warning");
+        }
+      }
     }
 
     // Modal Review Kunci Jawaban

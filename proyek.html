@@ -498,7 +498,7 @@
 
     <!-- Masonry Columns Grid -->
     <div class="gallery-masonry-grid" id="galeriContainer">
-      <!-- Diinjeksi otomatis via Firebase -->
+      <!-- Diisi otomatis dari penyimpanan lokal browser -->
     </div>
   </section>
 
@@ -571,32 +571,49 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script src="sfx.js"></script>
 
-  <!-- Firebase Compat Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-
   <script>
     AOS.init({ duration: 800, once: true });
 
-    // Firebase Init
-    const firebaseConfig = {
-      apiKey: "AIzaSyDguvGwMNqADw8vC2877IDvoxmnTvj1txU",
-      authDomain: "inovasi-stem-lahan-basah.firebaseapp.com",
-      databaseURL: "https://inovasi-stem-lahan-basah-default-rtdb.firebaseio.com",
-      projectId: "inovasi-stem-lahan-basah",
-      storageBucket: "inovasi-stem-lahan-basah.appspot.com",
-      messagingSenderId: "853863316290",
-      appId: "1:853863316290:web:721e94519c84e725f1a6db"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const auth = firebase.auth();
+    const USERS_STORAGE_KEY = "lahanBasahUsers";
+    const CURRENT_USER_STORAGE_KEY = "lahanBasahCurrentUser";
+    const PROJECTS_STORAGE_KEY = "lahanBasahProjects";
 
     let authMode = "login";
     let compressedBase64 = null;
     let allGalleryItems = [];
+    let currentUser = null;
+
+    function readLocalData(key, fallback) {
+      try {
+        return JSON.parse(localStorage.getItem(key)) || fallback;
+      } catch (error) {
+        console.error(`Gagal membaca ${key}:`, error);
+        return fallback;
+      }
+    }
+
+    function updateAuthUI() {
+      const authContainer = document.getElementById("authContainer");
+      const uploadContainer = document.getElementById("uploadContainer");
+      const userGreeting = document.getElementById("userGreeting");
+      const userEmailBadge = document.getElementById("userEmailBadge");
+
+      if (currentUser) {
+        authContainer.style.display = "none";
+        uploadContainer.style.display = "block";
+        userGreeting.textContent = `Halo, ${currentUser.email.split('@')[0]}!`;
+        userEmailBadge.textContent = `${currentUser.email} • akun lokal`;
+      } else {
+        authContainer.style.display = "block";
+        uploadContainer.style.display = "none";
+      }
+    }
+
+    async function hashPassword(password) {
+      const bytes = new TextEncoder().encode(password);
+      const digest = await crypto.subtle.digest("SHA-256", bytes);
+      return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+    }
 
     function switchAuthTab(mode) {
       authMode = mode;
@@ -628,8 +645,8 @@
       }
     }
 
-    function submitAuth() {
-      const email = document.getElementById("email").value.trim();
+    async function submitAuth() {
+      const email = document.getElementById("email").value.trim().toLowerCase();
       const password = document.getElementById("password").value.trim();
 
       if (!email || !password) {
@@ -638,57 +655,50 @@
       }
 
       SoundEffects.playPop();
+      const users = readLocalData(USERS_STORAGE_KEY, {});
+      const passwordHash = await hashPassword(password);
 
       if (authMode === "login") {
-        auth.signInWithEmailAndPassword(email, password)
-          .then(() => {
-            SoundEffects.playCorrect();
-            showNotification("Berhasil masuk! Selamat berkarya 🎉", "success");
-          })
-          .catch(err => {
-            SoundEffects.playWrong();
-            showNotification(err.message || "Gagal masuk. Periksa kembali email dan kata sandi.", "danger");
-          });
+        const user = users[email];
+        if (!user || user.passwordHash !== passwordHash) {
+          SoundEffects.playWrong();
+          showNotification("Email atau kata sandi lokal tidak cocok.", "danger");
+          return;
+        }
+
+        currentUser = { uid: user.uid, email: user.email };
+        localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(currentUser));
+        updateAuthUI();
+        SoundEffects.playCorrect();
+        showNotification("Berhasil masuk! Selamat berkarya 🎉", "success");
       } else {
         if (password.length < 6) {
           showNotification("Kata sandi minimal harus 6 karakter ya!", "warning");
           return;
         }
-        auth.createUserWithEmailAndPassword(email, password)
-          .then(() => {
-            SoundEffects.playFanfare();
-            showNotification("Pendaftaran berhasil! Selamat datang 🎉", "success");
-          })
-          .catch(err => {
-            SoundEffects.playWrong();
-            showNotification(err.message || "Pendaftaran gagal. Coba lagi.", "danger");
-          });
+        if (users[email]) {
+          showNotification("Email ini sudah terdaftar di perangkat ini.", "warning");
+          return;
+        }
+
+        const user = { uid: `local_${Date.now()}`, email, passwordHash };
+        users[email] = user;
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+        currentUser = { uid: user.uid, email: user.email };
+        localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(currentUser));
+        updateAuthUI();
+        SoundEffects.playFanfare();
+        showNotification("Pendaftaran lokal berhasil! Selamat datang 🎉", "success");
       }
     }
 
     function logout() {
-      auth.signOut().then(() => {
-        SoundEffects.playPop();
-        showNotification("Kamu telah berhasil keluar.", "info");
-      });
+      currentUser = null;
+      localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
+      updateAuthUI();
+      SoundEffects.playPop();
+      showNotification("Kamu telah berhasil keluar.", "info");
     }
-
-    auth.onAuthStateChanged(user => {
-      const authContainer = document.getElementById("authContainer");
-      const uploadContainer = document.getElementById("uploadContainer");
-      const userGreeting = document.getElementById("userGreeting");
-      const userEmailBadge = document.getElementById("userEmailBadge");
-
-      if (user) {
-        authContainer.style.display = "none";
-        uploadContainer.style.display = "block";
-        userGreeting.textContent = `Halo, ${user.displayName || user.email.split('@')[0]}!`;
-        userEmailBadge.textContent = user.email;
-      } else {
-        authContainer.style.display = "block";
-        uploadContainer.style.display = "none";
-      }
-    });
 
     // Client-side Image Compression via Canvas
     function previewSelectedImage(event) {
@@ -738,7 +748,7 @@
     formProyek.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const user = auth.currentUser;
+      const user = currentUser;
       if (!user) {
         showNotification("Silakan masuk terlebih dahulu untuk upload karya.", "warning");
         return;
@@ -766,22 +776,26 @@
         likes: 1
       };
 
-      db.ref("proyek").push(newProject)
-        .then(() => {
-          SoundEffects.playFanfare();
-          showNotification("🎉 Karya berhasil dipublikasikan ke Galeri!", "success");
-          formProyek.reset();
-          compressedBase64 = null;
-          document.getElementById("imagePreview").style.display = "none";
-          btnSubmit.disabled = false;
-          btnSubmit.innerHTML = `<i class="bi bi-send-fill"></i> Publikasikan Karyamu ke Galeri`;
-          tampilkanGaleri();
-        })
-        .catch(err => {
-          btnSubmit.disabled = false;
-          btnSubmit.innerHTML = `<i class="bi bi-send-fill"></i> Publikasikan Karyamu ke Galeri`;
-          showNotification("Gagal menyimpan proyek: " + err.message, "danger");
-        });
+      newProject.id = `project_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+
+      try {
+        const projects = readLocalData(PROJECTS_STORAGE_KEY, []);
+        projects.unshift(newProject);
+        localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects));
+
+        SoundEffects.playFanfare();
+        showNotification("🎉 Karya berhasil disimpan ke Galeri lokal!", "success");
+        formProyek.reset();
+        compressedBase64 = null;
+        document.getElementById("imagePreview").style.display = "none";
+        tampilkanGaleri();
+      } catch (error) {
+        console.error("Gagal menyimpan proyek lokal:", error);
+        showNotification("Penyimpanan browser penuh. Coba gunakan gambar yang lebih kecil.", "danger");
+      } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = `<i class="bi bi-send-fill"></i> Publikasikan Karyamu ke Galeri`;
+      }
     });
 
     function tampilkanGaleri() {
@@ -790,32 +804,29 @@
 
       galeriLoading.style.display = "block";
 
-      db.ref("proyek").once("value", snapshot => {
+      try {
+        const items = readLocalData(PROJECTS_STORAGE_KEY, []);
         galeriLoading.style.display = "none";
         galeriContainer.innerHTML = "";
 
-        if (!snapshot.exists()) {
+        if (items.length === 0) {
           galeriContainer.innerHTML = `
             <div class="col-12 text-center py-5">
               <span class="fs-1 d-block mb-2">🌱</span>
-              <h5 class="text-muted">Belum ada karya yang diunggah.</h5>
+              <h5 class="text-muted">Belum ada karya yang tersimpan.</h5>
               <p class="small text-muted">Jadilah yang pertama membagikan kreasi perlindungan lahan basah!</p>
             </div>
           `;
           return;
         }
 
-        const items = [];
-        snapshot.forEach(child => {
-          items.push({ id: child.key, ...child.val() });
-        });
-
-        allGalleryItems = items.reverse();
+        allGalleryItems = items;
         renderGalleryList(allGalleryItems);
-      }).catch(err => {
+      } catch (error) {
         galeriLoading.style.display = "none";
-        galeriContainer.innerHTML = `<p class="text-danger text-center">Gagal memuat galeri: ${err.message}</p>`;
-      });
+        galeriContainer.innerHTML = `<p class="text-danger text-center">Data galeri lokal tidak dapat dibaca.</p>`;
+        console.error("Gagal membaca galeri lokal:", error);
+      }
     }
 
     function renderGalleryList(items) {
@@ -889,8 +900,16 @@
       btn.style.transform = "scale(1.25)";
       setTimeout(() => { btn.style.transform = "none"; }, 200);
 
-      // Simpan ke Firebase Realtime DB
-      db.ref(`proyek/${id}/likes`).transaction(curr => (curr || 0) + 1);
+      const projects = readLocalData(PROJECTS_STORAGE_KEY, []);
+      const project = projects.find(item => item.id === id);
+      if (project) {
+        project.likes = count;
+        try {
+          localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects));
+        } catch (error) {
+          console.error("Gagal menyimpan suka lokal:", error);
+        }
+      }
     }
 
     function showNotification(pesan, tipe = "info") {
@@ -949,6 +968,8 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
+      currentUser = readLocalData(CURRENT_USER_STORAGE_KEY, null);
+      updateAuthUI();
       tampilkanGaleri();
       const tryPlay = () => {
         if (music.paused) {

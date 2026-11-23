@@ -291,7 +291,7 @@
 
       <div class="text-center mb-4">
         <h3 class="display-font text-success mb-1">🏅 Panggung Juara Teratas</h3>
-        <p class="text-muted small">Peringkat diperbarui secara otomatis secara real-time dari Firebase Database.</p>
+        <p class="text-muted small">Peringkat diambil dari hasil kuis yang tersimpan di browser perangkat ini.</p>
       </div>
 
       <!-- Loading Spinner -->
@@ -420,27 +420,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script src="sfx.js"></script>
 
-  <!-- Firebase Compat Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-
   <script>
     AOS.init({ duration: 800, once: true });
 
-    // Firebase Init
-    const firebaseConfig = {
-      apiKey: "AIzaSyDguvGwMNqADw8vC2877IDvoxmnTvj1txU",
-      authDomain: "inovasi-stem-lahan-basah.firebaseapp.com",
-      databaseURL: "https://inovasi-stem-lahan-basah-default-rtdb.firebaseio.com",
-      projectId: "inovasi-stem-lahan-basah",
-      storageBucket: "inovasi-stem-lahan-basah.appspot.com",
-      messagingSenderId: "853863316290",
-      appId: "1:853863316290:web:721e94519c84e725f1a6db"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    const QUIZ_STORAGE_KEY = "lahanBasahQuizResults";
 
     let allLeaderboardData = [];
 
@@ -451,39 +434,37 @@
 
       loading.style.display = "block";
 
-      db.ref("kuis").once("value", snapshot => {
-        loading.style.display = "none";
-        const rawData = snapshot.val();
+      try {
+        const rawData = JSON.parse(localStorage.getItem(QUIZ_STORAGE_KEY)) || {};
+        const data = Object.values(rawData)
+          .filter(item => item && item.nama && item.skor !== undefined)
+          .map(item => ({
+            nama: item.nama,
+            skor: Number(item.skor),
+            sekolah: item.sekolah || "-",
+            waktu: item.waktu || null
+          }))
+          .sort((a, b) => b.skor - a.skor || new Date(a.waktu || 0) - new Date(b.waktu || 0));
 
-        if (!rawData) {
+        loading.style.display = "none";
+        allLeaderboardData = data;
+
+        if (data.length === 0) {
+          podiumArea.style.display = "none";
           listContainer.innerHTML = `<div class="text-center py-5 text-muted">
             <span class="fs-1 d-block mb-2">🌱</span>
-            Belum ada data kuis yang tercatat. Jadilah yang pertama!
+            Belum ada hasil kuis di perangkat ini. Jadilah yang pertama!
           </div>`;
           return;
         }
 
-        const data = [];
-        for (let key in rawData) {
-          const item = rawData[key];
-          if (item && item.nama && item.skor !== undefined) {
-            data.push({
-              nama: item.nama,
-              skor: Number(item.skor),
-              sekolah: item.sekolah || "-",
-              waktu: item.waktu || null
-            });
-          }
-        }
-
-        data.sort((a, b) => b.skor - a.skor);
-        allLeaderboardData = data;
-
         displayData(allLeaderboardData);
-      }).catch(err => {
+      } catch (error) {
         loading.style.display = "none";
-        listContainer.innerHTML = `<p class="text-danger text-center">Gagal memuat papan peringkat: ${err.message}</p>`;
-      });
+        podiumArea.style.display = "none";
+        listContainer.innerHTML = `<p class="text-danger text-center">Data lokal tidak dapat dibaca.</p>`;
+        console.error("Gagal membaca papan peringkat lokal:", error);
+      }
     }
 
     function displayData(data) {

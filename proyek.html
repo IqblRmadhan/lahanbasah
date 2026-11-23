@@ -11,7 +11,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
 
   <!-- Custom Design System -->
-  <link rel="stylesheet" href="custom.css?v=3.2" />
+  <link rel="stylesheet" href="custom.css?v=3.4" />
 
   <style>
     /* Specific styles for Proyek & Galeri */
@@ -86,16 +86,24 @@
     }
 
     .idea-icon-wrap {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: #f0fdf4;
+      width: 92px;
+      height: 78px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #f0fdf4, #eff9ff);
       border: 1px solid #bbf7d0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
       margin-bottom: 12px;
+      padding: 5px;
+      box-shadow: inset 0 0 0 4px rgba(255,255,255,0.72);
+    }
+
+    .idea-icon-wrap .ui-2d-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 7px rgba(15, 118, 91, 0.16));
     }
 
     .idea-guide-btn {
@@ -299,7 +307,7 @@
           <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Beranda</a></li>
           <li class="nav-item"><a class="nav-link" href="materi.php"><i class="bi bi-book-fill"></i> Materi</a></li>
           <li class="nav-item"><a class="nav-link" href="kuis.php"><i class="bi bi-controller"></i> Kuis & Games</a></li>
-          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-flask-fill"></i> Simulasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-bezier2"></i> Simulasi</a></li>
           <li class="nav-item"><a class="nav-link active" href="proyek.html"><i class="bi bi-lightbulb-fill"></i> Proyek</a></li>
           <li class="nav-item"><a class="nav-link" href="leaderboard.html"><i class="bi bi-trophy-fill"></i> Papan Peringkat</a></li>
         </ul>
@@ -1046,7 +1054,7 @@ document.addEventListener("DOMContentLoaded", () => {
         time: "30 Menit",
         level: "Mudah",
         bab: "IPAS Bab 3 & 4 (Gambut & Siklus Air)",
-        icon: "foto/asetgame/Rawa.png",
+        icon: "foto/proyek-icons/resapan-gambut.webp",
         tools: [
           "2 Botol plastik bekas ukuran 1,5 liter (dipotong bagian atas)",
           "Busa spons cuci piring (simulasi gambut berserat)",
@@ -1072,7 +1080,7 @@ document.addEventListener("DOMContentLoaded", () => {
         time: "45 Menit",
         level: "Menengah",
         bab: "IPAS Bab 3 (Konservasi Lahan Basah)",
-        icon: "foto/asetgame/Pohon.png",
+        icon: "foto/proyek-icons/sekat-kanal.webp",
         tools: [
           "Stik es krim kayu (20-30 batang)",
           "Lem tahan air / lem tembak / plastisin",
@@ -1098,7 +1106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         time: "40 Menit",
         level: "Mudah",
         bab: "IPAS Bab 4 (Siklus & Kejernihan Air)",
-        icon: "foto/asetgame/Rawa.png",
+        icon: "foto/proyek-icons/filter-air-rawa.webp",
         tools: [
           "Botol plastik bekas 1,5 liter (potong bagian bawahnya)",
           "Kapas atau kain kasa bersih (lapisan paling dasar)",
@@ -1125,7 +1133,7 @@ document.addEventListener("DOMContentLoaded", () => {
         time: "60 Menit",
         level: "Mudah",
         bab: "IPAS Bab 3 (Biodiversitas Lahan Basah)",
-        icon: "foto/puzzle.webp",
+        icon: "foto/proyek-icons/jurnal-digital.webp",
         tools: [
           "Kamera ponsel pintar atau tablet",
           "Aplikasi presentasi / catatan / Canva",
@@ -1150,7 +1158,7 @@ document.addEventListener("DOMContentLoaded", () => {
         time: "45 Menit",
         level: "Mudah",
         bab: "IPAS Bab 3 (Rantai Makanan & Taraf Trofik)",
-        icon: "foto/asetgame/Katak.png",
+        icon: "foto/proyek-icons/piramida-rantai-makanan.webp",
         tools: [
           "Kardus bekas kemasan makanan / karton tebal",
           "Gunting aman dan lem kertas",
@@ -1177,7 +1185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         time: "1 Minggu Pengamatan",
         level: "Mudah",
         bab: "IPAS Bab 4 & Matematika Data",
-        icon: "foto/kuis.webp",
+        icon: "foto/proyek-icons/penakar-hujan.webp",
         tools: [
           "Botol plastik lurus bening dengan corong di atasnya",
           "Penggaris transparan dengan skala milimeter (mm)",
@@ -1202,7 +1210,7 @@ document.addEventListener("DOMContentLoaded", () => {
         time: "60 Menit",
         level: "Menengah",
         bab: "IPAS Bab 3 & STEM Fisika Cilik",
-        icon: "foto/puzzle.webp",
+        icon: "foto/proyek-icons/sensor-kelembapan.webp",
         tools: [
           "Baterai kotak 9 Volt dan soket kancing baterai",
           "1 Buah lampu LED kecil (warna hijau atau merah)",
@@ -1228,7 +1236,7 @@ document.addEventListener("DOMContentLoaded", () => {
         time: "35 Menit",
         level: "Mudah",
         bab: "IPAS Bab 4 (Siklus Air Lahan Basah)",
-        icon: "foto/asetgame/Teratai.png",
+        icon: "foto/proyek-icons/terrarium-siklus-air.webp",
         tools: [
           "Toples kaca bening dengan penutup kedap",
           "Kerikil kecil dan tanah gambut lembap",

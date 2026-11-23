@@ -25,7 +25,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
   
   <!-- Custom Design System -->
-  <link rel="stylesheet" href="custom.css?v=3.3" />
+  <link rel="stylesheet" href="custom.css?v=3.4" />
 
   <style>
     /* Styling Spesifik Game Hub */
@@ -1015,7 +1015,7 @@
           <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Beranda</a></li>
           <li class="nav-item"><a class="nav-link" href="materi.php"><i class="bi bi-book-fill"></i> Materi</a></li>
           <li class="nav-item"><a class="nav-link active" href="kuis.php"><i class="bi bi-controller"></i> Kuis & Games</a></li>
-          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-flask-fill"></i> Simulasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-bezier2"></i> Simulasi</a></li>
           <li class="nav-item"><a class="nav-link" href="proyek.html"><i class="bi bi-lightbulb-fill"></i> Proyek</a></li>
           <li class="nav-item"><a class="nav-link" href="leaderboard.html"><i class="bi bi-trophy-fill"></i> Peringkat</a></li>
         </ul>

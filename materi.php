@@ -446,6 +446,113 @@ if (!isset($modules[$currentModulId])) {
 $activeModul = $modules[$currentModulId];
 $prevModulId = ($currentModulId > 1) ? $currentModulId - 1 : null;
 $nextModulId = ($currentModulId < count($modules)) ? $currentModulId + 1 : null;
+
+// Foto autentik berlisensi terbuka. Setiap modul menampilkan dokumentasi nyata
+// yang relevan agar siswa dapat membandingkan ilustrasi dengan kondisi lapangan.
+$authenticPhotos = [
+    'peat' => [
+        'src' => 'foto/materi-asli/hutan-rawa-gambut.webp',
+        'alt' => 'Hutan rawa gambut di Kalimantan',
+        'caption' => 'Hutan rawa gambut Kalimantan menyimpan air, karbon, dan habitat beragam makhluk hidup.',
+        'credit' => 'Ruanda Agung Sugardiman / Australian Aid',
+        'license' => 'CC BY 2.0',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Peat_Forest_Swamp_(10712654875).jpg'
+    ],
+    'bekantan' => [
+        'src' => 'foto/materi-asli/bekantan.webp',
+        'alt' => 'Bekantan jantan di tepi Sungai Kinabatangan, Borneo',
+        'caption' => 'Bekantan adalah primata khas Borneo yang bergantung pada hutan tepian sungai dan lahan basah.',
+        'credit' => 'Erwin Bolwidt',
+        'license' => 'CC BY-SA 3.0',
+        'url' => 'https://commons.wikimedia.org/wiki/File:ProboscisKinabatanganBorneo.jpg'
+    ],
+    'fish' => [
+        'src' => 'foto/materi-asli/ikan-gabus.webp',
+        'alt' => 'Ikan gabus Channa striata',
+        'caption' => 'Ikan gabus (Channa striata) merupakan predator perairan tawar yang membantu menjaga keseimbangan populasi.',
+        'credit' => 'Nilesh Heda',
+        'license' => 'Domain publik',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Channa_striatus.jpg'
+    ],
+    'heron' => [
+        'src' => 'foto/materi-asli/bangau-ungu.webp',
+        'alt' => 'Bangau ungu di kawasan lahan basah',
+        'caption' => 'Bangau berburu ikan dan hewan kecil di perairan dangkal sehingga menjadi bagian penting jaring-jaring makanan.',
+        'credit' => 'Anirudhanmuthuvara',
+        'license' => 'CC BY-SA 4.0',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Purple_Heron_at_Kole_Wetland.jpg'
+    ],
+    'wetland' => [
+        'src' => 'foto/materi-asli/rawa-teratai.webp',
+        'alt' => 'Lahan basah dengan hamparan daun teratai',
+        'caption' => 'Tumbuhan air menyediakan tempat berlindung, sumber makanan, dan membantu mempertahankan kualitas air.',
+        'credit' => 'Tiner Ralph / U.S. Fish and Wildlife Service',
+        'license' => 'Domain publik',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Wetland_with_lily_pads.jpg'
+    ]
+];
+
+$modulePhotoKeys = [
+    1 => ['peat', 'wetland', 'bekantan'],
+    2 => ['wetland', 'fish', 'heron'],
+    3 => ['peat', 'fish', 'heron'],
+    4 => ['peat', 'bekantan', 'wetland'],
+    5 => ['bekantan', 'heron', 'peat'],
+    6 => ['wetland', 'peat', 'fish']
+];
+$activePhotos = array_map(fn($key) => $authenticPhotos[$key], $modulePhotoKeys[$currentModulId]);
+
+$spotlightPhotoLibrary = $authenticPhotos + [
+    'purun' => [
+        'src' => 'foto/materi-asli/purun-danau.webp', 'alt' => 'Purun danau di rawa air tawar Kalimantan',
+        'credit' => 'Wibowo Djatmiko', 'license' => 'CC BY-SA 3.0',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Lepiro_articu_090825-12414_ith.JPG'
+    ],
+    'lotus' => [
+        'src' => 'foto/materi-asli/teratai-merah.webp', 'alt' => 'Bunga teratai merah Nymphaea rubra',
+        'credit' => 'MD Nuruzzaman Shiekh', 'license' => 'CC BY-SA 4.0',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Red_water_lily_2.jpg'
+    ],
+    'snail' => [
+        'src' => 'foto/materi-asli/keong-mas.webp', 'alt' => 'Keong mas Pomacea canaliculata',
+        'credit' => 'gailhampshire', 'license' => 'CC BY 2.0',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Golden_Apple_Snail_(Pomacea_canaliculata)_(48622388178).jpg'
+    ],
+    'frog' => [
+        'src' => 'foto/materi-asli/katak-rawa.webp', 'alt' => 'Katak sawah Asia Fejervarya limnocharis',
+        'credit' => 'LiCheng Shih', 'license' => 'CC BY 2.0',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Fejervarya_limnocharis_(43659333105).jpg'
+    ],
+    'mushroom' => [
+        'src' => 'foto/materi-asli/jamur.webp', 'alt' => 'Jamur tumbuh di lantai hutan',
+        'credit' => 'Paolo Neo', 'license' => 'Domain publik',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Mushroom_in_forest.jpg'
+    ],
+    'buffalo' => [
+        'src' => 'foto/materi-asli/kerbau-kuntul.webp', 'alt' => 'Kerbau air bersama burung kuntul',
+        'credit' => 'Ganesh Mohan T', 'license' => 'CC BY-SA 4.0',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Eastern_Cattle_Egret_with_a_Buffalo_01.jpg'
+    ],
+    'fire' => [
+        'src' => 'foto/materi-asli/api-gambut.webp', 'alt' => 'Bara api tersembunyi pada lahan gambut Kalimantan',
+        'credit' => 'DenY Krisbiyantoro', 'license' => 'CC BY-SA 4.0',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Marking_the_Fire.jpg'
+    ],
+    'canal' => [
+        'src' => 'foto/materi-asli/sekat-kanal-asli.webp', 'alt' => 'Sekat kanal untuk membasahi kembali lahan gambut',
+        'credit' => 'Gambut Pratama', 'license' => 'CC BY-SA 4.0',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Peat_Compaction_Dam_South_Sumatra_Indonesia.jpg'
+    ]
+];
+
+$spotlightPhotoKeys = [
+    1 => ['bekantan', 'fish', 'purun', 'lotus'],
+    2 => ['wetland', 'snail', 'frog', 'fish', 'mushroom'],
+    3 => ['buffalo', 'buffalo', 'wetland'],
+    4 => ['peat', 'fire', 'canal'],
+    5 => ['bekantan', 'peat', 'wetland'],
+    6 => ['peat', 'wetland', 'purun']
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -462,7 +569,7 @@ $nextModulId = ($currentModulId < count($modules)) ? $currentModulId + 1 : null;
   <!-- AOS Animation -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
   <!-- Custom Design System -->
-  <link rel="stylesheet" href="custom.css?v=3.2" />
+  <link rel="stylesheet" href="custom.css?v=3.4" />
 
   <style>
     /* ==========================================================================
@@ -493,18 +600,12 @@ $nextModulId = ($currentModulId < count($modules)) ? $currentModulId + 1 : null;
 
     .module-nav-container {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
       padding-top: 8px;
     }
 
-    @media (max-width: 991px) {
-      .module-nav-container {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 576px) {
+    @media (max-width: 767px) {
       .module-nav-container {
         grid-template-columns: 1fr;
       }
@@ -528,6 +629,8 @@ $nextModulId = ($currentModulId < count($modules)) ? $currentModulId + 1 : null;
       position: relative;
       overflow: hidden;
       width: 100%;
+      min-width: 0;
+      min-height: 88px;
     }
 
     .module-nav-btn:hover {
@@ -581,7 +684,11 @@ $nextModulId = ($currentModulId < count($modules)) ? $currentModulId + 1 : null;
       font-weight: 700;
       color: #1e293b;
       line-height: 1.3;
+      white-space: normal;
+      overflow-wrap: anywhere;
     }
+
+    .module-nav-btn .flex-grow-1 { min-width: 0; }
 
     .module-nav-btn.active .mod-title-text {
       color: #ffffff !important;
@@ -673,10 +780,13 @@ $nextModulId = ($currentModulId < count($modules)) ? $currentModulId + 1 : null;
       background: #ffffff;
       border-radius: 18px;
       border: 1px solid #d4ece1;
-      padding: 18px 14px;
+      padding: 0;
       text-align: center;
       height: 100%;
       transition: all 0.25s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     .species-card:hover {
@@ -696,6 +806,99 @@ $nextModulId = ($currentModulId < count($modules)) ? $currentModulId + 1 : null;
       font-size: 2rem;
       background: linear-gradient(135deg, #dcfce7, #dbeafe);
     }
+
+    .species-photo-wrap {
+      position: relative;
+      width: 100%;
+      height: 150px;
+      overflow: hidden;
+      background: #e8f5ef;
+    }
+
+    .species-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .species-card:hover .species-photo-wrap img { transform: scale(1.055); }
+
+    .species-photo-label {
+      position: absolute;
+      right: 9px;
+      bottom: 9px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.94);
+      color: #047857;
+      font-size: 0.66rem;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 3px 10px rgba(6,78,59,0.16);
+    }
+
+    .species-photo-label:hover { color: #065f46; background: #ffffff; }
+    .species-card-body { padding: 16px 14px 15px; display: flex; flex-direction: column; flex: 1; }
+    .species-card-body p { line-height: 1.55; }
+    .species-credit { margin-top: auto; padding-top: 10px; font-size: 0.64rem; color: #718096; }
+
+    .field-photo-panel {
+      background: linear-gradient(145deg, #f0fdf4, #eff9ff);
+      border: 1px solid #b9ead4;
+      border-radius: 24px;
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+
+    .field-photo-card {
+      height: 100%;
+      background: #ffffff;
+      border: 1px solid #d8e8e0;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 7px 18px rgba(15, 79, 61, 0.08);
+    }
+
+    .field-photo-card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .field-photo-copy { padding: 14px 15px 15px; }
+    .field-photo-copy p { font-size: 0.86rem; line-height: 1.5; color: #475569; }
+    .field-photo-source { font-size: 0.72rem; color: #64748b; }
+    .field-photo-source a { color: #047857; font-weight: 800; text-decoration: none; }
+    .field-photo-source a:hover { text-decoration: underline; }
+
+    .golden-summary-card {
+      color: #5b3a05;
+      background: linear-gradient(135deg, #fffdf2 0%, #fff4c2 58%, #ffe7a3 100%);
+      border: 2px solid #f2c14e;
+      border-left: 8px solid #d99b16;
+      box-shadow: 0 12px 28px rgba(180, 119, 16, 0.14);
+    }
+
+    .golden-summary-card h5 { color: #6b4300; }
+    .golden-summary-card h5 i {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      background: linear-gradient(135deg, #d99b16, #f4bf32);
+      border-radius: 12px;
+      box-shadow: 0 5px 12px rgba(180, 119, 16, 0.25);
+    }
+    .golden-summary-card li { color: #604b23; line-height: 1.6; }
+    .golden-summary-card li::marker { color: #c58408; }
 
     /* Food Chain Interactive */
     .food-chain-interactive {
@@ -1009,7 +1212,7 @@ $nextModulId = ($currentModulId < count($modules)) ? $currentModulId + 1 : null;
           <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Beranda</a></li>
           <li class="nav-item"><a class="nav-link active" href="materi.php"><i class="bi bi-book-fill"></i> Materi</a></li>
           <li class="nav-item"><a class="nav-link" href="kuis.php"><i class="bi bi-controller"></i> Kuis & Games</a></li>
-          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-flask-fill"></i> Simulasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-bezier2"></i> Simulasi</a></li>
           <li class="nav-item"><a class="nav-link" href="proyek.html"><i class="bi bi-lightbulb-fill"></i> Proyek</a></li>
           <li class="nav-item"><a class="nav-link" href="leaderboard.html"><i class="bi bi-trophy-fill"></i> Peringkat</a></li>
         </ul>
@@ -1136,19 +1339,59 @@ $nextModulId = ($currentModulId < count($modules)) ? $currentModulId + 1 : null;
           <?php endforeach; ?>
         </div>
 
+        <!-- Dokumentasi lapangan autentik dengan atribusi sumber terbuka -->
+        <section class="field-photo-panel" aria-labelledby="fieldPhotoTitle">
+          <div class="d-flex flex-wrap align-items-end justify-content-between gap-2 mb-3">
+            <div>
+              <span class="badge bg-success-subtle text-success rounded-pill mb-2"><i class="bi bi-camera-fill me-1"></i> Foto Lapangan Nyata</span>
+              <h3 class="h5 fw-bold text-success mb-1" id="fieldPhotoTitle">Lihat Ekosistemnya dari Dekat</h3>
+              <p class="small text-muted mb-0">Bandingkan konsep yang kamu pelajari dengan dokumentasi asli dari habitat lahan basah.</p>
+            </div>
+            <span class="small text-muted"><i class="bi bi-box-arrow-up-right me-1"></i>Sumber terbuka tercantum pada setiap foto</span>
+          </div>
+          <div class="row g-3">
+            <?php foreach ($activePhotos as $photo): ?>
+              <div class="col-md-4">
+                <figure class="field-photo-card mb-0">
+                  <img src="<?= htmlspecialchars($photo['src']) ?>" alt="<?= htmlspecialchars($photo['alt']) ?>" loading="lazy">
+                  <figcaption class="field-photo-copy">
+                    <p class="mb-2"><?= htmlspecialchars($photo['caption']) ?></p>
+                    <div class="field-photo-source">
+                      Foto: <?= htmlspecialchars($photo['credit']) ?> · <?= htmlspecialchars($photo['license']) ?> ·
+                      <a href="<?= htmlspecialchars($photo['url']) ?>" target="_blank" rel="noopener noreferrer">Wikimedia Commons <i class="bi bi-box-arrow-up-right"></i></a>
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </section>
+
         <!-- Section 3: Spotlight Spesies & Ekosistem Lokal Kalsel -->
-        <div class="materi-subcard bg-white border-success-subtle mb-4">
+        <div class="materi-subcard bg-white border-success-subtle mb-4" id="speciesSpotlight">
           <div class="materi-subcard-title text-success">
             <i class="bi bi-binoculars-fill"></i> <?= htmlspecialchars($activeModul['spotlight']['title']) ?>
           </div>
           <div class="row g-3">
-            <?php foreach ($activeModul['spotlight']['items'] as $item): ?>
-              <div class="col-sm-6 col-lg-3">
+            <?php foreach ($activeModul['spotlight']['items'] as $itemIndex => $item): ?>
+              <?php
+                $photoKey = $spotlightPhotoKeys[$currentModulId][$itemIndex] ?? 'wetland';
+                $spotPhoto = $spotlightPhotoLibrary[$photoKey];
+              ?>
+              <div class="col-sm-6 col-lg">
                 <div class="species-card">
-                  <div class="species-icon-circle"><?= renderMaterialIcon($item['icon']) ?></div>
-                  <h6 class="fw-bold mb-1"><?= htmlspecialchars($item['name']) ?></h6>
-                  <span class="badge bg-success-subtle text-success mb-2"><?= htmlspecialchars($item['role']) ?></span>
-                  <p class="small text-muted mb-0"><?= htmlspecialchars($item['info']) ?></p>
+                  <div class="species-photo-wrap">
+                    <img src="<?= htmlspecialchars($spotPhoto['src']) ?>" alt="<?= htmlspecialchars($spotPhoto['alt']) ?>" loading="lazy">
+                    <a class="species-photo-label" href="<?= htmlspecialchars($spotPhoto['url']) ?>" target="_blank" rel="noopener noreferrer" aria-label="Buka sumber foto <?= htmlspecialchars($item['name']) ?>">
+                      <i class="bi bi-camera-fill"></i> Foto asli
+                    </a>
+                  </div>
+                  <div class="species-card-body">
+                    <h6 class="fw-bold mb-1"><?= htmlspecialchars($item['name']) ?></h6>
+                    <div><span class="badge bg-success-subtle text-success mb-2"><?= htmlspecialchars($item['role']) ?></span></div>
+                    <p class="small text-muted mb-0"><?= htmlspecialchars($item['info']) ?></p>
+                    <div class="species-credit">Foto: <?= htmlspecialchars($spotPhoto['credit']) ?> · <?= htmlspecialchars($spotPhoto['license']) ?></div>
+                  </div>
                 </div>
               </div>
             <?php endforeach; ?>
@@ -1326,7 +1569,7 @@ $nextModulId = ($currentModulId < count($modules)) ? $currentModulId + 1 : null;
         </div>
 
         <!-- Section 6: Rangkuman Catatan Detektif Cilik -->
-        <div class="summary-card mt-4 p-4 text-white rounded-4" style="background: linear-gradient(135deg, #059669, #10b981);">
+        <div class="summary-card golden-summary-card mt-4 p-4 rounded-4" id="goldenSummary">
           <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
               <i class="bi bi-journal-text"></i> Catatan Emas Detektif Cilik (Rangkuman):
           </h5>

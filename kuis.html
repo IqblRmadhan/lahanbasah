@@ -277,7 +277,7 @@
       </h1>
 
       <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
-        Uji sejauh mana pemahamanmu tentang ekosistem rawa, gambut, dan cara melindungi air bumi. Dapatkan streak tertinggi dan raih posisimu di puncak Papan Peringkat!
+        Uji pemahamanmu tentang komponen ekosistem, rantai makanan, keseimbangan, peran manusia, dan siklus air sesuai IPAS Kelas V.
       </p>
 
       <div class="d-flex flex-wrap justify-content-center gap-3" data-aos="fade-up" data-aos-delay="200">
@@ -317,21 +317,21 @@
           <div class="p-3 rounded-4 bg-primary-subtle border border-primary-subtle text-center">
             <span class="fs-4 d-block mb-1">🟢</span>
             <strong class="text-primary d-block">Level Mudah</strong>
-            <small class="text-muted">Soal 1 s/d 4 (Dasar Lahan Basah)</small>
+            <small class="text-muted">Soal 1 s/d 4 (Komponen Ekosistem)</small>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="p-3 rounded-4 bg-warning-subtle border border-warning-subtle text-center">
             <span class="fs-4 d-block mb-1">🟡</span>
             <strong class="text-warning-emphasis d-block">Level Sedang</strong>
-            <small class="text-muted">Soal 5 s/d 8 (Fungsi & Ekologi)</small>
+            <small class="text-muted">Soal 5 s/d 8 (Rantai Makanan)</small>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="p-3 rounded-4 bg-danger-subtle border border-danger-subtle text-center">
             <span class="fs-4 d-block mb-1">🔴</span>
             <strong class="text-danger d-block">Level Sulit</strong>
-            <small class="text-muted">Soal 9 s/d 12 (Ancaman & Konservasi)</small>
+            <small class="text-muted">Soal 9 s/d 12 (Sebab-Akibat & Air)</small>
           </div>
         </div>
       </div>
@@ -348,7 +348,7 @@
           <label for="sekolah" class="form-label fw-bold small text-muted">
             <i class="bi bi-mortarboard-fill text-primary"></i> Nama Sekolah / Instansi
           </label>
-          <input type="text" class="form-control form-control-lg rounded-pill px-4 fs-6 border-primary-subtle shadow-sm" id="sekolah" placeholder="Contoh: SMA Negeri 2 Banjarmasin" required />
+          <input type="text" class="form-control form-control-lg rounded-pill px-4 fs-6 border-primary-subtle shadow-sm" id="sekolah" placeholder="Contoh: SD Negeri 2 Banjarmasin" required />
         </div>
 
         <div class="d-grid mt-4">
@@ -538,132 +538,132 @@
     // Bank Soal
     const soalMudah = [
       {
-        pertanyaan: "Apa pengertian mendasar dari lahan basah (wetland)?",
+        pertanyaan: "Manakah yang termasuk komponen biotik di ekosistem rawa?",
         opsi: [
-          "Daerah yang sering atau selalu tergenang air seperti rawa, gambut, dan sungai",
-          "Tanah padang pasir kering yang tandus",
-          "Kawasan pegunungan berbatu tanpa vegetasi",
-          "Lahan buatan yang tertutup oleh aspal jalanan"
+          "Ikan, teratai, dan jamur",
+          "Air, lumpur, dan cahaya matahari",
+          "Batu, udara, dan mineral",
+          "Tanah, suhu, dan air hujan"
         ],
-        jawaban: "Daerah yang sering atau selalu tergenang air seperti rawa, gambut, dan sungai",
-        penjelasan: "Lahan basah adalah wilayah daratan yang jenuh atau tergenang air dangkal secara permanen maupun musiman."
+        jawaban: "Ikan, teratai, dan jamur",
+        penjelasan: "Komponen biotik adalah semua makhluk hidup. Air, tanah, udara, cahaya, dan mineral termasuk komponen abiotik."
       },
       {
-        pertanyaan: "Tumbuhan khas yang hidup mengapung atau berakar di air lahan basah adalah...",
-        opsi: ["Teratai & Eceng Gondok", "Pohon Kaktus Gurun", "Pohon Pinus Gunung", "Bunga Edelweis"],
-        jawaban: "Teratai & Eceng Gondok",
-        penjelasan: "Teratai dan eceng gondok adalah tumbuhan hidrofit yang beradaptasi hidup di genangan air tenang."
+        pertanyaan: "Apa yang dimaksud dengan habitat?",
+        opsi: ["Tempat makhluk hidup tinggal dan memenuhi kebutuhannya", "Sekumpulan hewan yang berbeda jenis", "Proses makan dan dimakan", "Benda tak hidup yang terkena cahaya"],
+        jawaban: "Tempat makhluk hidup tinggal dan memenuhi kebutuhannya",
+        penjelasan: "Habitat adalah lingkungan tempat makhluk hidup tinggal, memperoleh makanan, air, perlindungan, dan berkembang biak."
       },
       {
-        pertanyaan: "Di manakah kita paling sering menemukan ekosistem lahan basah alami?",
+        pertanyaan: "Kumpulan ikan seluang sejenis yang hidup di satu rawa disebut...",
         opsi: [
-          "Sepanjang muara sungai, dataran rendah, dan pesisir rawa",
-          "Puncak gunung berapi",
-          "Gurun pasir tandus",
-          "Kawasan industri padat semen"
+          "Populasi",
+          "Individu",
+          "Komponen abiotik",
+          "Habitat"
         ],
-        jawaban: "Sepanjang muara sungai, dataran rendah, dan pesisir rawa",
-        penjelasan: "Lahan basah terbentuk di dataran rendah di mana air dapat berkumpul dan membentuk tanah jenuh air."
+        jawaban: "Populasi",
+        penjelasan: "Satu makhluk hidup disebut individu. Sekumpulan makhluk hidup sejenis yang tinggal bersama disebut populasi."
       },
       {
-        pertanyaan: "Hewan amfibi yang sangat menyukai kelembapan ekosistem lahan basah adalah...",
-        opsi: ["Katak & Kodok", "Kelinci Padang Rumput", "Unta Berpunuk", "Burung Unta"],
-        jawaban: "Katak & Kodok",
-        penjelasan: "Katak membutuhkan kelembapan air rawa untuk bernapas melalui kulit dan meletakkan telur-telurnya."
+        pertanyaan: "Mengapa rawa dapat disebut sebagai ekosistem?",
+        opsi: ["Karena komponen biotik dan abiotiknya saling berinteraksi", "Karena hanya berisi air", "Karena tidak ada perubahan di dalamnya", "Karena semua hewannya sejenis"],
+        jawaban: "Karena komponen biotik dan abiotiknya saling berinteraksi",
+        penjelasan: "Ekosistem terbentuk ketika makhluk hidup berinteraksi dengan air, tanah, udara, cahaya, dan komponen lain di habitatnya."
       }
     ];
 
     const soalSedang = [
       {
-        pertanyaan: "Mengapa lahan basah dianalogikan sebagai 'spons raksasa' alami?",
+        pertanyaan: "Dalam rantai makanan fitoplankton → zooplankton → ikan seluang → bangau, organisme yang menjadi produsen adalah...",
         opsi: [
-          "Menyerap air hujan berlebih saat banjir dan menyimpannya untuk musim kemarau",
-          "Karena terbuat dari bahan busa sintetis",
-          "Karena menghisap seluruh air hingga sungai menjadi kering total",
-          "Sebagai tempat mencuci kendaraan warga"
+          "Fitoplankton",
+          "Zooplankton",
+          "Ikan seluang",
+          "Bangau"
         ],
-        jawaban: "Menyerap air hujan berlebih saat banjir dan menyimpannya untuk musim kemarau",
-        penjelasan: "Lahan gambut dan rawa menyerap jutaan liter air saat hujan deras, mencegah banjir bandang di hilir sungai."
+        jawaban: "Fitoplankton",
+        penjelasan: "Fitoplankton mampu membuat makanan dengan bantuan cahaya matahari, sehingga berperan sebagai produsen."
       },
       {
-        pertanyaan: "Mengapa keberadaan hutan mangrove (bakau) sangat penting bagi garis pantai?",
+        pertanyaan: "Apa arti arah panah dalam rantai makanan?",
         opsi: [
-          "Akarnya memecah energi gelombang tsunami dan mencegah abrasi pantai",
-          "Membuat air laut berubah menjadi air manis",
-          "Tempat berlabuh kapal tanker raksasa",
-          "Untuk ditebang kayunya tanpa ditanam kembali"
+          "Menunjukkan perpindahan energi dari makanan kepada pemakannya",
+          "Menunjukkan tempat tinggal hewan",
+          "Menunjukkan arah aliran sungai",
+          "Menunjukkan jumlah populasi"
         ],
-        jawaban: "Akarnya memecah energi gelombang tsunami dan mencegah abrasi pantai",
-        penjelasan: "Sistem perakaran tunjang mangrove sangat kokoh dalam meredam energi ombak dan menahan sedimentasi tanah pesisir."
+        jawaban: "Menunjukkan perpindahan energi dari makanan kepada pemakannya",
+        penjelasan: "Anak panah mengarah dari makhluk hidup yang dimakan menuju makhluk hidup yang memperoleh energi dengan memakannya."
       },
       {
-        pertanyaan: "Dampak langsung yang terjadi jika rawa diuruk dan dialihfungsikan tanpa perencanaan adalah...",
+        pertanyaan: "Apa peran jamur dan bakteri sebagai dekomposer?",
         opsi: [
-          "Frekuensi banjir meningkat pesat dan hilangnya habitat satwa endemik",
-          "Kualitas udara menjadi dingin seketika",
-          "Musim kemarau hilang selamanya",
-          "Jumlah populasi ikan liar berlipat ganda"
+          "Menguraikan sisa makhluk hidup dan mengembalikan unsur hara",
+          "Membuat cahaya matahari",
+          "Menjadi produsen utama di semua habitat",
+          "Menghentikan aliran air"
         ],
-        jawaban: "Frekuensi banjir meningkat pesat dan hilangnya habitat satwa endemik",
-        penjelasan: "Saat daerah resapan air hilang, air hujan langsung menggenangi pemukiman warga karena tidak ada waduk alami."
+        jawaban: "Menguraikan sisa makhluk hidup dan mengembalikan unsur hara",
+        penjelasan: "Dekomposer menguraikan bangkai dan sisa organisme. Hasil penguraian membantu menyuburkan lingkungan bagi produsen."
       },
       {
-        pertanyaan: "Siapa yang paling bertanggung jawab dalam menjaga kelestarian lahan basah?",
+        pertanyaan: "Jika jumlah ikan kecil menurun tajam, dampak yang paling mungkin pada bangau adalah...",
         opsi: [
-          "Seluruh masyarakat, termasuk pelajar, warga, dan pemerintah",
-          "Hanya nelayan di pesisir sungai",
-          "Hanya penjaga hutan seorang diri",
-          "Tidak ada yang perlu bertanggung jawab"
+          "Bangau lebih sulit memperoleh makanan",
+          "Bangau langsung menjadi produsen",
+          "Jumlah air rawa selalu bertambah",
+          "Jamur berhenti menjadi dekomposer"
         ],
-        jawaban: "Seluruh masyarakat, termasuk pelajar, warga, dan pemerintah",
-        penjelasan: "Menjaga lingkungan adalah tanggung jawab kolektif. Kebiasaan membuang sampah pada tempatnya dimulai dari diri kita sendiri."
+        jawaban: "Bangau lebih sulit memperoleh makanan",
+        penjelasan: "Perubahan jumlah satu populasi dapat memengaruhi populasi lain yang bergantung padanya dalam jaring-jaring makanan."
       }
     ];
 
     const soalSulit = [
       {
-        pertanyaan: "Mengapa kebakaran di lahan gambut saat kemarau jauh lebih berbahaya dan sulit dipadamkan?",
+        pertanyaan: "Jika pemangsa ikan kecil menghilang dari suatu jaring-jaring makanan, apa yang mungkin terjadi lebih dahulu?",
         opsi: [
-          "Api membakar lapisan bahan organik di bawah tanah (ground fire) dan menghasilkan kabut asap pekat",
-          "Karena gambut menghasilkan semburan air dingin",
-          "Karena gambut tidak bisa menyerap panas matahari",
-          "Karena ada magnet di dalam tanah gambut"
+          "Populasi ikan kecil dapat bertambah dan kebutuhan makanannya meningkat",
+          "Semua air langsung menguap",
+          "Ikan kecil berubah menjadi produsen",
+          "Seluruh dekomposer menghilang"
         ],
-        jawaban: "Api membakar lapisan bahan organik di bawah tanah (ground fire) dan menghasilkan kabut asap pekat",
-        penjelasan: "Api gambut merambat di bawah permukaan tanah berpori kering, melepaskan miliaran ton karbon dioksida ke atmosfer."
+        jawaban: "Populasi ikan kecil dapat bertambah dan kebutuhan makanannya meningkat",
+        penjelasan: "Berkurangnya pemangsa dapat membuat populasi mangsa meningkat. Perubahan ini dapat memicu persaingan makanan dan mengganggu keseimbangan."
       },
       {
-        pertanyaan: "Aktivitas antropogenik (manusia) apa yang paling cepat memicu eutrofikasi di perairan rawa?",
+        pertanyaan: "Tindakan manusia yang paling jelas mengganggu keseimbangan ekosistem lahan basah adalah...",
         opsi: [
-          "Pembuangan limbah deterjen, limbah rumah tangga, dan pupuk fosfat berlebih",
-          "Penanaman bibit pohon bakau",
-          "Pemasangan filter alami berbasis pasir",
-          "Pengamatan burung bangau dengan teropong"
+          "Membuang sampah plastik ke sungai dan merusak vegetasi tepi rawa",
+          "Mengamati burung dari jarak aman",
+          "Menghemat air di rumah",
+          "Membuat poster rantai makanan"
         ],
-        jawaban: "Pembuangan limbah deterjen, limbah rumah tangga, dan pupuk fosfat berlebih",
-        penjelasan: "Nutrisi fosfat dan nitrat berlebih memicu ledakan gulma eceng gondok yang menghabiskan oksigen terlarut dalam air."
+        jawaban: "Membuang sampah plastik ke sungai dan merusak vegetasi tepi rawa",
+        penjelasan: "Sampah dapat mencemari habitat dan melukai hewan, sedangkan hilangnya vegetasi mengurangi tempat hidup serta sumber makanan."
       },
       {
-        pertanyaan: "Apa peran ekologis lahan gambut dalam isu perubahan iklim global?",
+        pertanyaan: "Dalam siklus air, proses masuknya air hujan ke dalam tanah disebut...",
         opsi: [
-          "Sebagai rosot (penyimpan) karbon terestrial terbesar di bumi",
-          "Sebagai pendingin buatan berkekuatan freon",
-          "Memantulkan 100% sinar UV kembali ke angkasa",
-          "Tidak memiliki pengaruh terhadap iklim dunia"
+          "Infiltrasi",
+          "Evaporasi",
+          "Kondensasi",
+          "Presipitasi"
         ],
-        jawaban: "Sebagai rosot (penyimpan) karbon terestrial terbesar di bumi",
-        penjelasan: "Meskipun hanya mencakup 3% permukaan daratan bumi, lahan gambut menyimpan dua kali lebih banyak karbon dibanding gabungan seluruh hutan di dunia!"
+        jawaban: "Infiltrasi",
+        penjelasan: "Infiltrasi adalah penyerapan air hujan oleh tanah dan akar. Proses ini membantu ketersediaan air tanah dan habitat lahan basah."
       },
       {
-        pertanyaan: "Langkah restorasi ekosistem lahan basah yang tepat dan berkelanjutan adalah...",
+        pertanyaan: "Rencana tindakan siswa yang paling tepat untuk membantu ekosistem dan ketersediaan air adalah...",
         opsi: [
-          "Penyekatan kanal (rewetting), reboisasi vegetasi lokal, dan edukasi konservasi",
-          "Membeton seluruh pinggiran rawa dengan semen",
-          "Mengalirkan air limbah industri secara langsung tanpa pengolahan IPAL",
-          "Mengeringkan rawa untuk dijadikan jalan raya"
+          "Menghemat air, mengurangi sampah, dan mengamati lingkungan bersama pendamping",
+          "Membuang minyak bekas ke selokan agar cepat hilang",
+          "Menangkap semua hewan kecil di rawa",
+          "Mengeringkan genangan agar tidak ada tumbuhan air"
         ],
-        jawaban: "Penyekatan kanal (rewetting), reboisasi vegetasi lokal, dan edukasi konservasi",
-        penjelasan: "Restorasi gambut menerapkan prinsip 3R: Rewetting (pembasahan kembali), Revegetasi (penanaman), dan Revitalisasi ekonomi masyarakat."
+        jawaban: "Menghemat air, mengurangi sampah, dan mengamati lingkungan bersama pendamping",
+        penjelasan: "Tindakan sederhana yang aman dan dilakukan rutin dapat membantu menjaga kualitas habitat, ketersediaan air, dan keseimbangan ekosistem."
       }
     ];
 

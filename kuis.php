@@ -1,33 +1,15 @@
 <?php
 /**
  * Lahan Basah Hijau - Arena Game Kuis Ekosistem
- * Kurikulum Merdeka IPAS Kelas V SD - Bab 3 & Bab 4
- * Dilengkapi 6 Mode Permainan Seru:
- * 1. Pilihan Ganda Interaktif (dengan Lifeline & Streak)
- * 2. Mencocokan Kartu (Memory Match Pairs)
- * 3. Drag and Drop Rantai Makanan & Taraf Trofik
- * 4. Susun Kata STEM (Word Scramble)
- * 5. Hidden Object (Cari Hewan Rawa Tersembunyi)
- * 6. Puzzle Gambar Ekosistem (Sliding Tiles)
+ * Kurikulum Merdeka IPAS Kelas V SD - 6 Mini Games Interaktif
  */
-?>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Taman Bermain Kuis & Game Edukasi Ekosistem Lahan Basah - IPAS Kelas V SD Kurikulum Merdeka" />
-  <title>Arena Kuis & Games Ekosistem - Lahan Basah Hijau</title>
+$pageTitle = 'Arena Game Kuis Ekosistem Lahan Basah - IPAS SD';
+$pageDesc  = 'Uji pemahaman ekosistem rawa dengan 6 mini-game seru ramah anak: kuis detektif, kartu memori satwa, rantai makanan, susun kata, detektif panorama, dan puzzle 3x3.';
+$activePage = 'kuis';
+$bodyClass  = 'kuis-page';
 
-  <!-- CSS Framework & Libraries -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
-  
-  <!-- Custom Design System -->
-  <link rel="stylesheet" href="custom.css?v=3.4" />
-
-  <style>
+$extraHead = <<<'EOD'
+<style>
     /* Styling Spesifik Game Hub */
     .game-hero {
       background: radial-gradient(circle at 80% 20%, #dcfce7 0%, #e0f2fe 50%, #fffbeb 100%);
@@ -937,115 +919,29 @@
       transition: opacity 0.3s ease;
     }
   </style>
-</head>
-<body class="registration-open">
+EOD;
 
-  <div class="xp-toast" id="xpToast" role="status" aria-live="polite">+0 XP</div>
+require __DIR__ . '/partials/head.php';
+require __DIR__ . '/partials/navbar.php';
 
-  <section class="registration-overlay open" id="registrationOverlay" aria-labelledby="registrationTitle">
-    <div class="registration-card">
-      <aside class="registration-art">
-        <div>
-          <span class="badge bg-white text-success rounded-pill px-3 py-2 mb-3"><i class="bi bi-tree-fill me-1"></i> Arena Lahan Basah</span>
-          <h2 class="fw-bolder mb-3">Siap memulai petualangan?</h2>
-          <p class="text-white-50">Kenalkan dirimu dahulu. Nama dan sekolahmu akan dipakai untuk menyimpan XP serta skor terbaik di perangkat ini.</p>
-        </div>
-        <div class="registration-mascot" aria-hidden="true"><img src="foto/asetgame/Katak.png" alt="" /></div>
-        <small class="text-white-50"><i class="bi bi-shield-lock-fill me-1"></i> Data hanya tersimpan secara lokal di browser ini.</small>
-      </aside>
-      <div class="registration-form-wrap">
-        <button class="registration-close d-none" id="registrationClose" type="button" onclick="closeRegistrationModal()" aria-label="Tutup formulir">×</button>
-        <div class="mb-4">
-          <div class="small fw-bold text-success mb-1">IDENTITAS PENJELAJAH</div>
-          <h2 class="fw-bolder mb-2" id="registrationTitle">Daftar sebelum bermain</h2>
-          <p class="text-muted mb-0">Isi kedua kolom berikut agar progres permainanmu tidak hilang.</p>
-        </div>
-        <form id="registrationForm" novalidate>
-          <div class="registration-field">
-            <label for="registrationName">Nama lengkap</label>
-            <span class="field-icon" aria-hidden="true"><i class="bi bi-person-fill"></i></span>
-            <input id="registrationName" name="nama" type="text" autocomplete="name" maxlength="60" placeholder="Contoh: Iqbal Ramadhan" required />
-          </div>
-          <div class="registration-field">
-            <label for="registrationSchool">Nama sekolah / instansi</label>
-            <span class="field-icon" aria-hidden="true"><i class="bi bi-building-fill"></i></span>
-            <input id="registrationSchool" name="sekolah" type="text" autocomplete="organization" maxlength="80" placeholder="Contoh: SD Negeri 2 Banjarmasin" required />
-          </div>
-          <div class="registration-error" id="registrationError" role="alert"></div>
-          <button class="btn-eco-primary registration-submit" type="submit">
-            <i class="bi bi-rocket-takeoff-fill"></i> Mulai Petualangan
-          </button>
-        </form>
-      </div>
-    </div>
-  </section>
+// Unified Hero Banner
+$heroTag       = '<i class="bi bi-joystick me-1 text-warning"></i> Arena Edukasi Ramah Anak';
+$heroTitle     = 'Taman Bermain Game <br><span class="highlight">Kuis Ekosistem Rawa</span>';
+$heroSubtitle  = 'Pilih permainan favoritmu! Uji pengetahuanmu tentang harmoni alam, rantai makanan, dan satwa khas Kalimantan dengan 6 game interaktif yang seru.';
+$heroMascot    = 'foto/puzzle.webp';
+$heroMascotAlt = 'Maskot Game STEM';
+$heroCta       = '
+  <a href="materi.php" class="btn-eco-outline btn-sm px-4">
+    <i class="bi bi-book-half"></i> Baca Modul Dulu
+  </a>
+  <a href="leaderboard.php" class="btn-eco-primary btn-sm px-4">
+    <i class="bi bi-trophy-fill"></i> Lihat Peringkat
+  </a>
+';
+require __DIR__ . '/partials/hero.php';
+?>
 
-  <!-- Floating Audio Dock -->
-  <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
-    <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
-      <i id="music-icon" class="bi bi-volume-mute-fill"></i>
-    </button>
-    <div class="sound-bars">
-      <div class="sound-bar"></div>
-      <div class="sound-bar"></div>
-      <div class="sound-bar"></div>
-    </div>
-    <span class="music-label d-none d-sm-inline">Musik</span>
-  </div>
-  <audio id="bg-music" loop preload="auto">
-    <source src="sound/sound2.mp3" type="audio/mpeg" />
-  </audio>
-  <div id="music-toast" class="music-toast-popup"></div>
-
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
-    <div class="container">
-      <a class="brand-wrapper" href="index.html">
-        <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
-        <div class="brand-text">
-          <span>Lahan Basah Hijau</span>
-          <span class="brand-badge"><i class="bi bi-tree-fill me-1"></i> STEM Interaktif</span>
-        </div>
-      </a>
-      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Buka navigasi">
-        <i class="bi bi-list fs-2 text-success"></i>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="materi.php"><i class="bi bi-book-fill"></i> Materi</a></li>
-          <li class="nav-item"><a class="nav-link active" href="kuis.php"><i class="bi bi-controller"></i> Kuis & Games</a></li>
-          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-bezier2"></i> Simulasi</a></li>
-          <li class="nav-item"><a class="nav-link" href="proyek.html"><i class="bi bi-lightbulb-fill"></i> Proyek</a></li>
-          <li class="nav-item"><a class="nav-link" href="leaderboard.html"><i class="bi bi-trophy-fill"></i> Peringkat</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero Header -->
-  <header class="game-hero text-center">
-    <div class="container" data-aos="fade-down">
-      <div class="hero-game-icons" aria-hidden="true">
-        <span><img class="ui-icon-img" src="foto/kuis.webp" alt="" /></span>
-        <span><img class="ui-icon-img" src="foto/asetgame/Teratai.png" alt="" /></span>
-        <span><img class="ui-icon-img" src="foto/puzzle.webp" alt="" /></span>
-        <span><img class="ui-icon-img" src="foto/asetgame/Bekantan.png" alt="" /></span>
-      </div>
-      <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fw-bold mb-2">
-        <i class="bi bi-joystick me-1"></i> Taman Bermain Edukasi Ramah Anak
-      </span>
-      <h1 class="display-5 fw-bolder text-success-emphasis mb-2">
-        Arena Game Kuis Ekosistem Lahan Basah
-      </h1>
-      <p class="lead text-muted mx-auto mb-0" style="max-width: 680px; font-size: 1.05rem;">
-        Pilih permainan favoritmu! Uji pengetahuanmu tentang harmoni alam, rantai makanan, dan satwa khas Kalimantan dengan berbagai game interaktif yang seru.
-      </p>
-    </div>
-  </header>
-
-  <!-- Main Game Arena Wrapper -->
-  <main class="game-arena-card">
+<main class="game-arena-card">
     <div class="game-stage-box" data-aos="fade-up">
 
       <!-- Player Identity Bar -->
@@ -1095,16 +991,16 @@
           <span class="game-mode-icon"><img class="ui-icon-img" src="foto/kuis.webp" alt="" /></span><span class="game-mode-name">Kuis Detektif</span><span class="game-mode-desc">Taklukkan soal bertingkat</span><span class="game-tab-badge">12 Soal</span>
         </button>
         <button class="game-mode-tab" data-mode="memoryMatch" onclick="switchGameMode('memoryMatch', this)">
-          <span class="game-mode-icon"><img class="ui-icon-img" src="foto/asetgame/Teratai.png" alt="" /></span><span class="game-mode-name">Mencocokkan Kartu</span><span class="game-mode-desc">Latih ingatan dan konsep</span><span class="game-tab-badge">6 Pasang</span>
+          <span class="game-mode-icon"><img class="ui-icon-img" src="foto/asetgame/Teratai.webp" alt="" /></span><span class="game-mode-name">Mencocokkan Kartu</span><span class="game-mode-desc">Latih ingatan dan konsep</span><span class="game-tab-badge">6 Pasang</span>
         </button>
         <button class="game-mode-tab" data-mode="dragDrop" onclick="switchGameMode('dragDrop', this)">
-          <span class="game-mode-icon"><img class="ui-icon-img" src="foto/asetgame/Ikan.png" alt="" /></span><span class="game-mode-name">Susun Rantai</span><span class="game-mode-desc">Urutkan aliran energi</span><span class="game-tab-badge">Taraf Trofik</span>
+          <span class="game-mode-icon"><img class="ui-icon-img" src="foto/asetgame/Ikan.webp" alt="" /></span><span class="game-mode-name">Susun Rantai</span><span class="game-mode-desc">Urutkan aliran energi</span><span class="game-tab-badge">Taraf Trofik</span>
         </button>
         <button class="game-mode-tab" data-mode="wordScramble" onclick="switchGameMode('wordScramble', this)">
           <span class="game-mode-icon"><img class="ui-icon-img" src="foto/modul.webp" alt="" /></span><span class="game-mode-name">Susun Kata</span><span class="game-mode-desc">Pecahkan istilah ilmiah</span><span class="game-tab-badge">Kosakata STEM</span>
         </button>
         <button class="game-mode-tab" data-mode="hiddenObject" onclick="switchGameMode('hiddenObject', this)">
-          <span class="game-mode-icon"><img class="ui-icon-img" src="foto/asetgame/Bekantan.png" alt="" /></span><span class="game-mode-name">Cari Hewan Rawa</span><span class="game-mode-desc">Temukan satwa tersembunyi</span><span class="game-tab-badge">Detektif</span>
+          <span class="game-mode-icon"><img class="ui-icon-img" src="foto/asetgame/Bekantan.webp" alt="" /></span><span class="game-mode-name">Cari Hewan Rawa</span><span class="game-mode-desc">Temukan satwa tersembunyi</span><span class="game-tab-badge">Detektif</span>
         </button>
         <button class="game-mode-tab" data-mode="puzzle" onclick="switchGameMode('puzzle', this)">
           <span class="game-mode-icon"><img class="ui-icon-img" src="foto/puzzle.webp" alt="" /></span><span class="game-mode-name">Puzzle Gambar</span><span class="game-mode-desc">Susun panorama lahan basah</span><span class="game-tab-badge">3×3</span>
@@ -1127,7 +1023,7 @@
             <button class="btn btn-eco-primary" onclick="startMultipleChoiceQuiz()">
               <i class="bi bi-play-circle-fill"></i> Mulai Kuis Sekarang
             </button>
-            <a href="leaderboard.html" class="btn btn-eco-outline">
+            <a href="leaderboard.php" class="btn btn-eco-outline">
               <i class="bi bi-trophy-fill"></i> Lihat Peringkat
             </a>
           </div>
@@ -1204,7 +1100,7 @@
             <button class="btn btn-eco-primary" onclick="startMultipleChoiceQuiz()">
               <i class="bi bi-arrow-repeat"></i> Coba Lagi
             </button>
-            <a href="leaderboard.html" class="btn btn-eco-outline">
+            <a href="leaderboard.php" class="btn btn-eco-outline">
               <i class="bi bi-trophy-fill"></i> Papan Peringkat
             </a>
             <button class="btn btn-outline-secondary rounded-pill px-4 fw-bold" onclick="switchGameMode('memoryMatch')">
@@ -1220,7 +1116,7 @@
            =================================================================== -->
       <section id="arena-memoryMatch" class="game-section d-none">
         <div class="text-center mb-3">
-          <h4 class="fw-bold text-success-emphasis mb-1"><img class="section-title-img" src="foto/asetgame/Teratai.png" alt="" />Mencocokkan Kartu Ekosistem</h4>
+          <h4 class="fw-bold text-success-emphasis mb-1"><img class="section-title-img" src="foto/asetgame/Teratai.webp" alt="" />Mencocokkan Kartu Ekosistem</h4>
           <p class="text-muted small mb-3">Balik kartu dan temukan pasangan organisme lahan basah dengan perannya!</p>
           <div class="d-flex justify-content-center gap-3 mb-3">
             <span class="score-chip"><i class="bi bi-cursor-fill text-primary"></i> Gerakan: <strong id="memoryMoves">0</strong></span>
@@ -1235,7 +1131,7 @@
 
         <!-- Victory Modal for Memory -->
         <div id="memoryVictory" class="text-center p-4 bg-light rounded-4 border border-success mt-4 d-none">
-          <img class="section-title-img mb-1" src="foto/asetgame/Katak.png" alt="Ilustrasi keberhasilan" />
+          <img class="section-title-img mb-1" src="foto/asetgame/Katak.webp" alt="Ilustrasi keberhasilan" />
           <h4 class="fw-bold text-success mb-1">Luar Biasa! Semua Pasangan Ditemukan!</h4>
           <p class="text-muted small mb-3">Kamu berhasil menyelesaikan permainan dalam <strong id="victoryMoves"></strong> gerakan!</p>
           <button class="btn btn-eco-primary btn-sm" onclick="initMemoryGame()">
@@ -1249,7 +1145,7 @@
            =================================================================== -->
       <section id="arena-dragDrop" class="game-section d-none">
         <div class="text-center mb-4">
-          <h4 class="fw-bold text-success-emphasis mb-1"><img class="section-title-img" src="foto/asetgame/Ikan.png" alt="" />Susun Rantai Makanan Lahan Basah</h4>
+          <h4 class="fw-bold text-success-emphasis mb-1"><img class="section-title-img" src="foto/asetgame/Ikan.webp" alt="" />Susun Rantai Makanan Lahan Basah</h4>
           <p class="text-muted small mb-2">Tarik dan letakkan organisme ke dalam kotak taraf trofik yang tepat sesuai aliran energi!</p>
           <button class="btn btn-outline-success btn-sm rounded-pill fw-bold" onclick="initDragDropGame()">
             <i class="bi bi-arrow-repeat"></i> Reset Susunan
@@ -1320,7 +1216,7 @@
 
         <!-- Clue Card with Visual Clue & Definition -->
         <div class="d-flex align-items-center justify-content-center gap-3 p-3 bg-white border border-2 border-primary-subtle rounded-4 shadow-sm mb-4">
-          <img id="scrambleImage" src="foto/game/puzzle_ekosistem.jpg" alt="Visual Clue" style="width: 72px; height: 72px; object-fit: contain; border-radius: 12px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12)); flex-shrink: 0;">
+          <img id="scrambleImage" src="foto/game/puzzle_ekosistem.webp" alt="Visual Clue" style="width: 72px; height: 72px; object-fit: contain; border-radius: 12px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12)); flex-shrink: 0;">
           <div class="text-start">
             <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 mb-1 fw-bold">Petunjuk Visual & Definisi:</span>
             <div class="fw-bold fs-6 text-dark" id="scrambleClue">
@@ -1357,7 +1253,7 @@
             <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill fw-bold mb-2">
               <i class="bi bi-search"></i> Eksplorasi Visual IPAS Bab 3
             </span>
-            <h3 class="fw-bolder text-success-emphasis mb-1"><img class="section-title-img" src="foto/asetgame/Bekantan.png" alt="" />Detektif Satwa Lahan Basah</h3>
+            <h3 class="fw-bolder text-success-emphasis mb-1"><img class="section-title-img" src="foto/asetgame/Bekantan.webp" alt="" />Detektif Satwa Lahan Basah</h3>
             <p class="text-muted small mb-3">
               Temukan 5 objek tersembunyi di ekosistem rawa Kalimantan! Perhatikan balik dedaunan pohon, bebatuan, dan perairan rawa.
             </p>
@@ -1371,30 +1267,30 @@
           <!-- 16:9 Multi-Layer Panoramic Arena -->
           <div class="eco-panorama-box" id="ecoPanoramaBox">
             <!-- Layer 1: Langit (Edge-to-edge seamless sky & clouds) -->
-            <img src="foto/asetgame/Langit.png" class="eco-pano-layer pano-sky-bg" alt="Langit Rawa" />
+            <img src="foto/asetgame/Langit.webp" class="eco-pano-layer pano-sky-bg" alt="Langit Rawa" />
 
             <!-- Layer 2: Halaman / Perbukitan Hijau -->
-            <img src="foto/asetgame/Halaman.png" class="eco-pano-layer" style="z-index: 2;" alt="Daratan Lahan Basah" />
+            <img src="foto/asetgame/Halaman.webp" class="eco-pano-layer" style="z-index: 2;" alt="Daratan Lahan Basah" />
 
             <!-- Layer 3: Pohon Alami di Bukit Kanan Belakang (Distant hillside landscape tree) -->
-            <!-- Optional distant tree disabled for cleaner sunlight horizon: <img src="foto/asetgame/Pohon.png" class="eco-pano-bg-tree" style="right: 14%; top: 38%; width: 18%; z-index: 3; opacity: 0.92; filter: brightness(0.95);" alt="Pohon Mangrove di Tepi Air" /> -->
+            <!-- Optional distant tree disabled for cleaner sunlight horizon: <img src="foto/asetgame/Pohon.webp" class="eco-pano-bg-tree" style="right: 14%; top: 38%; width: 18%; z-index: 3; opacity: 0.92; filter: brightness(0.95);" alt="Pohon Mangrove di Tepi Air" /> -->
 
             <!-- Layer 4: Rawa / Air Jernih Mengalir -->
-            <img src="foto/asetgame/Rawa.png" class="eco-pano-layer" style="z-index: 4;" alt="Perairan Rawa" />
+            <img src="foto/asetgame/Rawa.webp" class="eco-pano-layer" style="z-index: 4;" alt="Perairan Rawa" />
 
             <!-- Container for Layer 5 (Animals in water / background) -->
             <div id="hiddenLayer5" style="position: absolute; inset: 0; z-index: 5; pointer-events: none;"></div>
 
             <!-- Layer 6: Batu Alami Pinggir Rawa -->
-            <img src="foto/asetgame/Batu.png" class="eco-pano-rock" style="left: 17%; bottom: 12%; width: 17%; z-index: 6;" alt="Batu Tepi Rawa Kiri" />
-            <img src="foto/asetgame/Batu.png" class="eco-pano-rock" style="right: 18%; bottom: 13%; width: 16%; transform: scaleX(-1); z-index: 6;" alt="Batu Tepi Rawa Kanan" />
+            <img src="foto/asetgame/Batu.webp" class="eco-pano-rock" style="left: 17%; bottom: 12%; width: 17%; z-index: 6;" alt="Batu Tepi Rawa Kiri" />
+            <img src="foto/asetgame/Batu.webp" class="eco-pano-rock" style="right: 18%; bottom: 13%; width: 16%; transform: scaleX(-1); z-index: 6;" alt="Batu Tepi Rawa Kanan" />
 
             <!-- Container for Layer 7 (Animals in midground bank) -->
             <div id="hiddenLayer7" style="position: absolute; inset: 0; z-index: 7; pointer-events: none;"></div>
 
             <!-- Layer 8: Pohon Mangrove Utama Kiri & Vegetasi Rumput Tropis Depan -->
-            <img src="foto/asetgame/Pohon.png" class="eco-pano-tree" style="left: -4%; top: 22%; width: 38%; z-index: 8; filter: drop-shadow(4px 4px 12px rgba(0,0,0,0.18));" alt="Pohon Mangrove Kiri" />
-            <img src="foto/asetgame/Rumput.png" class="eco-pano-layer" style="z-index: 8;" alt="Rerumputan & Daun Tropis Depan" />
+            <img src="foto/asetgame/Pohon.webp" class="eco-pano-tree" style="left: -4%; top: 22%; width: 38%; z-index: 8; filter: drop-shadow(4px 4px 12px rgba(0,0,0,0.18));" alt="Pohon Mangrove Kiri" />
+            <img src="foto/asetgame/Rumput.webp" class="eco-pano-layer" style="z-index: 8;" alt="Rerumputan & Daun Tropis Depan" />
 
             <!-- Container for Layer 9 (Animals in foreground) -->
             <div id="hiddenLayer9" style="position: absolute; inset: 0; z-index: 9; pointer-events: none;"></div>
@@ -1426,7 +1322,7 @@
           <!-- Discovery Feedback & Educational Fact Banner -->
           <div id="hiddenDiscoveryBanner" class="hidden-discovery-modal d-none">
             <div class="d-flex align-items-center gap-3">
-            <div id="hiddenDiscoveryIcon" class="flex-shrink-0"><img class="section-title-img" src="foto/asetgame/Katak.png" alt="" /></div>
+            <div id="hiddenDiscoveryIcon" class="flex-shrink-0"><img class="section-title-img" src="foto/asetgame/Katak.webp" alt="" /></div>
               <div>
                 <h5 class="fw-bold text-success mb-1" id="hiddenDiscoveryTitle">Hebat! Kamu menemukan Bekantan!</h5>
                 <p class="mb-0 text-dark small" id="hiddenDiscoveryFact">Fakta sains ekosistem...</p>
@@ -1456,9 +1352,9 @@
         <div class="puzzle-board" id="puzzleBoard"></div>
 
         <div id="puzzleVictory" class="text-center p-3 bg-light rounded-4 border border-success mt-3 d-none">
-          <img class="section-title-img mb-1" src="foto/asetgame/Katak.png" alt="Ilustrasi keberhasilan" />
+          <img class="section-title-img mb-1" src="foto/asetgame/Katak.webp" alt="Ilustrasi keberhasilan" />
           <h5 class="fw-bold text-success mb-1">Selamat! Puzzle Tersusun Rapi!</h5>
-          <img src="foto/game/puzzle_ekosistem.jpg" alt="Master Puzzle Lahan Basah" class="rounded-3 shadow-sm mx-auto my-2" style="max-width: 220px; display: block; border: 2px solid #10b981;">
+          <img src="foto/game/puzzle_ekosistem.webp" alt="Master Puzzle Lahan Basah" class="rounded-3 shadow-sm mx-auto my-2" style="max-width: 220px; display: block; border: 2px solid #10b981;">
           <p class="text-muted small mb-2">Kamu berhasil menyusun ekosistem lahan basah dalam <strong id="finalPuzzleMoves"></strong> langkah!</p>
           <button class="btn btn-eco-primary btn-sm rounded-pill px-4" onclick="initPuzzleGame()"><i class="bi bi-arrow-clockwise"></i> Mainkan Lagi</button>
         </div>
@@ -1467,19 +1363,9 @@
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="custom-footer">
-    <div class="container py-4 text-center">
-      <p class="fw-bold mb-1"><i class="bi bi-tree-fill me-1"></i> Lahan Basah Hijau - Media Edukasi STEM Kurikulum Merdeka</p>
-      <p class="text-muted small mb-0">Disusun berdasarkan IPAS Kelas V SD Bab 3 (Harmoni dalam Ekosistem) & Bab 4 (Siklus Air)</p>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="sfx.js?v=3.2"></script>
-  <script>
+<?php
+$extraScripts = <<<'EOD'
+<script>
     AOS.init({ duration: 600, once: true });
 
     // ==========================================================================
@@ -1974,7 +1860,7 @@
         SoundEffects.playFanfare();
         addPlayerXp(100);
       } else if (quizScore >= 8) {
-        emojiElem.innerHTML = '<img class="result-illustration" src="foto/asetgame/Katak.png" alt="Ilustrasi penjaga lahan basah" />';
+        emojiElem.innerHTML = '<img class="result-illustration" src="foto/asetgame/Katak.webp" alt="Ilustrasi penjaga lahan basah" />';
         rankBadge.textContent = 'Penjaga Lahan Basah Teladan';
         rankBadge.className = 'badge bg-success text-white fw-bold px-3 py-2 rounded-pill fs-6';
         SoundEffects.playCorrect();
@@ -2011,18 +1897,18 @@
     // 2. GAME MODE 2: MENCOCOKAN KARTU (MEMORY MATCH PAIRS)
     // ==========================================================================
     const memoryPairsData = [
-      { id: 1, front: "Teratai Rawa", back: "Produsen (Fotosintesis)", image: "foto/asetgame/Teratai.png" },
-      { id: 1, front: "Purun & Rumput", back: "Produsen (Fotosintesis)", image: "foto/asetgame/Rumput.png" },
-      { id: 2, front: "Keong Mas", back: "Konsumen I (Herbivora)", image: "foto/game/keong_kartu.png" },
-      { id: 2, front: "Pemakan Daun", back: "Konsumen I (Herbivora)", image: "foto/game/keong_kartu.png" },
-      { id: 3, front: "Ikan Haruan", back: "Konsumen Karnivora", image: "foto/asetgame/Ikan.png" },
-      { id: 3, front: "Katak Rawa", back: "Konsumen Karnivora", image: "foto/asetgame/Katak.png" },
-      { id: 4, front: "Jamur Lapuk", back: "Pengurai (Dekomposer)", image: "foto/game/jamur_kartu.png" },
-      { id: 4, front: "Bakteri Tanah", back: "Pengurai (Dekomposer)", image: "foto/game/bakteri_kartu.png" },
-      { id: 5, front: "Bekantan", back: "Satwa Maskot Kalsel", image: "foto/asetgame/Bekantan.png" },
-      { id: 5, front: "Pohon Rambai", back: "Pohon Pakan Kalsel", image: "foto/asetgame/Pohon.png" },
-      { id: 6, front: "Spons Gambut", back: "Penyimpan Air Alami", image: "foto/game/gambut_kartu.png" },
-      { id: 6, front: "Sinar Mentari", back: "Energi Utama Ekosistem", image: "foto/game/matahari_kartu.png" }
+      { id: 1, front: "Teratai Rawa", back: "Produsen (Fotosintesis)", image: "foto/asetgame/Teratai.webp" },
+      { id: 1, front: "Purun & Rumput", back: "Produsen (Fotosintesis)", image: "foto/asetgame/Rumput.webp" },
+      { id: 2, front: "Keong Mas", back: "Konsumen I (Herbivora)", image: "foto/game/keong_kartu.webp" },
+      { id: 2, front: "Pemakan Daun", back: "Konsumen I (Herbivora)", image: "foto/game/keong_kartu.webp" },
+      { id: 3, front: "Ikan Haruan", back: "Konsumen Karnivora", image: "foto/asetgame/Ikan.webp" },
+      { id: 3, front: "Katak Rawa", back: "Konsumen Karnivora", image: "foto/asetgame/Katak.webp" },
+      { id: 4, front: "Jamur Lapuk", back: "Pengurai (Dekomposer)", image: "foto/game/jamur_kartu.webp" },
+      { id: 4, front: "Bakteri Tanah", back: "Pengurai (Dekomposer)", image: "foto/game/bakteri_kartu.webp" },
+      { id: 5, front: "Bekantan", back: "Satwa Maskot Kalsel", image: "foto/asetgame/Bekantan.webp" },
+      { id: 5, front: "Pohon Rambai", back: "Pohon Pakan Kalsel", image: "foto/asetgame/Pohon.webp" },
+      { id: 6, front: "Spons Gambut", back: "Penyimpan Air Alami", image: "foto/game/gambut_kartu.webp" },
+      { id: 6, front: "Sinar Mentari", back: "Energi Utama Ekosistem", image: "foto/game/matahari_kartu.webp" }
     ];
 
     let memoryCards = [];
@@ -2129,11 +2015,11 @@
     // 3. GAME MODE 3: DRAG AND DROP RANTAI MAKANAN
     // ==========================================================================
     const chainItemsData = [
-      { id: "teratai", slot: "produsen", label: "Teratai Rawa", role: "Produsen", image: "foto/asetgame/Teratai.png" },
-      { id: "keong", slot: "konsumen1", label: "Keong Mas", role: "Konsumen I", image: "foto/game/keong_kartu.png" },
-      { id: "katak", slot: "konsumen2", label: "Katak Rawa", role: "Konsumen II", image: "foto/asetgame/Katak.png" },
-      { id: "bangau", slot: "puncak", label: "Bangau Tongtong", role: "Konsumen Puncak", image: "foto/asetgame/Bangau.png" },
-      { id: "jamur", slot: "pengurai", label: "Jamur Pengurai", role: "Dekomposer", image: "foto/game/jamur_kartu.png" }
+      { id: "teratai", slot: "produsen", label: "Teratai Rawa", role: "Produsen", image: "foto/asetgame/Teratai.webp" },
+      { id: "keong", slot: "konsumen1", label: "Keong Mas", role: "Konsumen I", image: "foto/game/keong_kartu.webp" },
+      { id: "katak", slot: "konsumen2", label: "Katak Rawa", role: "Konsumen II", image: "foto/asetgame/Katak.webp" },
+      { id: "bangau", slot: "puncak", label: "Bangau Tongtong", role: "Konsumen Puncak", image: "foto/asetgame/Bangau.webp" },
+      { id: "jamur", slot: "pengurai", label: "Jamur Pengurai", role: "Dekomposer", image: "foto/game/jamur_kartu.webp" }
     ];
 
     let currentDraggedItem = null;
@@ -2249,12 +2135,12 @@
     // 4. GAME MODE 4: SUSUN KATA STEM (WORD SCRAMBLE)
     // ==========================================================================
     const scrambleVocab = [
-      { word: "EKOSISTEM", clue: "Hubungan timbal balik antara makhluk hidup dengan lingkungan alamnya.", image: "foto/game/puzzle_ekosistem.jpg" },
-      { word: "PRODUSEN", clue: "Tumbuhan atau alga yang mampu membuat makanannya sendiri melalui fotosintesis.", image: "foto/asetgame/Teratai.png" },
-      { word: "KARNIVORA", clue: "Golongan hewan pemakan daging seperti ikan haruan dan katak rawa.", image: "foto/asetgame/Ikan.png" },
-      { word: "DEKOMPOSER", clue: "Bakteri dan jamur pengurai bangkai serta daun lapuk di rawa.", image: "foto/game/jamur_kartu.png" },
-      { word: "BEKANTAN", clue: "Monyet unik berhidung panjang yang menjadi satwa maskot Kalimantan Selatan.", image: "foto/asetgame/Bekantan.png" },
-      { word: "GAMBUT", clue: "Lahan basah kaya bahan organik yang menyimpan air seperti spons raksasa.", image: "foto/game/gambut_kartu.png" }
+      { word: "EKOSISTEM", clue: "Hubungan timbal balik antara makhluk hidup dengan lingkungan alamnya.", image: "foto/game/puzzle_ekosistem.webp" },
+      { word: "PRODUSEN", clue: "Tumbuhan atau alga yang mampu membuat makanannya sendiri melalui fotosintesis.", image: "foto/asetgame/Teratai.webp" },
+      { word: "KARNIVORA", clue: "Golongan hewan pemakan daging seperti ikan haruan dan katak rawa.", image: "foto/asetgame/Ikan.webp" },
+      { word: "DEKOMPOSER", clue: "Bakteri dan jamur pengurai bangkai serta daun lapuk di rawa.", image: "foto/game/jamur_kartu.webp" },
+      { word: "BEKANTAN", clue: "Monyet unik berhidung panjang yang menjadi satwa maskot Kalimantan Selatan.", image: "foto/asetgame/Bekantan.webp" },
+      { word: "GAMBUT", clue: "Lahan basah kaya bahan organik yang menyimpan air seperti spons raksasa.", image: "foto/game/gambut_kartu.webp" }
     ];
 
     let currentWordIdx = 0;
@@ -2362,7 +2248,7 @@
       {
         id: "bekantan",
         name: "Bekantan",
-        iconImg: "foto/asetgame/Bekantan.png",
+        iconImg: "foto/asetgame/Bekantan.webp",
         fact: "🐒 Bekantan (Nasalis larvatus) adalah primata endemik Kalimantan berhidung unik yang suka memakan pucuk dedaunan pohon rambai di tepi rawa dan sungai!",
         spots: [
           {
@@ -2385,7 +2271,7 @@
       {
         id: "bangau",
         name: "Burung Bangau",
-        iconImg: "foto/asetgame/Bangau.png",
+        iconImg: "foto/asetgame/Bangau.webp",
         fact: "🪶 Burung Bangau Tongtong memiliki kaki jangkung dan paruh runcing yang kokoh untuk menyambar ikan serta katak di rawa dangkal.",
         spots: [
           {
@@ -2408,7 +2294,7 @@
       {
         id: "katak",
         name: "Katak Rawa",
-        iconImg: "foto/asetgame/Katak.png",
+        iconImg: "foto/asetgame/Katak.webp",
         fact: "🐸 Katak Rawa memangsa serangga air dan menjadi mangsa bergizi bagi ikan predator serta burung air dalam jejaring makanan lahan basah.",
         spots: [
           {
@@ -2431,7 +2317,7 @@
       {
         id: "ikan",
         name: "Ikan Seluang",
-        iconImg: "foto/asetgame/Ikan.png",
+        iconImg: "foto/asetgame/Ikan.webp",
         fact: "🐟 Ikan Seluang berenang lincah secara berkelompok di perairan rawa dan sungai gambut yang bersih, memakan mikroorganisme serta lumut air.",
         spots: [
           {
@@ -2454,7 +2340,7 @@
       {
         id: "teratai",
         name: "Teratai Mekar",
-        iconImg: "foto/asetgame/Teratai.png",
+        iconImg: "foto/asetgame/Teratai.webp",
         fact: "🪷 Teratai adalah tanaman air produsen utama yang meneduhkan dasar rawa dengan daunnya dan memekarkan bunga indah untuk fauna air.",
         spots: [
           {
@@ -2763,7 +2649,7 @@
           // Calculate background coordinates for 3x3 tiles
           const origRow = Math.floor((val - 1) / 3);
           const origCol = (val - 1) % 3;
-          piece.style.backgroundImage = 'url("foto/game/puzzle_ekosistem.jpg")';
+          piece.style.backgroundImage = 'url("foto/game/puzzle_ekosistem.webp")';
           piece.style.backgroundPosition = `${origCol * 50}% ${origRow * 50}%`;
           piece.innerHTML = `<span class="piece-num">${val}</span>`;
           piece.onclick = () => handlePuzzleClick(idx);
@@ -2806,5 +2692,6 @@
       initHiddenObjectGame();
     });
   </script>
-</body>
-</html>
+EOD;
+
+require __DIR__ . '/partials/footer.php';

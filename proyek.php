@@ -1,0 +1,1267 @@
+<?php
+/**
+ * Lahan Basah Hijau - Studio Proyek STEM Lahan Basah
+ * Kurikulum Merdeka IPAS Kelas V SD - 4 Pilar STEM Terpadu
+ */
+$pageTitle = 'Studio Proyek STEM Lahan Basah - IPAS SD';
+$pageDesc  = 'Eksplorasi 8 ide proyek STEM (Sains, Teknologi, Rekayasa, Matematika), panduan langkah praktis, dan galeri karya siswa se-Indonesia.';
+$activePage = 'proyek';
+$bodyClass  = 'proyek-page';
+
+$extraHead = <<<'EOD'
+<style>
+    /* Specific styles for Proyek & Galeri */
+    .project-studio-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: var(--radius-xl);
+      padding: 38px 32px;
+      box-shadow: 0 15px 35px rgba(6, 78, 59, 0.08);
+      max-width: 820px;
+      margin: -40px auto 40px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* STEM 4 Pillars & Idea Cards */
+    .stem-filter-pill {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 2px solid #e2e8f0;
+      background: #ffffff;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stem-filter-pill:hover {
+      border-color: #10b981;
+      color: #059669;
+      transform: translateY(-2px);
+    }
+
+    .stem-filter-pill.active {
+      background: linear-gradient(135deg, #059669, #10b981);
+      border-color: #059669;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+
+    .idea-card {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 6px 18px rgba(6, 78, 59, 0.05);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .idea-card:hover {
+      transform: translateY(-6px);
+      border-color: #10b981;
+      box-shadow: 0 12px 28px rgba(16, 185, 129, 0.16);
+    }
+
+    .idea-badge-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .idea-icon-wrap {
+      width: 92px;
+      height: 78px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #f0fdf4, #eff9ff);
+      border: 1px solid #bbf7d0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      padding: 5px;
+      box-shadow: inset 0 0 0 4px rgba(255,255,255,0.72);
+    }
+
+    .idea-icon-wrap .ui-2d-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 7px rgba(15, 118, 91, 0.16));
+    }
+
+    .idea-guide-btn {
+      background: #f0fdf4;
+      color: #059669;
+      border: 1.5px solid #a7f3d0;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+      width: 100%;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .idea-guide-btn:hover {
+      background: #059669;
+      color: #ffffff;
+      border-color: #059669;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    }
+
+    /* Auth Box */
+    .auth-tab-btn {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: #64748b;
+      padding: 8px 24px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: transparent;
+      transition: all 0.25s ease;
+    }
+
+    .auth-tab-btn.active {
+      background: linear-gradient(135deg, #10b981, #0284c7);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    /* File Drop Area */
+    .file-dropzone {
+      border: 2px dashed #10b981;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      background: #f0fdf4;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .file-dropzone:hover {
+      background: #dcfce7;
+      border-color: #059669;
+    }
+
+    .image-preview-thumbnail {
+      max-height: 180px;
+      border-radius: var(--radius-sm);
+      display: none;
+      margin: 12px auto 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Gallery Grid */
+    .gallery-masonry-grid {
+      column-count: 3;
+      column-gap: 20px;
+    }
+
+    @media (max-width: 991px) {
+      .gallery-masonry-grid { column-count: 2; }
+    }
+    @media (max-width: 576px) {
+      .gallery-masonry-grid { column-count: 1; }
+    }
+
+    .gallery-item-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+      break-inside: avoid;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .gallery-item-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: #10b981;
+    }
+
+    .gallery-card-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item-card:hover .gallery-card-img {
+      transform: scale(1.03);
+    }
+
+    .gallery-card-body {
+      padding: 16px;
+    }
+
+    .gallery-author {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #064e3b;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .gallery-desc-text {
+      font-size: 0.9rem;
+      color: #475569;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .gallery-footer-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 10px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .like-btn {
+      border: none;
+      background: #fee2e2;
+      color: #ef4444;
+      border-radius: var(--radius-pill);
+      padding: 3px 10px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .like-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .filter-category-btn {
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      color: #475569;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 6px 18px;
+      border-radius: var(--radius-pill);
+      transition: all 0.25s ease;
+    }
+
+    .filter-category-btn.active {
+      background: linear-gradient(135deg, #10b981, #0284c7);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    }
+  </style>
+EOD;
+
+require __DIR__ . '/partials/head.php';
+require __DIR__ . '/partials/navbar.php';
+
+// Unified Hero Banner
+$heroTag       = '<i class="bi bi-lightbulb-fill me-1 text-warning"></i> Studio Proyek Pembelajaran STEM';
+$heroTitle     = 'Studio Karya Kreatif <br><span class="highlight">Sains & Lingkungan</span>';
+$heroSubtitle  = 'Pilih dari 8 ide proyek terpadu (Sains, Teknologi, Rekayasa, Matematika), ikuti panduan langkah praktis, dan bagikan karyamu di galeri!';
+$heroMascot    = 'foto/peneliti.webp';
+$heroMascotAlt = 'Peneliti Muda Lahan Basah';
+$heroCta       = '
+  <a href="#stemPillarsSection" class="btn-eco-primary btn-sm px-4">
+    <i class="bi bi-search"></i> Eksplorasi 8 Proyek
+  </a>
+  <a href="#formProyekSection" class="btn-eco-outline btn-sm px-4">
+    <i class="bi bi-cloud-arrow-up-fill"></i> Unggah Karyamu
+  </a>
+';
+require __DIR__ . '/partials/hero.php';
+?>
+
+<section class="container my-5" id="stemPillarsSection">
+    <div class="text-center mb-4" data-aos="fade-up">
+      <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill mb-2 fw-bold">
+        <i class="bi bi-stars me-1"></i> Kurikulum Merdeka IPAS Bab 3 & Bab 4
+      </span>
+      <h2 class="display-font text-success mb-2">Studio Eksperimen & Proyek STEM Lahan Basah</h2>
+      <p class="text-muted small mx-auto" style="max-width: 680px;">
+        Pilih salah satu pilar STEM di bawah ini, pelajari panduan langkah kerjanya, lalu unggah dokumentasi hasil eksperimenmu ke galeri pameran karya!
+      </p>
+
+      <!-- Filter Kategori 4 Pilar STEM -->
+      <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+        <button class="stem-filter-pill active" onclick="filterStemProjects('all', this)">
+          <i class="bi bi-grid-fill me-1"></i> Semua Pilar
+        </button>
+        <button class="stem-filter-pill" onclick="filterStemProjects('sains', this)">
+          <i class="bi bi-search me-1"></i> Sains (Science)
+        </button>
+        <button class="stem-filter-pill" onclick="filterStemProjects('teknologi', this)">
+          <i class="bi bi-laptop me-1"></i> Teknologi (Technology)
+        </button>
+        <button class="stem-filter-pill" onclick="filterStemProjects('rekayasa', this)">
+          <i class="bi bi-gear-fill me-1"></i> Rekayasa (Engineering)
+        </button>
+        <button class="stem-filter-pill" onclick="filterStemProjects('matematika', this)">
+          <i class="bi bi-rulers me-1"></i> Matematika (Math)
+        </button>
+      </div>
+    </div>
+
+    <!-- Grid Kartu Proyek STEM -->
+    <div class="row g-4" id="stemProjectsGrid" data-aos="fade-up" data-aos-delay="100">
+      <!-- Diinjeksi otomatis oleh script STEM -->
+    </div>
+  </section>
+
+  <!-- MODAL PANDUAN LANGKAH EKSPERIMEN STEM -->
+  <div class="modal fade" id="projectGuideModal" tabindex="-1" aria-labelledby="guideModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 border-0 shadow-lg">
+        <div class="modal-header bg-success text-white rounded-top-4 p-4">
+          <div>
+            <span class="badge bg-white text-success rounded-pill px-3 py-1 fw-bold mb-2" id="modalPilarBadge">Pilar STEM</span>
+            <h4 class="modal-title fw-bold mb-0" id="modalProjectTitle">Judul Proyek</h4>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <!-- Waktu & Kesulitan -->
+          <div class="d-flex flex-wrap gap-3 p-3 bg-light rounded-3 mb-4">
+            <div><i class="bi bi-clock-history text-success me-1"></i> <strong>Estimasi:</strong> <span id="modalProjectTime">30 Menit</span></div>
+            <div><i class="bi bi-bar-chart-fill text-warning me-1"></i> <strong>Tingkat:</strong> <span id="modalProjectLevel">Mudah</span></div>
+            <div><i class="bi bi-book-half text-primary me-1"></i> <strong>Materi:</strong> <span id="modalProjectBab">IPAS Bab 3 Ekosistem</span></div>
+          </div>
+
+          <!-- Alat & Bahan -->
+          <div class="mb-4">
+            <h6 class="fw-bold text-success mb-2"><i class="bi bi-tools text-success me-1"></i> Alat & Bahan yang Diperlukan:</h6>
+            <ul class="mb-0 text-muted small" id="modalProjectTools"></ul>
+          </div>
+
+          <!-- Langkah Kerja -->
+          <div class="mb-4">
+            <h6 class="fw-bold text-success mb-2"><i class="bi bi-list-ol text-success me-1"></i> Langkah-Langkah Eksperimen:</h6>
+            <ol class="mb-0 text-dark small" id="modalProjectSteps"></ol>
+          </div>
+
+          <!-- Tips Keselamatan -->
+          <div class="alert alert-warning border-2 rounded-3 mb-3 p-3">
+            <div class="fw-bold small text-warning-emphasis"><i class="bi bi-shield-exclamation me-1"></i> Tips Keselamatan & Etika:</div>
+            <p class="mb-0 small text-muted" id="modalProjectSafety"></p>
+          </div>
+
+          <!-- Pertanyaan Refleksi -->
+          <div class="p-3 bg-success-subtle rounded-3 border border-success-subtle">
+            <div class="fw-bold small text-success"><i class="bi bi-question-circle-fill me-1"></i> Pertanyaan Refleksi Ilmiah:</div>
+            <p class="mb-0 small text-dark" id="modalProjectReflection"></p>
+          </div>
+        </div>
+        <div class="modal-footer p-3 bg-light rounded-bottom-4">
+          <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-4" data-bs-dismiss="modal">Tutup Panduan</button>
+          <a href="#formProyekSection" class="btn btn-eco-primary btn-sm rounded-pill px-4" data-bs-dismiss="modal">Gunakan Ide Ini untuk Unggah Karya <i class="bi bi-rocket-takeoff-fill"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       PROJECT UPLOAD STUDIO (Auth & Upload Form)
+       ========================================================================== -->
+  <section class="container" id="formProyekSection">
+    <div class="project-studio-card" data-aos="fade-up">
+
+      <!-- 1. AUTH SCREEN -->
+      <div id="authContainer">
+        <div class="text-center mb-4">
+        <img src="foto/children.webp" class="ui-2d-thumb ui-2d-thumb-lg d-inline-block mb-1" alt="Ilustrasi akun siswa" />
+          <h3 class="display-font text-success mb-1">Studio Kreator Lahan Basah</h3>
+          <p class="text-muted small">Masuk atau buat akun lokal untuk menyimpan karya di browser perangkat ini.</p>
+
+          <div class="d-inline-flex bg-light p-1 rounded-pill border my-3">
+            <button class="auth-tab-btn active" id="tabLogin" onclick="switchAuthTab('login')">
+              <i class="bi bi-box-arrow-in-right me-1"></i> Masuk
+            </button>
+            <button class="auth-tab-btn" id="tabSignup" onclick="switchAuthTab('signup')">
+              <i class="bi bi-person-plus-fill me-1"></i> Daftar Baru
+            </button>
+          </div>
+        </div>
+
+        <div class="col-md-8 mx-auto">
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted">
+              <i class="bi bi-envelope-fill text-success"></i> Alamat Email
+            </label>
+            <input type="email" class="form-control rounded-pill px-4 fs-6 border shadow-sm" id="email" placeholder="nama@email.com" required />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted">
+              <i class="bi bi-lock-fill text-primary"></i> Kata Sandi (Minimal 6 karakter)
+            </label>
+            <div class="input-group">
+              <input type="password" class="form-control rounded-start-pill ps-4 fs-6 border shadow-sm" id="password" placeholder="••••••••" required />
+              <button class="btn btn-outline-secondary rounded-end-pill px-3" type="button" onclick="togglePasswordVisibility()">
+                <i class="bi bi-eye" id="togglePasswordIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="d-grid mt-4">
+            <button class="btn-eco-primary justify-content-center py-3 fs-6" id="authSubmitBtn" onclick="submitAuth()">
+              <i class="bi bi-box-arrow-in-right me-1"></i> Masuk Sekarang
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. UPLOAD FORM -->
+      <div id="uploadContainer" style="display:none;">
+        <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-4 border-bottom">
+          <div class="d-flex align-items-center gap-2">
+          <img src="foto/children.webp" class="ui-2d-thumb" alt="Ilustrasi kreator" />
+            <div>
+              <h5 class="display-font text-success mb-0" id="userGreeting">Selamat Datang, Kreator Alam!</h5>
+              <small class="text-muted" id="userEmailBadge">Terhubung sebagai Peneliti Muda</small>
+            </div>
+          </div>
+          <button class="btn btn-outline-danger btn-sm rounded-pill px-3" onclick="logout()">
+            <i class="bi bi-box-arrow-right"></i> Keluar (Logout)
+          </button>
+        </div>
+
+        <form id="formUploadProyek">
+          <div class="mb-3">
+            <label for="pilarSelect" class="form-label fw-bold small text-muted">
+              <i class="bi bi-tag-fill text-success"></i> Kategori Pilar STEM
+            </label>
+            <select class="form-select rounded-pill px-4 fs-6 border shadow-sm" id="pilarSelect" required>
+              <option value="Sains & Alam">Sains - Penyelidikan Alam & Ekosistem</option>
+              <option value="Teknologi Digital">Teknologi - Observasi & Sensor Digital</option>
+              <option value="Rekayasa Lingkungan">Rekayasa - Rancang Bangun & Sekat Kanal</option>
+              <option value="Matematika & Data">Matematika - Analisis Data & Curah Hujan</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="nama" class="form-label fw-bold small text-muted">
+              <i class="bi bi-person-fill text-success"></i> Nama Kamu / Tim
+            </label>
+            <input type="text" class="form-control rounded-pill px-4 fs-6 border shadow-sm" id="nama" placeholder="Contoh: Aulia & Tim Pelestari" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="deskripsi" class="form-label fw-bold small text-muted">
+              <i class="bi bi-card-text text-primary"></i> Deskripsi Karya / Proyek
+            </label>
+            <textarea class="form-control rounded-4 p-3 fs-6 border shadow-sm" id="deskripsi" rows="3" placeholder="Tuliskan tujuan, komponen ekosistem yang dipelajari, langkah kerja, hasil pengamatan, dan kesimpulanmu..." required></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-bold small text-muted">
+              <i class="bi bi-image text-warning"></i> Foto Dokumentasi Karya (Otomatis Dioptimalkan)
+            </label>
+            <div class="file-dropzone" onclick="document.getElementById('gambar').click()">
+              <input type="file" id="gambar" accept="image/*" class="d-none" onchange="previewSelectedImage(event)" required />
+              <i class="bi bi-cloud-arrow-up fs-1 text-success d-block mb-1"></i>
+              <div class="fw-bold text-dark">Klik untuk memilih foto karyamu</div>
+              <small class="text-muted">Format: JPG, PNG, atau WEBP</small>
+              <img id="imagePreview" class="image-preview-thumbnail" alt="Preview Gambar" />
+            </div>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn-eco-primary justify-content-center py-3 fs-6" id="btnSubmitProyek">
+              <i class="bi bi-send-fill"></i> Publikasikan Karyamu ke Galeri
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       COMMUNITY PROJECT GALLERY SECTION
+       ========================================================================== -->
+  <section class="container my-5" id="galeriSection">
+    <div class="text-center mb-4" data-aos="fade-up">
+      <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1 rounded-pill mb-2">
+        <i class="bi bi-images me-1"></i> Galeri Karya Sahabat
+      </span>
+      <h2 class="display-font text-success mb-2" style="font-size: 2.3rem;">
+        Karya & Inovasi Sahabat Lahan Basah
+      </h2>
+      <p class="text-muted mx-auto" style="max-width: 600px;">
+        Lihat berbagai inspirasi nyata dari teman-teman seluruh Indonesia yang berkontribusi menjaga kelestarian alam!
+      </p>
+
+      <!-- Search & Filter Bar Galeri -->
+      <div class="col-md-6 mx-auto mt-3">
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0 rounded-start-pill ps-4 text-muted">
+            <i class="bi bi-search"></i>
+          </span>
+          <input type="text" class="form-control rounded-end-pill pe-4 border-start-0 py-2" id="gallerySearchInput" placeholder="Cari karya teman atau nama kreator..." oninput="filterGalleryProjects()" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Spinner Indicator -->
+    <div id="galeriLoading" class="text-center my-5">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Memuat galeri...</span>
+      </div>
+      <p class="text-muted small mt-2">Sedang memuat karya teman-teman...</p>
+    </div>
+
+    <!-- Masonry Columns Grid -->
+    <div class="gallery-masonry-grid" id="galeriContainer">
+      <!-- Diisi otomatis dari penyimpanan lokal browser -->
+    </div>
+  </section>
+
+  <!-- Modal Preview Gambar Full Size -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 border-0 overflow-hidden shadow-lg">
+        <div class="modal-body p-0 position-relative">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-3 z-3 bg-white p-2 rounded-circle shadow-sm" data-bs-dismiss="modal"></button>
+          <img src="" id="modalImg" class="w-100 h-auto d-block" alt="Detail Karya" />
+          <div class="p-4 bg-white">
+            <h5 class="fw-bold text-success mb-1" id="modalAuthor">Nama Kreator</h5>
+            <p class="text-muted mb-0 small" id="modalDesc">Deskripsi proyek...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast Area -->
+  <div id="notifArea" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 10050; max-width: 90%;"></div>
+
+  <!-- ==========================================================================
+       FLOATING MUSIC DOCK & TOAST
+       ========================================================================== -->
+  <!-- Floating Audio Dock -->
+  <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
+    <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
+      <i id="music-icon" class="bi bi-volume-mute-fill"></i>
+    </button>
+    <div class="sound-bars">
+      <div class="sound-bar"></div>
+      <div class="sound-bar"></div>
+      <div class="sound-bar"></div>
+    </div>
+    <span class="music-label d-none d-sm-inline">Musik</span>
+  </div>
+  <audio id="bg-music" loop preload="auto">
+    <source src="sound/sound2.mp3" type="audio/mpeg" />
+  </audio>
+  <div id="music-toast" class="music-toast-popup"></div>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+
+<?php
+$extraScripts = <<<'EOD'
+<script>
+    AOS.init({ duration: 800, once: true });
+
+    const USERS_STORAGE_KEY = "lahanBasahUsers";
+    const CURRENT_USER_STORAGE_KEY = "lahanBasahCurrentUser";
+    const PROJECTS_STORAGE_KEY = "lahanBasahProjects";
+
+    let authMode = "login";
+    let compressedBase64 = null;
+    let allGalleryItems = [];
+    let currentUser = null;
+
+    function readLocalData(key, fallback) {
+      try {
+        return JSON.parse(localStorage.getItem(key)) || fallback;
+      } catch (error) {
+        console.error(`Gagal membaca ${key}:`, error);
+        return fallback;
+      }
+    }
+
+    function updateAuthUI() {
+      const authContainer = document.getElementById("authContainer");
+      const uploadContainer = document.getElementById("uploadContainer");
+      const userGreeting = document.getElementById("userGreeting");
+      const userEmailBadge = document.getElementById("userEmailBadge");
+
+      if (currentUser) {
+        authContainer.style.display = "none";
+        uploadContainer.style.display = "block";
+        userGreeting.textContent = `Halo, ${currentUser.email.split('@')[0]}!`;
+        userEmailBadge.textContent = `${currentUser.email} • akun lokal`;
+      } else {
+        authContainer.style.display = "block";
+        uploadContainer.style.display = "none";
+      }
+    }
+
+    async function hashPassword(password) {
+      const bytes = new TextEncoder().encode(password);
+      const digest = await crypto.subtle.digest("SHA-256", bytes);
+      return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+    }
+
+    function switchAuthTab(mode) {
+      authMode = mode;
+      SoundEffects.playPop();
+      const tabLogin = document.getElementById("tabLogin");
+      const tabSignup = document.getElementById("tabSignup");
+      const submitBtn = document.getElementById("authSubmitBtn");
+
+      if (mode === "login") {
+        tabLogin.classList.add("active");
+        tabSignup.classList.remove("active");
+          submitBtn.innerHTML = `<i class="bi bi-box-arrow-in-right me-1"></i> Masuk Sekarang`;
+      } else {
+        tabSignup.classList.add("active");
+        tabLogin.classList.remove("active");
+          submitBtn.innerHTML = `<i class="bi bi-person-plus-fill me-1"></i> Daftarkan Akun Baru`;
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const pwd = document.getElementById("password");
+      const icon = document.getElementById("togglePasswordIcon");
+      if (pwd.type === "password") {
+        pwd.type = "text";
+        icon.className = "bi bi-eye-slash";
+      } else {
+        pwd.type = "password";
+        icon.className = "bi bi-eye";
+      }
+    }
+
+    async function submitAuth() {
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        showNotification("Harap masukkan email dan kata sandi terlebih dahulu!", "warning");
+        return;
+      }
+
+      SoundEffects.playPop();
+      const users = readLocalData(USERS_STORAGE_KEY, {});
+      const passwordHash = await hashPassword(password);
+
+      if (authMode === "login") {
+        const user = users[email];
+        if (!user || user.passwordHash !== passwordHash) {
+          SoundEffects.playWrong();
+          showNotification("Email atau kata sandi lokal tidak cocok.", "danger");
+          return;
+        }
+
+        currentUser = { uid: user.uid, email: user.email };
+        localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(currentUser));
+        updateAuthUI();
+        SoundEffects.playCorrect();
+          showNotification("Berhasil masuk! Selamat berkarya.", "success");
+      } else {
+        if (password.length < 6) {
+          showNotification("Kata sandi minimal harus 6 karakter ya!", "warning");
+          return;
+        }
+        if (users[email]) {
+          showNotification("Email ini sudah terdaftar di perangkat ini.", "warning");
+          return;
+        }
+
+        const user = { uid: `local_${Date.now()}`, email, passwordHash };
+        users[email] = user;
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+        currentUser = { uid: user.uid, email: user.email };
+        localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(currentUser));
+        updateAuthUI();
+        SoundEffects.playFanfare();
+          showNotification("Pendaftaran lokal berhasil! Selamat datang.", "success");
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
+      updateAuthUI();
+      SoundEffects.playPop();
+      showNotification("Kamu telah berhasil keluar.", "info");
+    }
+
+    // Client-side Image Compression via Canvas
+    function previewSelectedImage(event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById("imagePreview");
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 900;
+          const MAX_HEIGHT = 900;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Kompresi kualitas 0.8
+          compressedBase64 = canvas.toDataURL("image/jpeg", 0.8);
+          preview.src = compressedBase64;
+          preview.style.display = "block";
+          SoundEffects.playPop();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    const formProyek = document.getElementById("formUploadProyek");
+    formProyek.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const user = currentUser;
+      if (!user) {
+        showNotification("Silakan masuk terlebih dahulu untuk upload karya.", "warning");
+        return;
+      }
+
+      const nama = document.getElementById("nama").value.trim();
+      const deskripsi = document.getElementById("deskripsi").value.trim();
+
+      if (!nama || !deskripsi || !compressedBase64) {
+        showNotification("Lengkapi semua isian form dan unggah fotomu!", "warning");
+        return;
+      }
+
+      const btnSubmit = document.getElementById("btnSubmitProyek");
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Mengunggah karyamu...`;
+
+      const newProject = {
+        nama,
+        deskripsi,
+        likes: 1
+      };
+
+      newProject.id = `project_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+
+      try {
+        const projects = readLocalData(PROJECTS_STORAGE_KEY, []);
+        projects.unshift(newProject);
+        localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects));
+
+        SoundEffects.playFanfare();
+        showNotification("Karya berhasil disimpan ke Galeri lokal!", "success");
+        formProyek.reset();
+        compressedBase64 = null;
+        document.getElementById("imagePreview").style.display = "none";
+        tampilkanGaleri();
+      } catch (error) {
+        console.error("Gagal menyimpan proyek lokal:", error);
+        showNotification("Penyimpanan browser penuh. Coba gunakan gambar yang lebih kecil.", "danger");
+      } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = `<i class="bi bi-send-fill"></i> Publikasikan Karyamu ke Galeri`;
+      }
+    });
+
+    function tampilkanGaleri() {
+      const galeriContainer = document.getElementById("galeriContainer");
+      const galeriLoading = document.getElementById("galeriLoading");
+
+      galeriLoading.style.display = "block";
+
+      try {
+        const items = readLocalData(PROJECTS_STORAGE_KEY, []);
+        galeriLoading.style.display = "none";
+        galeriContainer.innerHTML = "";
+
+        if (items.length === 0) {
+          galeriContainer.innerHTML = `
+            <div class="col-12 text-center py-5">
+            <img src="foto/asetgame/Teratai.png" class="ui-2d-thumb ui-2d-thumb-lg d-block mx-auto mb-2" alt="Ilustrasi karya" />
+              <h5 class="text-muted">Belum ada karya yang tersimpan.</h5>
+              <p class="small text-muted">Jadilah yang pertama membagikan kreasi perlindungan lahan basah!</p>
+            </div>
+          `;
+          return;
+        }
+
+        allGalleryItems = items;
+        renderGalleryList(allGalleryItems);
+      } catch (error) {
+        galeriLoading.style.display = "none";
+        galeriContainer.innerHTML = `<p class="text-danger text-center">Data galeri lokal tidak dapat dibaca.</p>`;
+        console.error("Gagal membaca galeri lokal:", error);
+      }
+    }
+
+    function renderGalleryList(items) {
+      const galeriContainer = document.getElementById("galeriContainer");
+      galeriContainer.innerHTML = "";
+
+      if (items.length === 0) {
+        galeriContainer.innerHTML = `<p class="text-center text-muted col-12 py-4">Karya yang dicari tidak ditemukan.</p>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "gallery-item-card";
+
+        const waktuFormatted = item.waktu ? new Date(item.waktu).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' }) : "Baru saja";
+
+        card.innerHTML = `
+          <img src="${item.gambar}" alt="Karya ${item.nama}" class="gallery-card-img" onclick="openImageModal('${item.gambar}', '${escapeHtml(item.nama)}', '${escapeHtml(item.deskripsi)}')" />
+          <div class="gallery-card-body">
+            <div class="mb-2">
+              <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill fw-bold" style="font-size:0.75rem;">
+                ${item.pilarBadge || 'Proyek STEM'}
+              </span>
+            </div>
+            <div class="gallery-author">
+              <i class="bi bi-tree-fill me-1"></i> ${escapeHtml(item.nama)}
+            </div>
+            <p class="gallery-desc-text">${escapeHtml(item.deskripsi)}</p>
+            <div class="gallery-footer-info">
+              <span><i class="bi bi-calendar3"></i> ${waktuFormatted}</span>
+              <button class="like-btn" onclick="handleLike('${item.id}', this)">
+                <i class="bi bi-heart-fill"></i> <span class="like-count">${item.likes || 1}</span>
+              </button>
+            </div>
+          </div>
+        `;
+
+        galeriContainer.appendChild(card);
+      });
+    }
+
+    function filterGalleryProjects() {
+      const q = document.getElementById("gallerySearchInput").value.toLowerCase().trim();
+      if (!q) {
+        renderGalleryList(allGalleryItems);
+        return;
+      }
+      const filtered = allGalleryItems.filter(item => 
+        (item.nama && item.nama.toLowerCase().includes(q)) ||
+        (item.deskripsi && item.deskripsi.toLowerCase().includes(q))
+      );
+      renderGalleryList(filtered);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function openImageModal(src, author, desc) {
+      document.getElementById("modalImg").src = src;
+      document.getElementById("modalAuthor").textContent = author;
+      document.getElementById("modalDesc").textContent = desc;
+      SoundEffects.playPop();
+      const modal = new bootstrap.Modal(document.getElementById("imageModal"));
+      modal.show();
+    }
+
+    function handleLike(id, btn) {
+      SoundEffects.playPop();
+      const countSpan = btn.querySelector(".like-count");
+      let count = parseInt(countSpan.textContent) || 0;
+      count++;
+      countSpan.textContent = count;
+      btn.style.transform = "scale(1.25)";
+      setTimeout(() => { btn.style.transform = "none"; }, 200);
+
+      const projects = readLocalData(PROJECTS_STORAGE_KEY, []);
+      const project = projects.find(item => item.id === id);
+      if (project) {
+        project.likes = count;
+        try {
+          localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects));
+        } catch (error) {
+          console.error("Gagal menyimpan suka lokal:", error);
+        }
+      }
+    }
+
+    function showNotification(pesan, tipe = "info") {
+      const notifArea = document.getElementById("notifArea");
+      const notif = document.createElement("div");
+      notif.className = `alert alert-${tipe} shadow-lg rounded-pill px-4 py-3 text-center fw-bold`;
+      notif.style.backdropFilter = "blur(10px)";
+      notif.textContent = pesan;
+
+      notifArea.appendChild(notif);
+      setTimeout(() => {
+        notif.style.opacity = "0";
+        notif.style.transition = "opacity 0.5s ease";
+        setTimeout(() => notif.remove(), 500);
+      }, 4000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      currentUser = readLocalData(CURRENT_USER_STORAGE_KEY, null);
+      updateAuthUI();
+      tampilkanGaleri();
+    });
+  
+    // ==========================================================================
+document.addEventListener("DOMContentLoaded", () => {
+      currentUser = readLocalData(CURRENT_USER_STORAGE_KEY, null);
+      updateAuthUI();
+      tampilkanGaleri();
+    });
+
+
+    // ==========================================================================
+    // DATABASE 8 PROYEK STEM LAHAN BASAH (KURIKULUM MERDEKA IPAS SD)
+    // ==========================================================================
+    const stemProjectsData = [
+      {
+        id: 1,
+        pilar: "sains",
+        badge: "Sains & Alam",
+        title: "Model Resapan Spons Tanah Gambut",
+        shortDesc: "Membuktikan peran tanah gambut sebagai spons raksasa penyerap air pencegah banjir.",
+        time: "30 Menit",
+        level: "Mudah",
+        bab: "IPAS Bab 3 & 4 (Gambut & Siklus Air)",
+        icon: "foto/proyek-icons/resapan-gambut.webp",
+        tools: [
+          "2 Botol plastik bekas ukuran 1,5 liter (dipotong bagian atas)",
+          "Busa spons cuci piring (simulasi gambut berserat)",
+          "Tanah kebun biasa / tanah padat",
+          "Gelas ukur atau wadah penampung air",
+          "Air bersih 500 ml"
+        ],
+        steps: [
+          "Letakkan spons di wadah pertama, dan tanah padat di wadah kedua dengan volume seimbang.",
+          "Tuangkan 250 ml air secara perlahan ke atas spons, lalu amati air yang keluar menetes di bagian bawah.",
+          "Tuangkan 250 ml air ke wadah tanah padat, lalu ukur berapa banyak air yang langsung meluncur lolos.",
+          "Bandingkan air yang terserap spons vs tanah padat. Gambut mampu mengikat air berkali-kali lipat beratnya!"
+        ],
+        safety: "Gunakan gunting pemotong botol dengan bantuan orang tua/guru. Bersihkan tumpahan air agar lantai tidak licin.",
+        reflection: "Mengapa pembukaan kanal parit yang mengeringkan lahan gambut dapat memicu bencana banjir di musim hujan dan kebakaran hebat di musim kemarau?"
+      },
+      {
+        id: 2,
+        pilar: "rekayasa",
+        badge: "Rekayasa Lingkungan",
+        title: "Miniatur Sekat Kanal (Rewetting) Stik Es Krim",
+        shortDesc: "Merancang model bendungan sekat kanal parit rawa untuk menjaga kebasahan lahan gambut.",
+        time: "45 Menit",
+        level: "Menengah",
+        bab: "IPAS Bab 3 (Konservasi Lahan Basah)",
+        icon: "foto/proyek-icons/sekat-kanal.webp",
+        tools: [
+          "Stik es krim kayu (20-30 batang)",
+          "Lem tahan air / lem tembak / plastisin",
+          "Wadah nampan plastik panjang (simulasi saluran kanal)",
+          "Kerikil kecil dan tanah gambut/tanah gembur",
+          "Air dan pewarna makanan biru"
+        ],
+        steps: [
+          "Susun stik es krim menjadi dinding papan sekat berlapis ganda menyerupai sekat kanal kayu khas Kalimantan.",
+          "Pasang sekat di tengah nampan kanal, perkuat celah tepinya dengan plastisin atau tanah liat.",
+          "Alirkan air dari satu sisi. Amati bagaimana sekat kanal menahan laju air sehingga permukaan air gambut tetap tinggi.",
+          "Uji apa yang terjadi jika salah satu celah pelimpah air (spillway) dibuka saat debit air tinggi."
+        ],
+        safety: "Hati-hati saat menggunakan lem tembak panas atau gunting stik kayu. Lakukan di atas alas koran bekas.",
+        reflection: "Bagaimana cara kerja sekat kanal kayu oleh Badan Restorasi Gambut dalam mencegah kebakaran hutan rawa Kalimantan?"
+      },
+      {
+        id: 3,
+        pilar: "rekayasa",
+        badge: "Rekayasa Lingkungan",
+        title: "Filter Air Rawa Alami 3 Tahap",
+        shortDesc: "Menjernihkan air rawa keruh menjadi air bening menggunakan bahan-bahan alami di sekitar kita.",
+        time: "40 Menit",
+        level: "Mudah",
+        bab: "IPAS Bab 4 (Siklus & Kejernihan Air)",
+        icon: "foto/proyek-icons/filter-air-rawa.webp",
+        tools: [
+          "Botol plastik bekas 1,5 liter (potong bagian bawahnya)",
+          "Kapas atau kain kasa bersih (lapisan paling dasar)",
+          "Arang kayu aktif yang dihaluskan (penyerap bau dan zat warna)",
+          "Pasir bersih halus (penyaring kotoran mikro)",
+          "Kerikil kecil bersih (penyaring partikel besar)",
+          "Air rawa atau air cucian tanah keruh untuk diuji"
+        ],
+        steps: [
+          "Posisikan botol terbalik (mulut botol di bawah menghadap ke gelas penampung).",
+          "Masukkan kapas pada mulut botol, lapisi dengan arang, pasir halus, dan kerikil di bagian paling atas.",
+          "Tuangkan air keruh perlahan-lahan ke atas lapisan kerikil.",
+          "Amati tetesan air yang keluar di dasar botol. Air menjadi jauh lebih jernih dan tidak berbau!"
+        ],
+        safety: "Air hasil saringan percobaan ini hanya untuk pembuktian ilmiah, tidak untuk diminum sebelum dimasak mendidih.",
+        reflection: "Lapisan bahan manakah yang paling berperan menghilangkan partikel keruh dan bau air rawa?"
+      },
+      {
+        id: 4,
+        pilar: "teknologi",
+        badge: "Teknologi & Observasi",
+        title: "Jurnal Digital Observasi Satwa Lahan Basah",
+        shortDesc: "Mendokumentasikan satwa liar dan tumbuhan air menggunakan kamera dan menyusun infografis digital.",
+        time: "60 Menit",
+        level: "Mudah",
+        bab: "IPAS Bab 3 (Biodiversitas Lahan Basah)",
+        icon: "foto/proyek-icons/jurnal-digital.webp",
+        tools: [
+          "Kamera ponsel pintar atau tablet",
+          "Aplikasi presentasi / catatan / Canva",
+          "Buku catatan lapangan kecil dan pensil",
+          "Topi penjelajah dan teropong (opsional)"
+        ],
+        steps: [
+          "Jelajahi taman sekolah, tepi sungai, atau rawa terdekat didampingi orang tua/guru.",
+          "Ambil foto 3 jenis tumbuhan (misal: teratai, purun) dan 3 jenis satwa (burung, serangga, katak).",
+          "Catat habitat, warna, perilaku, dan peran mereka dalam ekosistem (produsen/konsumen).",
+          "Susun foto dan hasil pengamatan ke dalam poster digital bertema 'Satwa Sahabat Rawa'."
+        ],
+        safety: "Jangan mendekati tepi air yang dalam atau licin sendirian. Jangan menyentuh satwa liar yang belum dikenal.",
+        reflection: "Apa hubungan antara ketersediaan tumbuhan air dengan keberadaan burung dan serangga di lokasi yang kamu amati?"
+      },
+      {
+        id: 5,
+        pilar: "sains",
+        badge: "Sains & Alam",
+        title: "Maket 3D Piramida Rantai Makanan Rawa",
+        shortDesc: "Merakit miniatur piramida taraf trofik energi ekosistem rawa dari kardus bekas.",
+        time: "45 Menit",
+        level: "Mudah",
+        bab: "IPAS Bab 3 (Rantai Makanan & Taraf Trofik)",
+        icon: "foto/proyek-icons/piramida-rantai-makanan.webp",
+        tools: [
+          "Kardus bekas kemasan makanan / karton tebal",
+          "Gunting aman dan lem kertas",
+          "Pensil warna, spidol, dan gambar cetak satwa rawa",
+          "Penggaris dan selotip kertas"
+        ],
+        steps: [
+          "Bentuk kardus menjadi segitiga piramida bertingkat 4 tingkat (Tingkat 1 dasar paling lebar, Tingkat 4 puncak).",
+          "Tingkat dasar: Tempelkan gambar Teratai & Purun (Produsen Fotosintesis).",
+          "Tingkat 2: Tempelkan gambar Keong Mas & Serangga (Konsumen I Herbivora).",
+          "Tingkat 3: Tempelkan gambar Katak Rawa & Ikan Kecil (Konsumen II Karnivora).",
+          "Tingkat 4: Tempelkan gambar Burung Bangau Tongtong / Elang (Konsumen Puncak).",
+          "Beri panah perpindahan energi dari bawah ke atas."
+        ],
+        safety: "Gunakan gunting tumpul berujung bundar untuk keamanan anak.",
+        reflection: "Mengapa jumlah produsen di dasar piramida harus jauh lebih banyak daripada jumlah konsumen puncak di puncak piramida?"
+      },
+      {
+        id: 6,
+        pilar: "matematika",
+        badge: "Matematika & Data",
+        title: "Penakar Curah Hujan & Grafik Fluktuasi Rawa",
+        shortDesc: "Mengukur volume air hujan harian dan menyajikan data fluktuasi air rawa dalam diagram batang.",
+        time: "1 Minggu Pengamatan",
+        level: "Mudah",
+        bab: "IPAS Bab 4 & Matematika Data",
+        icon: "foto/proyek-icons/penakar-hujan.webp",
+        tools: [
+          "Botol plastik lurus bening dengan corong di atasnya",
+          "Penggaris transparan dengan skala milimeter (mm)",
+          "Buku berpetak / spreadsheet digital",
+          "Spidol permanen tahan air"
+        ],
+        steps: [
+          "Pasang penggaris di dinding botol penakar, letakkan di area terbuka sekolah atau halaman rumah.",
+          "Setiap pagi pukul 07.00, catat tinggi air hujan yang tertampung dalam satuan milimeter (mm).",
+          "Kosongkan kembali botol untuk penampungan hari berikutnya selama 7 hari berturut-turut.",
+          "Buat diagram batang (bar chart) curah hujan mingguan dan hitung rata-rata curah hujan harian."
+        ],
+        safety: "Pastikan wadah ditaruh stabil dengan pemberat batu agar tidak tumbang tertiup angin kencang.",
+        reflection: "Pada hari dengan curah hujan tertinggi, apakah terlihat kenaikan tinggi genangan air di rawa atau saluran terdekat?"
+      },
+      {
+        id: 7,
+        pilar: "teknologi",
+        badge: "Teknologi & Sensor",
+        title: "Sensor Sederhana Kelembaban Tanah Gambut",
+        shortDesc: "Merangkai detektor kelembaban tanah elektrik dengan lampu LED dan baterai.",
+        time: "60 Menit",
+        level: "Menengah",
+        bab: "IPAS Bab 3 & STEM Fisika Cilik",
+        icon: "foto/proyek-icons/sensor-kelembapan.webp",
+        tools: [
+          "Baterai kotak 9 Volt dan soket kancing baterai",
+          "1 Buah lampu LED kecil (warna hijau atau merah)",
+          "2 Batang paku bersih atau kawat tembaga (sebagai elektroda)",
+          "Kabel kecil 20 cm dan selotip isolasi",
+          "Wadah berisi tanah gambut kering dan wadah tanah gambut basah"
+        ],
+        steps: [
+          "Hubungkan kutub positif baterai ke salah satu kaki paku pertama.",
+          "Hubungkan kaki lampu LED ke paku kedua dan kutub negatif baterai.",
+          "Tancapkan kedua paku ke tanah gambut basah berjarak 3 cm. Lampu LED akan menyala karena air menghantarkan arus listrik!",
+          "Pindahkan kedua paku ke tanah kering. Lampu meredup atau mati menandakan tanah butuh dialiri air."
+        ],
+        safety: "Eksperimen ini hanya menggunakan baterai 9V tegangan rendah yang aman bagi anak. Jangan pernah mencoba dengan listrik stopkontak dinding!",
+        reflection: "Bagaimana teknologi sensor digital modern membantu petugas pemadam kebakaran hutan memantau titik kekeringan gambut?"
+      },
+      {
+        id: 8,
+        pilar: "matematika",
+        badge: "Sains & Matematika",
+        title: "Miniatur Terrarium Siklus Hujan Lahan Basah",
+        shortDesc: "Membuktikan proses evaporasi, kondensasi, dan presipitasi dalam toples kaca tertutup.",
+        time: "35 Menit",
+        level: "Mudah",
+        bab: "IPAS Bab 4 (Siklus Air Lahan Basah)",
+        icon: "foto/proyek-icons/terrarium-siklus-air.webp",
+        tools: [
+          "Toples kaca bening dengan penutup kedap",
+          "Kerikil kecil dan tanah gambut lembap",
+          "Tanaman lumut atau pakis rawa kecil",
+          "Air hangat 50 ml",
+          "Es batu diletakkan di atas penutup toples"
+        ],
+        steps: [
+          "Masukkan kerikil di dasar toples, lapisi tanah gambut dan tanaman kecil.",
+          "Tuangkan sedikit air hangat ke dasar toples, lalu tutup rapat toples.",
+          "Letakkan 3 butir es batu di atas permukaan tutup toples.",
+          "Amati: Air hangat menguap (evaporasi), uap air menyentuh tutup dingin membentuk tetesan air (kondensasi), lalu jatuh membasahi tanaman seperti hujan (presipitasi)!"
+        ],
+        safety: "Hati-hati saat menuangkan air hangat. Lakukan bersama orang tua atau guru.",
+        reflection: "Apakah air di dalam toples tertutup tersebut akan habis atau terus berputar kembali dalam siklus tak terhingga?"
+      }
+    ];
+
+    // Render STEM Projects Grid
+    function renderStemProjects(filter = 'all') {
+      const grid = document.getElementById('stemProjectsGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const filtered = (filter === 'all') 
+        ? stemProjectsData 
+        : stemProjectsData.filter(p => p.pilar === filter);
+
+      filtered.forEach((proj, idx) => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6 col-lg-3';
+        col.innerHTML = `
+          <div class="idea-card">
+            <div>
+              <div class="idea-badge-bar">
+                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill fw-bold" style="font-size:0.75rem;">${proj.badge}</span>
+                <span class="badge bg-light text-muted border" style="font-size:0.7rem;">${proj.level}</span>
+              </div>
+              <div class="idea-icon-wrap"><img src="${proj.icon}" class="ui-2d-thumb" alt="" /></div>
+              <h5 class="fw-bold text-dark fs-6 mb-2 lh-sm">${proj.title}</h5>
+              <p class="small text-muted mb-3" style="font-size:0.8rem; line-height:1.4;">${proj.shortDesc}</p>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between align-items-center text-muted small mb-2" style="font-size:0.75rem;">
+                <span><i class="bi bi-clock me-1"></i>${proj.time}</span>
+                <span class="text-success fw-bold">Kurikulum Merdeka</span>
+              </div>
+              <button class="idea-guide-btn" onclick="openProjectGuide(${proj.id})">
+                <i class="bi bi-book me-1"></i> Buka Panduan Langkah ➔
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(col);
+      });
+    }
+
+    // Filter STEM Projects
+    function filterStemProjects(pilar, btn) {
+      document.querySelectorAll('.stem-filter-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderStemProjects(pilar);
+      if (typeof SoundEffects !== 'undefined') SoundEffects.playPop();
+    }
+
+    // Open Project Guide Modal
+    function openProjectGuide(id) {
+      const proj = stemProjectsData.find(p => p.id === id);
+      if (!proj) return;
+
+      document.getElementById('modalPilarBadge').textContent = proj.badge;
+      document.getElementById('modalProjectTitle').textContent = proj.title;
+      document.getElementById('modalProjectTime').textContent = proj.time;
+      document.getElementById('modalProjectLevel').textContent = proj.level;
+      document.getElementById('modalProjectBab').textContent = proj.bab;
+
+      const toolsList = document.getElementById('modalProjectTools');
+      toolsList.innerHTML = '';
+      proj.tools.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        toolsList.appendChild(li);
+      });
+
+      const stepsList = document.getElementById('modalProjectSteps');
+      stepsList.innerHTML = '';
+      proj.steps.forEach(s => {
+        const li = document.createElement('li');
+        li.className = 'mb-2';
+        li.textContent = s;
+        stepsList.appendChild(li);
+      });
+
+      document.getElementById('modalProjectSafety').textContent = proj.safety;
+      document.getElementById('modalProjectReflection').textContent = proj.reflection;
+
+      const modalEl = document.getElementById('projectGuideModal');
+      const bsModal = new bootstrap.Modal(modalEl);
+      bsModal.show();
+      if (typeof SoundEffects !== 'undefined') SoundEffects.playPop();
+    }
+
+    // Panggil saat render
+    renderStemProjects('all');
+
+</script>
+EOD;
+
+require __DIR__ . '/partials/footer.php';

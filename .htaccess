@@ -1,0 +1,8 @@
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /lahanbasah/
+  RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+  RewriteRule ^(.+)\.html$ $1.php [R=301,L,NE]
+</IfModule>

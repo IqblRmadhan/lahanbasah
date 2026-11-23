@@ -1,19 +1,15 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Papan Peringkat - Lahan Basah Hijau</title>
+<?php
+/**
+ * Lahan Basah Hijau - Papan Peringkat & Prestasi Siswa
+ * Kurikulum Merdeka IPAS Kelas V SD
+ */
+$pageTitle = 'Papan Peringkat & Prestasi Siswa - Lahan Basah Hijau';
+$pageDesc  = 'Pantau skor kuis, koleksi lencana prestasi, dan peringkat penjelajah ekosistem lahan basah se-Indonesia.';
+$activePage = 'leaderboard';
+$bodyClass  = 'leaderboard-page';
 
-  <!-- CSS Framework & Libraries -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
-
-  <!-- Custom Design System -->
-  <link rel="stylesheet" href="custom.css?v=3.4" />
-
-  <style>
+$extraHead = <<<'EOD'
+<style>
     /* Specific styles for Leaderboard */
     .leaderboard-container {
       max-width: 900px;
@@ -209,85 +205,29 @@
       font-size: 0.95rem;
     }
   </style>
-</head>
-<body>
+EOD;
 
-  <!-- ==========================================================================
-       NAVBAR
-       ========================================================================== -->
-  <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
-    <div class="container">
-      <a class="brand-wrapper" href="index.html">
-        <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
-        <div class="brand-text">
-          <span>Lahan Basah Hijau</span>
-          <span class="brand-badge"><i class="bi bi-tree-fill me-1"></i> STEM Interaktif</span>
-        </div>
-      </a>
+require __DIR__ . '/partials/head.php';
+require __DIR__ . '/partials/navbar.php';
 
-      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <i class="bi bi-list fs-2 text-success"></i>
-      </button>
+// Unified Hero Banner
+$heroTag       = '<i class="bi bi-trophy-fill me-1 text-warning"></i> Papan Bintang Prestasi';
+$heroTitle     = 'Peringkat & Prestasi <br><span class="highlight">Sahabat Lahan Basah</span>';
+$heroSubtitle  = 'Lihat pencapaian terbaikmu dan teman-teman se-Indonesia dalam kuis, eksplorasi ekosistem, dan proyek sains pelestarian rawa!';
+$heroMascot    = 'foto/leaderboard.webp';
+$heroMascotAlt = 'Maskot Juara Lahan Basah';
+$heroCta       = '
+  <a href="kuis.php" class="btn-eco-primary btn-sm px-4">
+    <i class="bi bi-controller"></i> Tambah Skor di Kuis
+  </a>
+  <a href="proyek.php" class="btn-eco-outline btn-sm px-4">
+    <i class="bi bi-lightbulb-fill"></i> Kirim Proyek STEM
+  </a>
+';
+require __DIR__ . '/partials/hero.php';
+?>
 
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="materi.php"><i class="bi bi-book-fill"></i> Materi</a></li>
-          <li class="nav-item"><a class="nav-link" href="kuis.php"><i class="bi bi-controller"></i> Kuis & Games</a></li>
-          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-bezier2"></i> Simulasi</a></li>
-          <li class="nav-item"><a class="nav-link" href="proyek.html"><i class="bi bi-lightbulb-fill"></i> Proyek</a></li>
-          <li class="nav-item"><a class="nav-link active" href="leaderboard.html"><i class="bi bi-trophy-fill"></i> Papan Peringkat</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ==========================================================================
-       HERO SECTION
-       ========================================================================== -->
-  <section class="hero-section">
-    <img src="foto/cloud1.webp" class="hero-cloud c1" alt="Awan Cantik" />
-    <img src="foto/cloud2.webp" class="hero-cloud c2" alt="Awan Cantik" />
-    <img src="foto/daun1.webp" class="hero-floating-leaf leaf1" alt="Daun Hijau" />
-    <img src="foto/daun2.webp" class="hero-floating-leaf leaf2" alt="Daun Hijau" />
-
-    <img src="foto/leaderboard.webp" class="hero-mascot-right" alt="Maskot Juara" style="max-height: 250px;" data-aos="fade-left" />
-
-    <div class="container hero-content">
-      <div class="hero-tag" data-aos="fade-down">
-        <i class="bi bi-trophy-fill me-1"></i> Hall of Fame Juara Lingkungan
-      </div>
-
-      <h1 class="hero-title" data-aos="zoom-in">
-        Papan Peringkat <br><span class="highlight">Sahabat Lahan Basah</span>
-      </h1>
-
-      <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
-        Inilah para pelajar dan sahabat alam terbaik yang berhasil menaklukkan tantangan Kuis Edukasi STEM Lahan Basah!
-      </p>
-
-      <div class="d-flex flex-wrap justify-content-center gap-3" data-aos="fade-up" data-aos-delay="200">
-        <a href="#leaderboardList" class="btn-eco-primary">
-          <i class="bi bi-award-fill"></i> Lihat Daftar Juara
-        </a>
-        <a href="kuis.php" class="btn-eco-outline">
-          <i class="bi bi-controller"></i> Coba Kuis Sekarang
-        </a>
-      </div>
-    </div>
-
-    <!-- Organic Wave Divider -->
-    <div class="hero-wave-divider">
-      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.31,200,105,242.79,94.92,284.28,74.58,321.39,56.44Z" class="shape-fill"></path>
-      </svg>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       LEADERBOARD MAIN CONTAINER
-       ========================================================================== -->
-  <div class="leaderboard-container" id="leaderboardList">
+<div class="leaderboard-container" id="leaderboardList">
     <div class="glass-leaderboard-card" data-aos="fade-up">
 
       <div class="text-center mb-4">
@@ -394,31 +334,10 @@
   <!-- ==========================================================================
        FOOTER
        ========================================================================== -->
-  <footer class="custom-footer">
-    <div class="footer-top-wave">
-      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
-      </svg>
-    </div>
 
-    <div class="container footer-content text-center">
-      <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
-        <img src="foto/logo.webp" alt="Logo" width="40" height="40" />
-        <span class="footer-brand">Lahan Basah Hijau</span>
-      </div>
-      <p class="small text-muted mb-3">Aplikasi pembelajaran interaktif berbasis STEM untuk mengenal, menjaga, dan mencintai lahan basah.</p>
-      <div class="footer-bottom">
-        <small>© 2025 Lahan Basah Hijau. Semua hak dilindungi.</small>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="sfx.js?v=3.2"></script>
-
-  <script>
+<?php
+$extraScripts = <<<'EOD'
+<script>
     AOS.init({ duration: 800, once: true });
 
     const QUIZ_STORAGE_KEY = "lahanBasahQuizResults";
@@ -450,7 +369,7 @@
         if (data.length === 0) {
           podiumArea.style.display = "none";
           listContainer.innerHTML = `<div class="text-center py-5 text-muted">
-              <img src="foto/asetgame/Teratai.png" class="ui-2d-thumb ui-2d-thumb-lg d-block mx-auto mb-2" alt="Ilustrasi lahan basah" />
+              <img src="foto/asetgame/Teratai.webp" class="ui-2d-thumb ui-2d-thumb-lg d-block mx-auto mb-2" alt="Ilustrasi lahan basah" />
             Belum ada hasil kuis di perangkat ini. Jadilah yang pertama!
           </div>`;
           return;
@@ -554,5 +473,6 @@
       renderLeaderboard();
     });
   </script>
-</body>
-</html>
+EOD;
+
+require __DIR__ . '/partials/footer.php';

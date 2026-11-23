@@ -1,19 +1,15 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simulasi Ekosistem - Lahan Basah Hijau</title>
+<?php
+/**
+ * Lahan Basah Hijau - Simulasi Ekosistem Interaktif
+ * Kurikulum Merdeka IPAS Kelas V SD
+ */
+$pageTitle = 'Simulasi Keseimbangan Ekosistem Lahan Basah - IPAS SD';
+$pageDesc  = 'Laboratorium interaktif ramah anak untuk mengamati hubungan sebab-akibat, rantai makanan, dan kelestarian ekosistem rawa gambut Kalimantan.';
+$activePage = 'simulasi';
+$bodyClass  = 'simulasi-page';
 
-  <!-- CSS Framework & Libraries -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
-
-  <!-- Custom Design System -->
-  <link rel="stylesheet" href="custom.css?v=3.4" />
-
-  <style>
+$extraHead = <<<'EOD'
+<style>
     /* Specific styles for Simulasi */
     .simulasi-main-card {
       background: rgba(255, 255, 255, 0.95);
@@ -250,135 +246,29 @@
       animation: floatSubtle 3s ease-in-out infinite;
     }
   </style>
-</head>
-<body>
+EOD;
 
-  <!-- ==========================================================================
-       NAVBAR
-       ========================================================================== -->
-  <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
-    <div class="container">
-      <a class="brand-wrapper" href="index.html">
-        <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
-        <div class="brand-text">
-          <span>Lahan Basah Hijau</span>
-          <span class="brand-badge"><i class="bi bi-tree-fill me-1"></i> STEM Interaktif</span>
-        </div>
-      </a>
+require __DIR__ . '/partials/head.php';
+require __DIR__ . '/partials/navbar.php';
 
-      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <i class="bi bi-list fs-2 text-success"></i>
-      </button>
+// Unified Hero Banner
+$heroTag       = '<i class="bi bi-bezier2 me-1 text-warning"></i> Laboratorium Digital Interaktif';
+$heroTitle     = 'Simulasi Keseimbangan <br><span class="highlight">Ekosistem Lahan Basah</span>';
+$heroSubtitle  = 'Uji coba aksi nyata: amati dampak vegetasi, ketinggian air rawa, dan tindakan manusia terhadap kelestarian alam rawa gambut Kalimantan.';
+$heroMascot    = 'foto-simulasi/katak.webp';
+$heroMascotAlt = 'Kodokko Penjaga Rawa';
+$heroCta       = '
+  <a href="#labArea" class="btn-eco-primary btn-sm px-4">
+    <i class="bi bi-play-circle-fill"></i> Mulai Simulasi
+  </a>
+  <a href="materi.php" class="btn-eco-outline btn-sm px-4">
+    <i class="bi bi-book-half"></i> Pelajari Teori Dulu
+  </a>
+';
+require __DIR__ . '/partials/hero.php';
+?>
 
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="materi.php"><i class="bi bi-book-fill"></i> Materi</a></li>
-          <li class="nav-item"><a class="nav-link" href="kuis.php"><i class="bi bi-controller"></i> Kuis & Games</a></li>
-          <li class="nav-item"><a class="nav-link active" href="simulasi.html"><i class="bi bi-bezier2"></i> Simulasi</a></li>
-          <li class="nav-item"><a class="nav-link" href="proyek.html"><i class="bi bi-lightbulb-fill"></i> Proyek</a></li>
-          <li class="nav-item"><a class="nav-link" href="leaderboard.html"><i class="bi bi-trophy-fill"></i> Papan Peringkat</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ==========================================================================
-       HERO SECTION
-       ========================================================================== -->
-  <section class="hero-section">
-    <img src="foto/cloud1.webp" class="hero-cloud c1" alt="Awan Cantik" />
-    <img src="foto/cloud2.webp" class="hero-cloud c2" alt="Awan Cantik" />
-    <img src="foto/daun1.webp" class="hero-floating-leaf leaf1" alt="Daun Hijau" />
-    <img src="foto/daun2.webp" class="hero-floating-leaf leaf2" alt="Daun Hijau" />
-
-    <div class="container hero-content">
-      <div class="hero-tag" data-aos="fade-down">
-        <i class="bi bi-flask-fill me-1"></i> Laboratorium Digital Interaktif
-      </div>
-
-      <h1 class="hero-title" data-aos="zoom-in">
-        Simulasi Ekosistem <br><span class="highlight">Lahan Basah</span>
-      </h1>
-
-      <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
-        Uji hubungan sebab-akibat dalam ekosistem! Seret atau klik tindakan manusia, lalu amati perubahan komponen biotik, abiotik, dan jaring-jaring makanan.
-      </p>
-
-      <!-- Karakter Hero Berdampingan -->
-      <div class="d-flex justify-content-center align-items-center gap-4 my-3" data-aos="fade-up" data-aos-delay="200">
-        <div class="text-center">
-          <img src="foto-simulasi/katak.webp" alt="Kodokko si Katak" style="width: 80px; height: 80px; object-fit: contain;" class="mb-1" />
-          <div class="badge bg-white text-dark shadow-sm px-3 py-1 rounded-pill">Kodokko</div>
-        </div>
-          <i class="bi bi-link-45deg fs-3 text-success"></i>
-        <div class="text-center">
-          <img src="foto-simulasi/bangau.webp" alt="Bango si Bangau" style="width: 80px; height: 80px; object-fit: contain;" class="mb-1" />
-          <div class="badge bg-white text-dark shadow-sm px-3 py-1 rounded-pill">Bango</div>
-        </div>
-      </div>
-
-      <div class="mt-3">
-        <a href="#labArea" class="btn-eco-primary">
-          <i class="bi bi-play-circle-fill"></i> Masuk ke Lab Simulasi
-        </a>
-      </div>
-    </div>
-
-    <!-- Organic Wave Divider -->
-    <div class="hero-wave-divider">
-      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.31,200,105,242.79,94.92,284.28,74.58,321.39,56.44Z" class="shape-fill"></path>
-      </svg>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       STORY SECTION ("Misi Rahasia di Lahan Basah")
-       ========================================================================== -->
-  <section class="container my-5">
-    <div class="story-card-wrapper" data-aos="fade-up">
-      <div class="row align-items-center g-4">
-        <div class="col-lg-4 text-center">
-          <img src="foto-simulasi/background.webp" alt="Ilustrasi Situasi Lahan Basah" class="img-fluid rounded-4 shadow-sm border w-100" style="max-height: 260px; object-fit: cover;" />
-        </div>
-
-        <div class="col-lg-8">
-          <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill mb-2">
-            <i class="bi bi-book-fill me-1"></i> Cerita Pengantar Simulasi
-          </span>
-          <h3 class="display-font text-success mb-3">Misi Rahasia di Lahan Basah</h3>
-          
-          <div class="d-flex flex-column gap-3">
-            <div class="d-flex align-items-start gap-3">
-              <img src="foto-simulasi/katak.webp" class="story-character-avatar" alt="Kodokko" />
-              <div class="speech-bubble">
-                <strong class="text-success d-block mb-1">Kodokko:</strong>
-                "Bango, lihat deh... Kenapa banyak plastik dan airnya mulai keruh ya? Tempat kita melompat dan mencari makan jadi tercemar!"
-              </div>
-            </div>
-
-            <div class="d-flex align-items-start gap-3">
-              <img src="foto-simulasi/bangau.webp" class="story-character-avatar" alt="Bango" />
-              <div class="speech-bubble">
-                <strong class="text-primary d-block mb-1">Bango:</strong>
-                "Itu karena ulah pembuangan limbah dan penebangan liar, Kodokko! Tapi kalau manusia mau bergotong royong melakukan <strong>restorasi</strong> dan <strong>edukasi</strong>, ekosistem rumah kita pasti bisa pulih kembali!"
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-3 p-3 bg-white rounded-3 border small text-muted">
-            <i class="bi bi-lightbulb-fill text-warning"></i> <strong>Tantangan untukmu:</strong> Uji beberapa tindakan. Jelaskan komponen yang terdampak terlebih dahulu, lalu telusuri pengaruhnya terhadap rantai makanan dan keseimbangan ekosistem.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       SIMULATION LAB ARENA
-       ========================================================================== -->
-  <main class="container my-5" id="labArea">
+<main class="eco-stage-container" id="labArea">
     <div class="simulasi-main-card" data-aos="fade-up">
 
       <!-- Eco-Certificate Banner (Muncul saat kesehatan >= 85%) -->
@@ -488,55 +378,6 @@
     </div>
   </main>
 
-  <!-- ==========================================================================
-       FLOATING MUSIC DOCK & TOAST
-       ========================================================================== -->
-  <!-- Floating Audio Dock -->
-  <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
-    <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
-      <i id="music-icon" class="bi bi-volume-mute-fill"></i>
-    </button>
-    <div class="sound-bars">
-      <div class="sound-bar"></div>
-      <div class="sound-bar"></div>
-      <div class="sound-bar"></div>
-    </div>
-    <span class="music-label d-none d-sm-inline">Musik</span>
-  </div>
-  <audio id="bg-music" loop preload="auto">
-    <source src="sound/sound2.mp3" type="audio/mpeg" />
-  </audio>
-  <div id="music-toast" class="music-toast-popup"></div>
-
-  <!-- ==========================================================================
-       FOOTER
-       ========================================================================== -->
-  <footer class="custom-footer">
-    <div class="footer-top-wave">
-      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
-      </svg>
-    </div>
-
-    <div class="container footer-content text-center">
-      <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
-        <img src="foto/logo.webp" alt="Logo" width="40" height="40" />
-        <span class="footer-brand">Lahan Basah Hijau</span>
-      </div>
-      <p class="small text-muted mb-3">Aplikasi pembelajaran interaktif berbasis STEM untuk mengenal, menjaga, dan mencintai lahan basah.</p>
-      <div class="footer-bottom">
-        <small>© 2025 Lahan Basah Hijau. Semua hak dilindungi.</small>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="sfx.js?v=3.2"></script>
-  <script src="simulasi.js"></script>
-  <script>
-    AOS.init({ duration: 800, once: true });
-  </script>
-</body>
-</html>
+<?php
+$extraScripts = '<script src="simulasi.js"></script>';
+require __DIR__ . '/partials/footer.php';

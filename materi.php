@@ -7,26 +7,12 @@
 
 function renderMaterialIcon(string $icon, string $class = 'ui-2d-thumb'): string
 {
-    $images = [
-        '🐸' => 'foto/asetgame/Katak.png', '🐒' => 'foto/asetgame/Bekantan.png',
-        '🐟' => 'foto/asetgame/Ikan.png', '🪷' => 'foto/asetgame/Teratai.png',
-        '🪶' => 'foto/asetgame/Bangau.png', '🌱' => 'foto/asetgame/Teratai.png',
-        '🌿' => 'foto/asetgame/Teratai.png', '🌾' => 'foto/asetgame/Teratai.png',
-        '🌳' => 'foto/asetgame/Pohon.png', '💧' => 'foto/asetgame/Rawa.png',
-        '🏝️' => 'foto/asetgame/Halaman.png'
-    ];
-    if (isset($images[$icon])) {
-        return '<img src="' . $images[$icon] . '" class="' . $class . '" alt="" />';
-    }
-    $icons = [
-        '⚖️' => 'bi-sliders', '⚠️' => 'bi-exclamation-triangle-fill', '🔥' => 'bi-fire',
-        '🧪' => 'bi-flask-fill', '🪓' => 'bi-tree-fill', '♻️' => 'bi-recycle',
-        '🎣' => 'bi-water', '🛡️' => 'bi-shield-check', '☀️' => 'bi-sun-fill',
-        '☁️' => 'bi-cloud-fill', '🌧️' => 'bi-cloud-rain-heavy-fill', '🚰' => 'bi-droplet-fill',
-        '🎒' => 'bi-backpack-fill', '🚣' => 'bi-water', '🍄' => 'bi-flower1'
-    ];
-    $bi = $icons[$icon] ?? 'bi-stars';
-    return '<i class="bi ' . $bi . ' fs-3 text-success" aria-hidden="true"></i>';
+    return '<i class="bi bi-leaf-fill fs-3 text-success" aria-hidden="true"></i>';
+}
+
+function renderLabThumbnail(string $src, string $alt, string $class = 'lab-choice-image'): string
+{
+    return '<img src="' . htmlspecialchars($src) . '" alt="' . htmlspecialchars($alt) . '" class="' . htmlspecialchars($class) . '" loading="lazy">';
 }
 
 // Data Modul Pembelajaran
@@ -204,7 +190,7 @@ $modules = [
                 'desc' => 'Hubungan yang saling menguntungkan! Contoh: Burung bangau yang memakan parasit kutu di tubuh kerbau rawa (Amuntai). Kerbau bersih dari gatal, burung bangau kenyang bernutrisi.'
             ],
             [
-                'icon' => '🌿',
+                'icon' => '🤝',
                 'title' => 'Simbiosis Komensalisme & Parasitisme',
                 'desc' => '<strong>Komensalisme:</strong> Anggrek hutan menempel pada pohon rambai (satu untung, yang lain tak rugi).<br><strong>Parasitisme:</strong> Benalu yang menyedot sari makanan dari pohon induk hingga layu.'
             ]
@@ -493,14 +479,13 @@ $authenticPhotos = [
 ];
 
 $modulePhotoKeys = [
-    1 => ['peat', 'wetland', 'bekantan'],
-    2 => ['wetland', 'fish', 'heron'],
-    3 => ['peat', 'fish', 'heron'],
-    4 => ['peat', 'bekantan', 'wetland'],
-    5 => ['bekantan', 'heron', 'peat'],
-    6 => ['wetland', 'peat', 'fish']
+    1 => ['peat', 'wetland', 'heron'],
+    2 => ['peat', 'bekantan', 'heron'],
+    3 => ['peat', 'fish', 'bekantan'],
+    4 => ['bekantan', 'wetland', 'fish'],
+    5 => ['heron', 'fish', 'fire'],
+    6 => ['bekantan', 'heron', 'fish']
 ];
-$activePhotos = array_map(fn($key) => $authenticPhotos[$key], $modulePhotoKeys[$currentModulId]);
 
 $spotlightPhotoLibrary = $authenticPhotos + [
     'purun' => [
@@ -548,30 +533,23 @@ $spotlightPhotoLibrary = $authenticPhotos + [
 $spotlightPhotoKeys = [
     1 => ['bekantan', 'fish', 'purun', 'lotus'],
     2 => ['wetland', 'snail', 'frog', 'fish', 'mushroom'],
-    3 => ['buffalo', 'buffalo', 'wetland'],
+    3 => ['buffalo', 'heron', 'wetland'],
     4 => ['peat', 'fire', 'canal'],
     5 => ['bekantan', 'peat', 'wetland'],
     6 => ['peat', 'wetland', 'purun']
 ];
-?>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Modul Pembelajaran Interaktif IPAS Kelas V SD - Bab 3 Harmoni dalam Ekosistem Lahan Basah Kalimantan Selatan" />
-  <title><?= htmlspecialchars($activeModul['badge']) ?>: <?= htmlspecialchars($activeModul['title']) ?> - Lahan Basah Hijau</title>
 
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <!-- AOS Animation -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
-  <!-- Custom Design System -->
-  <link rel="stylesheet" href="custom.css?v=3.4" />
+$activePhotos = array_map(fn($key) => $spotlightPhotoLibrary[$key], $modulePhotoKeys[$currentModulId]);
 
-  <style>
+
+
+$pageTitle = 'Harmoni Ekosistem Lahan Basah - IPAS Kelas 5 SD';
+$pageDesc  = 'Modul pembelajaran interaktif ekosistem lahan basah, rantai makanan, peranan tanah gambut, dan siklus air Kalimantan.';
+$activePage = 'materi';
+$bodyClass  = 'inner-page';
+
+$extraHead = <<<'EOD'
+<style>
     /* ==========================================================================
        COMPLETE EMBEDDED STYLES FOR MATERI PHP (Zero Cache Glitch)
        ========================================================================== */
@@ -579,45 +557,90 @@ $spotlightPhotoKeys = [
       --primary-green: #10b981;
       --primary-dark: #064e3b;
       --emerald-accent: #059669;
-      --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --materi-font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     }
 
     body {
       background-color: #f8fafc;
       color: #1e293b;
-      font-family: var(--font-display);
+      font-family: var(--materi-font);
     }
 
-    /* Module Navigation Card Grid */
+    /* Layout materi: tab modul sederhana di kiri, konten aktif di kanan */
+    .materi-layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
     .module-nav-wrapper {
       background: #ffffff;
-      border-radius: 26px;
-      padding: 24px;
-      border: 2px solid #e2f2ea;
-      box-shadow: 0 10px 30px rgba(6, 78, 59, 0.05);
-      margin-bottom: 28px;
+      border-radius: 18px;
+      padding: 16px;
+      border: 1px solid #dcebe4;
+      box-shadow: 0 8px 24px rgba(6, 78, 59, 0.05);
+      position: sticky;
+      top: 88px;
     }
 
     .module-nav-container {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      padding-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .module-nav-heading {
+      padding: 2px 4px 12px;
+      border-bottom: 1px solid #eef4f1;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 991px) {
+      .materi-layout {
+        grid-template-columns: 210px minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .module-nav-wrapper {
+        top: 78px;
+      }
     }
 
     @media (max-width: 767px) {
-      .module-nav-container {
+      .materi-layout {
         grid-template-columns: 1fr;
       }
+
+      .module-nav-wrapper {
+        position: static;
+      }
+
+      .module-nav-container {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .module-nav-btn {
+        min-height: 64px;
+      }
+
+      .module-nav-btn .icon-badge {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .module-nav-container { grid-template-columns: 1fr; }
     }
 
     .module-nav-btn {
       appearance: none;
       -webkit-appearance: none;
       background: #ffffff;
-      border: 2px solid #e2e8f0;
-      border-radius: 20px;
-      padding: 16px 18px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 11px 12px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -625,38 +648,37 @@ $spotlightPhotoKeys = [
       cursor: pointer;
       text-decoration: none;
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 12px rgba(6, 78, 59, 0.04);
+      box-shadow: none;
       position: relative;
       overflow: hidden;
       width: 100%;
       min-width: 0;
-      min-height: 88px;
+      min-height: 68px;
     }
 
     .module-nav-btn:hover {
-      transform: translateY(-3px);
-      border-color: #10b981;
-      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.15);
+      background: #f0fdf4;
+      border-color: #bbf7d0;
       color: #064e3b;
     }
 
     .module-nav-btn.active {
-      background: linear-gradient(135deg, #059669, #10b981) !important;
+      background: #059669 !important;
       border-color: #059669 !important;
       color: #ffffff !important;
-      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35) !important;
+      box-shadow: 0 5px 14px rgba(5, 150, 105, 0.22) !important;
     }
 
     .module-nav-btn .icon-badge {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
+      font-size: 1.2rem;
       flex-shrink: 0;
       transition: all 0.2s ease;
     }
@@ -667,7 +689,7 @@ $spotlightPhotoKeys = [
     }
 
     .mod-badge-text {
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       font-weight: 800;
       letter-spacing: 0.5px;
       text-transform: uppercase;
@@ -680,7 +702,7 @@ $spotlightPhotoKeys = [
     }
 
     .mod-title-text {
-      font-size: 0.95rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #1e293b;
       line-height: 1.3;
@@ -812,18 +834,16 @@ $spotlightPhotoKeys = [
       width: 100%;
       height: 150px;
       overflow: hidden;
-      background: #e8f5ef;
+      background: #f4faf7;
     }
 
     .species-photo-wrap img {
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: cover;
-      transition: transform 0.4s ease;
+      object-fit: contain;
+      object-position: center;
     }
-
-    .species-card:hover .species-photo-wrap img { transform: scale(1.055); }
 
     .species-photo-label {
       position: absolute;
@@ -867,7 +887,9 @@ $spotlightPhotoKeys = [
     .field-photo-card img {
       width: 100%;
       height: 190px;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center;
+      background: #f4faf7;
       display: block;
     }
 
@@ -876,6 +898,81 @@ $spotlightPhotoKeys = [
     .field-photo-source { font-size: 0.72rem; color: #64748b; }
     .field-photo-source a { color: #047857; font-weight: 800; text-decoration: none; }
     .field-photo-source a:hover { text-decoration: underline; }
+
+    .lab-choice-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px 5px 6px;
+    }
+
+    .lab-choice-image {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      background: #ffffff;
+    }
+
+    .lab-node-image {
+      width: 76px;
+      height: 58px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 10px;
+      margin-bottom: 7px;
+    }
+
+    .lab-card-image {
+      width: 100%;
+      height: 92px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 10px;
+      margin-bottom: 9px;
+    }
+
+    .lab-check-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      border: 1px solid #d9eee4;
+      border-radius: 12px;
+      background: #ffffff;
+    }
+
+    .lab-result-visual {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 92px;
+    }
+
+    .lab-result-visual img {
+      width: 118px;
+      height: 82px;
+      flex: 0 0 118px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 12px;
+      border: 2px solid #d1fae5;
+      background: #f0fdf4;
+    }
+
+    .lab-result-copy {
+      min-width: 0;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 575px) {
+      .lab-result-visual { align-items: flex-start; }
+      .lab-result-visual img { width: 88px; height: 72px; flex-basis: 88px; }
+    }
 
     .golden-summary-card {
       color: #5b3a05;
@@ -1174,106 +1271,53 @@ $spotlightPhotoKeys = [
       transition: opacity 0.3s ease;
     }
   </style>
-</head>
-<body>
+EOD;
 
-  <!-- Floating Audio Dock -->
-  <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
-    <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
-      <i id="music-icon" class="bi bi-volume-mute-fill"></i>
-    </button>
-    <div class="sound-bars">
-      <div class="sound-bar"></div>
-      <div class="sound-bar"></div>
-      <div class="sound-bar"></div>
-    </div>
-    <span class="music-label d-none d-sm-inline">Musik</span>
-  </div>
-  <audio id="bg-music" loop preload="auto">
-    <source src="sound/sound2.mp3" type="audio/mpeg" />
-  </audio>
-  <div id="music-toast" class="music-toast-popup"></div>
+require __DIR__ . '/partials/head.php';
+require __DIR__ . '/partials/navbar.php';
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
-    <div class="container">
-      <a class="brand-wrapper" href="index.html">
-        <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
-        <div class="brand-text">
-          <span>Lahan Basah Hijau</span>
-          <span class="brand-badge"><i class="bi bi-tree-fill me-1"></i> STEM Interaktif</span>
-        </div>
-      </a>
-      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Buka navigasi">
-        <i class="bi bi-list fs-2 text-success"></i>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Beranda</a></li>
-          <li class="nav-item"><a class="nav-link active" href="materi.php"><i class="bi bi-book-fill"></i> Materi</a></li>
-          <li class="nav-item"><a class="nav-link" href="kuis.php"><i class="bi bi-controller"></i> Kuis & Games</a></li>
-          <li class="nav-item"><a class="nav-link" href="simulasi.html"><i class="bi bi-bezier2"></i> Simulasi</a></li>
-          <li class="nav-item"><a class="nav-link" href="proyek.html"><i class="bi bi-lightbulb-fill"></i> Proyek</a></li>
-          <li class="nav-item"><a class="nav-link" href="leaderboard.html"><i class="bi bi-trophy-fill"></i> Peringkat</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+// Unified Hero Banner
+$heroTag       = '<i class="bi bi-mortarboard-fill me-1"></i> IPAS Kelas V SD • Kurikulum Merdeka';
+$heroTitle     = 'Harmoni dalam <span class="highlight">Ekosistem Lahan Basah</span>';
+$heroSubtitle  = 'Jelajahi interaksi rantai makanan, keanekaragaman flora-fauna rawa, peranan tanah gambut, dan siklus air Kalimantan melalui modul interaktif ramah anak.';
+$heroMascot    = 'foto/peneliti.webp';
+$heroMascotAlt = 'Peneliti Cilik Lahan Basah';
+$heroCta       = '
+  <a href="kuis.php" class="btn-eco-primary btn-sm px-4">
+    <i class="bi bi-controller"></i> Uji di Game Kuis
+  </a>
+  <a href="simulasi.php" class="btn-eco-outline btn-sm px-4">
+    <i class="bi bi-bezier2"></i> Buka Simulasi
+  </a>
+';
+require __DIR__ . '/partials/hero.php';
+?>
 
-  <!-- Hero Section Modul -->
-  <header class="py-4 bg-light border-bottom">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
-        <div>
-          <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fw-bold">
-            <i class="bi bi-mortarboard-fill me-1"></i> IPAS Kelas V SD • Kurikulum Merdeka
-          </span>
-          <h1 class="h3 fw-bolder mt-2 mb-1 text-success-emphasis">
-            Harmoni dalam Ekosistem Lahan Basah
-          </h1>
-          <p class="text-muted mb-0 small">
-            Belajar ekosistem secara rapi, bertahap, dan menyenangkan tanpa scroll panjang!
-          </p>
-        </div>
-        <div class="d-flex align-items-center gap-2">
-          <button class="audio-read-pill" id="readModuleBtn" onclick="readActiveModule()">
-            <i class="bi bi-volume-up-fill"></i> Dengarkan Materi
-          </button>
-          <a href="kuis.php" class="btn btn-outline-success rounded-pill fw-bold btn-sm px-3">
-            <i class="bi bi-controller"></i> Main Game Kuis
-          </a>
-        </div>
-      </div>
-    </div>
-  </header>
+<!-- Main Content Area Wrapped in Unified Stage Container -->
+<main class="eco-stage-container eco-stage-wide">
+    <div class="materi-layout">
+        <!-- Navigasi modul dirender langsung oleh PHP -->
+        <aside class="module-nav-wrapper" aria-label="Daftar modul">
+          <div class="module-nav-heading">
+            <div class="fw-bold text-dark"><i class="bi bi-book text-success me-1"></i> Modul Materi</div>
+            <small class="text-muted">Pilih topik untuk dipelajari</small>
+          </div>
+          <nav class="module-nav-container">
+            <?php foreach ($modules as $modId => $mod): ?>
+              <a href="materi.php?modul=<?= $modId ?>"
+                 class="module-nav-btn <?= ($modId === $currentModulId) ? 'active' : '' ?>"
+                 <?= ($modId === $currentModulId) ? 'aria-current="page"' : '' ?>>
+                <div class="flex-grow-1">
+                  <div class="mod-badge-text">Modul <?= $modId ?></div>
+                  <div class="mod-title-text"><?= htmlspecialchars($mod['title']) ?></div>
+                </div>
+              </a>
+            <?php endforeach; ?>
+          </nav>
+        </aside>
 
-  <!-- Main Content Area -->
-  <main class="py-4">
-    <div class="container">
-
-      <!-- MODUL NAVIGATION CARDS (Grid 3 Kolom) -->
-      <div class="module-nav-wrapper" data-aos="fade-down">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <span class="fw-bold text-dark fs-6"><i class="bi bi-compass text-success me-1"></i> Pilih Petualangan Modul:</span>
-          <span class="badge bg-success-subtle text-success fw-bold px-3 py-2 rounded-pill" id="progressStatusBadge">
-            Modul <?= $currentModulId ?> dari <?= count($modules) ?>
-          </span>
-        </div>
-        <div class="module-nav-container">
-          <?php foreach ($modules as $modId => $mod): ?>
-            <a href="materi.php?modul=<?= $modId ?>" class="module-nav-btn <?= ($modId === $currentModulId) ? 'active' : '' ?>">
-              <div class="icon-badge"><?= renderMaterialIcon($mod['icon'], 'ui-2d-thumb ui-2d-thumb-sm') ?></div>
-              <div class="flex-grow-1">
-                <div class="mod-badge-text"><?= $mod['badge'] ?></div>
-                <div class="mod-title-text"><?= htmlspecialchars($mod['title']) ?></div>
-              </div>
-            </a>
-          <?php endforeach; ?>
-        </div>
-      </div>
-
-      <!-- STAGE CARD MODUL AKTIF -->
-      <div class="materi-stage-card" data-aos="fade-up">
+        <!-- STAGE CARD MODUL AKTIF -->
+        <div class="materi-stage-card" data-aos="fade-up">
 
         <!-- Banner Modul -->
         <div class="modul-hero-header">
@@ -1355,7 +1399,7 @@ $spotlightPhotoKeys = [
                 <figure class="field-photo-card mb-0">
                   <img src="<?= htmlspecialchars($photo['src']) ?>" alt="<?= htmlspecialchars($photo['alt']) ?>" loading="lazy">
                   <figcaption class="field-photo-copy">
-                    <p class="mb-2"><?= htmlspecialchars($photo['caption']) ?></p>
+                    <p class="mb-2"><?= htmlspecialchars($photo['caption'] ?? $photo['alt']) ?></p>
                     <div class="field-photo-source">
                       Foto: <?= htmlspecialchars($photo['credit']) ?> · <?= htmlspecialchars($photo['license']) ?> ·
                       <a href="<?= htmlspecialchars($photo['url']) ?>" target="_blank" rel="noopener noreferrer">Wikimedia Commons <i class="bi bi-box-arrow-up-right"></i></a>
@@ -1412,12 +1456,12 @@ $spotlightPhotoKeys = [
             <div class="p-3 bg-light rounded-4">
               <p class="small fw-bold text-muted mb-2">Klik tombol di bawah ini untuk melihat ke mana mereka tergolong:</p>
               <div class="d-flex flex-wrap gap-2 mb-3">
-                <button class="btn btn-outline-success btn-sm rounded-pill d-inline-flex align-items-center gap-1" onclick="checkBio('ikan', 'Biotik (Makhluk Hidup - Ikan bernapas dan berkembang biak)')"><img src="foto/asetgame/Ikan.png" style="width:20px;height:20px;object-fit:contain;"> Ikan Gabus</button>
-              <button class="btn btn-outline-primary btn-sm rounded-pill d-inline-flex align-items-center gap-1" onclick="checkBio('air', 'Abiotik (Benda Tak Hidup - Air rawa penopang kehidupan)')"><i class="bi bi-droplet-fill"></i> Air Rawa</button>
-                <button class="btn btn-outline-success btn-sm rounded-pill d-inline-flex align-items-center gap-1" onclick="checkBio('purun', 'Biotik (Makhluk Hidup - Tumbuhan produsen fotosintesis)')"><img src="foto/asetgame/Rumput.png" style="width:20px;height:20px;object-fit:contain;"> Rumput Purun</button>
-                <button class="btn btn-outline-primary btn-sm rounded-pill d-inline-flex align-items-center gap-1" onclick="checkBio('sinar', 'Abiotik (Benda Tak Hidup - Sumber energi fotosintesis)')"><img src="foto/game/matahari_kartu.png" style="width:20px;height:20px;object-fit:contain;"> Sinar Matahari</button>
-                <button class="btn btn-outline-success btn-sm rounded-pill d-inline-flex align-items-center gap-1" onclick="checkBio('bekantan', 'Biotik (Makhluk Hidup - Primata endemik lahan basah)')"><img src="foto/asetgame/Bekantan.png" style="width:20px;height:20px;object-fit:contain;"> Bekantan</button>
-                <button class="btn btn-outline-primary btn-sm rounded-pill d-inline-flex align-items-center gap-1" onclick="checkBio('tanah', 'Abiotik (Benda Tak Hidup - Tanah gambut kaya unsur hara)')"><img src="foto/game/gambut_kartu.png" style="width:20px;height:20px;object-fit:contain;"> Tanah Gambut</button>
+                <button class="btn btn-outline-success btn-sm rounded-pill lab-choice-btn" onclick="checkBio('Biotik', 'Ikan bernapas, bergerak, tumbuh, dan berkembang biak sehingga termasuk makhluk hidup.', 'foto/materi-asli/ikan-gabus.webp', 'Ikan Gabus')"><?= renderLabThumbnail('foto/materi-asli/ikan-gabus.webp', 'Ikan gabus') ?> Ikan Gabus</button>
+                <button class="btn btn-outline-primary btn-sm rounded-pill lab-choice-btn" onclick="checkBio('Abiotik', 'Air tidak hidup, tetapi menjadi tempat tinggal dan penopang kehidupan organisme rawa.', 'foto/materi-asli/rawa-teratai.webp', 'Air Rawa')"><?= renderLabThumbnail('foto/materi-asli/rawa-teratai.webp', 'Air rawa') ?> Air Rawa</button>
+                <button class="btn btn-outline-success btn-sm rounded-pill lab-choice-btn" onclick="checkBio('Biotik', 'Purun adalah tumbuhan hidup yang melakukan fotosintesis dan menjadi produsen di lahan basah.', 'foto/materi-asli/purun-danau.webp', 'Rumput Purun')"><?= renderLabThumbnail('foto/materi-asli/purun-danau.webp', 'Rumput purun') ?> Rumput Purun</button>
+                <button class="btn btn-outline-primary btn-sm rounded-pill lab-choice-btn" onclick="checkBio('Abiotik', 'Sinar matahari adalah sumber energi tak hidup yang dibutuhkan tumbuhan untuk fotosintesis.', 'foto/materi-asli/teratai-merah.webp', 'Sinar Matahari')"><?= renderLabThumbnail('foto/materi-asli/teratai-merah.webp', 'Teratai terkena sinar matahari') ?> Sinar Matahari</button>
+                <button class="btn btn-outline-success btn-sm rounded-pill lab-choice-btn" onclick="checkBio('Biotik', 'Bekantan bernapas, mencari makan, bergerak, dan berkembang biak sehingga termasuk makhluk hidup.', 'foto/materi-asli/bekantan.webp', 'Bekantan')"><?= renderLabThumbnail('foto/materi-asli/bekantan.webp', 'Bekantan') ?> Bekantan</button>
+                <button class="btn btn-outline-primary btn-sm rounded-pill lab-choice-btn" onclick="checkBio('Abiotik', 'Tanah gambut merupakan komponen tak hidup yang menyimpan air dan unsur hara bagi ekosistem.', 'foto/materi-asli/hutan-rawa-gambut.webp', 'Tanah Gambut')"><?= renderLabThumbnail('foto/materi-asli/hutan-rawa-gambut.webp', 'Tanah gambut') ?> Tanah Gambut</button>
               </div>
               <div id="bioResult" class="p-3 bg-white rounded-3 border border-success-subtle text-success fw-bold small">
               <i class="bi bi-hand-index-thumb me-1"></i> Klik salah satu komponen di atas untuk melihat penjelasannya!
@@ -1428,31 +1472,31 @@ $spotlightPhotoKeys = [
             <!-- Interaktif Modul 2: Rantai Makanan Interaktif -->
             <div class="food-chain-interactive">
               <div class="chain-item-node text-center">
-                <img src="foto/asetgame/Teratai.png" alt="Teratai Rawa" class="mb-1" style="width: 54px; height: 54px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));">
+                <?= renderLabThumbnail('foto/materi-asli/teratai-merah.webp', 'Teratai rawa', 'lab-node-image') ?>
                 <div class="fw-bold text-success lh-sm">Teratai Rawa</div>
                 <span class="badge bg-success-subtle text-success small">Produsen</span>
               </div>
               <div class="chain-arrow-icon"><i class="bi bi-arrow-right"></i></div>
               <div class="chain-item-node text-center">
-                <img src="foto/game/keong_kartu.png" alt="Keong Mas" class="mb-1" style="width: 54px; height: 54px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));">
+                <?= renderLabThumbnail('foto/materi-asli/keong-mas.webp', 'Keong mas', 'lab-node-image') ?>
                 <div class="fw-bold text-primary lh-sm">Keong Mas</div>
                 <span class="badge bg-primary-subtle text-primary small">Konsumen I</span>
               </div>
               <div class="chain-arrow-icon"><i class="bi bi-arrow-right"></i></div>
               <div class="chain-item-node text-center">
-                <img src="foto/asetgame/Katak.png" alt="Katak Rawa" class="mb-1" style="width: 54px; height: 54px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));">
+                <?= renderLabThumbnail('foto/materi-asli/katak-rawa.webp', 'Katak rawa', 'lab-node-image') ?>
                 <div class="fw-bold text-warning-emphasis lh-sm">Katak Rawa</div>
                 <span class="badge bg-warning-subtle text-warning-emphasis small">Konsumen II</span>
               </div>
               <div class="chain-arrow-icon"><i class="bi bi-arrow-right"></i></div>
               <div class="chain-item-node text-center">
-                <img src="foto/asetgame/Ikan.png" alt="Ikan Haruan" class="mb-1" style="width: 54px; height: 54px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));">
+                <?= renderLabThumbnail('foto/materi-asli/ikan-gabus.webp', 'Ikan haruan', 'lab-node-image') ?>
                 <div class="fw-bold text-danger lh-sm">Ikan Haruan</div>
                 <span class="badge bg-danger-subtle text-danger small">Konsumen Karnivora</span>
               </div>
               <div class="chain-arrow-icon"><i class="bi bi-arrow-right"></i></div>
               <div class="chain-item-node text-center">
-                <img src="foto/game/jamur_kartu.png" alt="Jamur Pengurai" class="mb-1" style="width: 54px; height: 54px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));">
+                <?= renderLabThumbnail('foto/materi-asli/jamur.webp', 'Jamur pengurai', 'lab-node-image') ?>
                 <div class="fw-bold text-secondary lh-sm">Jamur Pengurai</div>
                 <span class="badge bg-secondary-subtle text-secondary small">Dekomposer</span>
               </div>
@@ -1463,9 +1507,9 @@ $spotlightPhotoKeys = [
             <div class="p-3 bg-light rounded-4">
               <p class="small fw-bold text-muted mb-2">Uji Skenario: Apa yang terjadi jika salah satu organisme terganggu?</p>
               <div class="btn-group flex-wrap w-100 gap-2 mb-3">
-                <button class="btn btn-outline-danger btn-sm rounded-pill" onclick="simulateBalance('ular_katak')">Jika Katak Habis Diburu</button>
-                <button class="btn btn-outline-warning btn-sm rounded-pill" onclick="simulateBalance('teratai_mati')">Jika Teratai Kena Racun</button>
-                <button class="btn btn-outline-success btn-sm rounded-pill" onclick="simulateBalance('seimbang')">Kondisi Alami Seimbang</button>
+                <button class="btn btn-outline-danger btn-sm rounded-pill lab-choice-btn" onclick="simulateBalance('ular_katak', 'foto/materi-asli/katak-rawa.webp', 'Katak Habis Diburu')"><?= renderLabThumbnail('foto/materi-asli/katak-rawa.webp', 'Katak rawa') ?> Jika Katak Habis Diburu</button>
+                <button class="btn btn-outline-warning btn-sm rounded-pill lab-choice-btn" onclick="simulateBalance('teratai_mati', 'foto/materi-asli/teratai-merah.webp', 'Teratai Terkena Racun')"><?= renderLabThumbnail('foto/materi-asli/teratai-merah.webp', 'Teratai merah') ?> Jika Teratai Kena Racun</button>
+                <button class="btn btn-outline-success btn-sm rounded-pill lab-choice-btn" onclick="simulateBalance('seimbang', 'foto/materi-asli/rawa-teratai.webp', 'Ekosistem Seimbang')"><?= renderLabThumbnail('foto/materi-asli/rawa-teratai.webp', 'Ekosistem rawa seimbang') ?> Kondisi Alami Seimbang</button>
               </div>
               <div id="balanceResult" class="p-3 bg-white rounded-3 border border-warning-subtle text-dark fw-bold small">
                 Klik salah satu tombol skenario untuk mengamati efeknya pada rantai makanan!
@@ -1477,21 +1521,21 @@ $spotlightPhotoKeys = [
             <div class="row g-2">
               <div class="col-md-4">
                 <div class="p-3 bg-white rounded-3 border text-center">
-                <i class="bi bi-fire fs-2 text-danger d-block mb-1"></i>
+                  <?= renderLabThumbnail('foto/materi-asli/api-gambut.webp', 'Kebakaran gambut', 'lab-card-image') ?>
                   <h6 class="fw-bold text-danger">Kebakaran Gambut</h6>
                   <p class="small text-muted mb-0">Asap pekat ISPA & hilangnya pohon rambai rumah bekantan.</p>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="p-3 bg-white rounded-3 border text-center">
-                <i class="bi bi-lightning-charge-fill fs-2 text-warning d-block mb-1"></i>
+                  <?= renderLabThumbnail('foto/materi-asli/ikan-gabus.webp', 'Ikan di perairan rawa', 'lab-card-image') ?>
                   <h6 class="fw-bold text-warning-emphasis">Setrum Ikan Ilegal</h6>
                   <p class="small text-muted mb-0">Bibit ikan kecil mati, rantai makanan perairan terputus total.</p>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="p-3 bg-white rounded-3 border text-center">
-                <i class="bi bi-trash3-fill fs-2 text-secondary d-block mb-1"></i>
+                  <?= renderLabThumbnail('foto/materi-asli/sekat-kanal-asli.webp', 'Aliran air lahan gambut', 'lab-card-image') ?>
                   <h6 class="fw-bold text-info-emphasis">Sampah Plastik</h6>
                   <p class="small text-muted mb-0">Menyumbat aliran air rawa dan tertelan satwa liar.</p>
                 </div>
@@ -1502,16 +1546,19 @@ $spotlightPhotoKeys = [
             <!-- Interaktif Modul 5: Checklist Aksi Siswa -->
             <div class="p-3 bg-light rounded-4">
               <p class="fw-bold text-success mb-2">Centang aksi ramah lingkungan yang sudah kamu lakukan:</p>
-              <div class="form-check mb-2">
+              <div class="form-check lab-check-card">
                 <input class="form-check-input" type="checkbox" id="act1" onchange="checkActionPoints()">
+                <?= renderLabThumbnail('foto/materi-asli/rawa-teratai.webp', 'Air rawa yang bersih') ?>
                 <label class="form-check-label small fw-semibold" for="act1">Membawa botol minum sendiri ke sekolah</label>
               </div>
-              <div class="form-check mb-2">
+              <div class="form-check lab-check-card">
                 <input class="form-check-input" type="checkbox" id="act2" onchange="checkActionPoints()">
+                <?= renderLabThumbnail('foto/materi-asli/sekat-kanal-asli.webp', 'Aliran air yang dijaga') ?>
                 <label class="form-check-label small fw-semibold" for="act2">Tidak pernah membuang sampah ke selokan atau sungai</label>
               </div>
-              <div class="form-check mb-2">
+              <div class="form-check lab-check-card">
                 <input class="form-check-input" type="checkbox" id="act3" onchange="checkActionPoints()">
+                <?= renderLabThumbnail('foto/materi-asli/purun-danau.webp', 'Tanaman purun') ?>
                 <label class="form-check-label small fw-semibold" for="act3">Menanam tanaman hias atau pohon di sekitar rumah</label>
               </div>
               <div id="actionBadge" class="mt-2 text-success fw-bold small">Lakukan aksi nyata untuk bumi kita!</div>
@@ -1521,22 +1568,22 @@ $spotlightPhotoKeys = [
             <!-- Interaktif Modul 6: 4 Langkah Siklus Air -->
             <div class="row g-2">
               <div class="col-6 col-md-3 text-center p-2 bg-white rounded-3 border">
-                <i class="bi bi-sun-fill fs-3 text-warning"></i>
+                <?= renderLabThumbnail('foto/materi-asli/teratai-merah.webp', 'Air menguap karena panas matahari', 'lab-card-image') ?>
                 <div class="fw-bold small text-primary">1. Evaporasi</div>
                 <div class="text-muted" style="font-size: 0.75rem;">Air menguap ke udara</div>
               </div>
               <div class="col-6 col-md-3 text-center p-2 bg-white rounded-3 border">
-                <i class="bi bi-cloud-fill fs-3 text-primary"></i>
+                <?= renderLabThumbnail('foto/materi-asli/hutan-rawa-gambut.webp', 'Uap air di atas hutan rawa', 'lab-card-image') ?>
                 <div class="fw-bold small text-primary">2. Kondensasi</div>
                 <div class="text-muted" style="font-size: 0.75rem;">Membentuk awan hujan</div>
               </div>
               <div class="col-6 col-md-3 text-center p-2 bg-white rounded-3 border">
-                <i class="bi bi-cloud-rain-heavy-fill fs-3 text-primary"></i>
+                <?= renderLabThumbnail('foto/materi-asli/rawa-teratai.webp', 'Air hujan mengisi rawa', 'lab-card-image') ?>
                 <div class="fw-bold small text-primary">3. Presipitasi</div>
                 <div class="text-muted" style="font-size: 0.75rem;">Turun sebagai hujan</div>
               </div>
               <div class="col-6 col-md-3 text-center p-2 bg-white rounded-3 border">
-                <img src="foto/asetgame/Teratai.png" class="ui-2d-thumb ui-2d-thumb-sm" alt="" />
+                <?= renderLabThumbnail('foto/materi-asli/purun-danau.webp', 'Tanah rawa menyerap air', 'lab-card-image') ?>
                 <div class="fw-bold small text-primary">4. Infiltrasi</div>
                 <div class="text-muted" style="font-size: 0.75rem;">Diserap spons rawa</div>
               </div>
@@ -1587,7 +1634,7 @@ $spotlightPhotoKeys = [
               <i class="bi bi-arrow-left"></i> Modul Sebelumnya
             </a>
           <?php else: ?>
-            <a href="index.html" class="nav-step-btn nav-step-prev">
+            <a href="index.php" class="nav-step-btn nav-step-prev">
               <i class="bi bi-house-door-fill"></i> Halaman Utama
             </a>
           <?php endif; ?>
@@ -1610,21 +1657,12 @@ $spotlightPhotoKeys = [
 
       </div>
     </div>
-  </main>
+</main>
 
-  <!-- Footer -->
-  <footer class="custom-footer mt-5">
-    <div class="container py-4 text-center">
-      <p class="fw-bold mb-1"><i class="bi bi-tree-fill me-1"></i> Lahan Basah Hijau - Media Edukasi STEM Kurikulum Merdeka</p>
-      <p class="text-muted small mb-0">Disusun berdasarkan IPAS Kelas V SD Bab 3 (Harmoni dalam Ekosistem) & Bab 4 (Siklus Air)</p>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="sfx.js?v=3.2"></script>
-  <script>
+<?php
+ob_start();
+?>
+<script>
     AOS.init({ duration: 600, once: true });
 
     // Track completed modules in localStorage
@@ -1662,22 +1700,35 @@ $spotlightPhotoKeys = [
     }
 
     // Micro interactive functions for modules
-    function checkBio(type, info) {
-      SoundEffects.playPop();
-      const res = document.getElementById('bioResult');
-      res.innerHTML = `<strong>Hasil Analisis:</strong> ${info}`;
+    function renderLabResult(image, label, heading, explanation) {
+      return `
+        <div class="lab-result-visual">
+          <img src="${image}" alt="${label}">
+          <div class="lab-result-copy">
+            <div class="fw-bold text-success mb-1">${heading}</div>
+            <div class="text-dark fw-semibold">${explanation}</div>
+          </div>
+        </div>`;
     }
 
-    function simulateBalance(mode) {
+    function checkBio(type, info, image, label) {
+      SoundEffects.playPop();
+      const res = document.getElementById('bioResult');
+      res.innerHTML = renderLabResult(image, label, `${label} · ${type}`, info);
+    }
+
+    function simulateBalance(mode, image, label) {
       SoundEffects.playPop();
       const res = document.getElementById('balanceResult');
+      let explanation = '';
       if (mode === 'ular_katak') {
-        res.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-1"></i><strong>Bahaya:</strong> Ketika katak habis diburu, populasi serangga dan keong melonjak drastis. Akibatnya daun teratai dan tanaman padi petani rusak dimakan hama!';
+        explanation = 'Ketika katak habis diburu, populasi serangga dan keong melonjak. Akibatnya daun teratai dan tanaman padi lebih banyak dimakan hama.';
       } else if (mode === 'teratai_mati') {
-        res.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-1"></i><strong>Kritis:</strong> Teratai adalah produsen utama. Jika mati kena limbah, keong mas dan ikan kecil tidak punya makanan dan mati kelaparan!';
+        explanation = 'Teratai adalah produsen utama. Jika mati terkena limbah, keong dan ikan kecil kehilangan makanan serta tempat berlindung.';
       } else {
-        res.innerHTML = '<i class="bi bi-stars me-1"></i><strong>Harmonis:</strong> Jumlah produsen melimpah, herbivora terkendali, dan predator puncak menjaga kestabilan seluruh rantai makanan.';
+        explanation = 'Produsen tersedia, herbivora terkendali, dan predator menjaga kestabilan sehingga rantai makanan berjalan harmonis.';
       }
+      res.innerHTML = renderLabResult(image, label, label, explanation);
     }
 
     let actionCount = 0;
@@ -1696,27 +1747,9 @@ $spotlightPhotoKeys = [
       }
     }
 
-    // Text to Speech Narrator for kids
-    let isSpeaking = false;
-    function readActiveModule() {
-      const btn = document.getElementById('readModuleBtn');
-      if (isSpeaking) {
-        SoundEffects.stopSpeaking();
-        isSpeaking = false;
-        btn.innerHTML = '<i class="bi bi-volume-up-fill"></i> Dengarkan Materi';
-      } else {
-        const textToRead = "<?= addslashes($activeModul['title']) ?>. " +
-          "<?= addslashes(strip_tags($activeModul['coreConcept']['desc'])) ?> " +
-          "<?= addslashes($activeModul['coreConcept']['quote']) ?>";
-        isSpeaking = true;
-        btn.innerHTML = '<i class="bi bi-stop-circle-fill text-danger"></i> Berhenti Mendengar';
-        SoundEffects.speakText(textToRead, () => {
-          isSpeaking = false;
-          btn.innerHTML = '<i class="bi bi-volume-up-fill"></i> Dengarkan Materi';
-        });
-      }
-    }
+
 
   </script>
-</body>
-</html>
+<?php
+$extraScripts = ob_get_clean();
+require __DIR__ . '/partials/footer.php';

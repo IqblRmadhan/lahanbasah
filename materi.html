@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Materi IPAS Kelas V tentang harmoni dalam ekosistem lahan basah dan siklus air." />
+  <title>Materi Ekosistem - Lahan Basah Hijau</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="custom.css" />
+  <style>
+    :root { --materi-green: #087f5b; --materi-ink: #173b34; }
+    html { scroll-behavior: smooth; scroll-padding-top: 105px; }
+    body { color: var(--materi-ink); overflow-x: hidden; }
+    .materi-hero {
+      position: relative; overflow: hidden; padding: 5.5rem 0 4.5rem;
+      background: radial-gradient(circle at 15% 15%, #ffffff 0 4%, transparent 5%),
+        linear-gradient(135deg, #dff8ed 0%, #dff5ff 55%, #fff8d9 100%);
+    }
+    .materi-hero::after { content: ""; position: absolute; inset: auto -8% -100px; height: 180px; background: #f8fcfb; border-radius: 50% 50% 0 0; }
+    .hero-book { max-width: 310px; filter: drop-shadow(0 18px 25px rgba(8,127,91,.18)); }
+    .curriculum-chip { display: inline-flex; align-items: center; gap: .5rem; padding: .5rem 1rem; border-radius: 999px; background: rgba(255,255,255,.82); border: 1px solid rgba(8,127,91,.18); color: var(--materi-green); font-weight: 700; }
+    .learning-map { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: .75rem; }
+    .learning-map a { text-decoration: none; color: var(--materi-ink); background: #fff; border: 1px solid #dceee8; border-radius: 18px; padding: .9rem; text-align: center; font-weight: 700; transition: .2s ease; }
+    .learning-map a:hover, .learning-map a.active { transform: translateY(-3px); border-color: #20b486; box-shadow: 0 10px 24px rgba(8,127,91,.12); color: var(--materi-green); }
+    .progress-panel { position: sticky; top: 92px; border-radius: 24px; background: #fff; border: 1px solid #dceee8; box-shadow: 0 14px 35px rgba(25,73,61,.08); }
+    .progress-ring { width: 74px; height: 74px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(#13a875 var(--progress, 0%), #e8f3ef 0); }
+    .progress-ring::before { content: ""; width: 58px; height: 58px; border-radius: 50%; background: #fff; position: absolute; }
+    .progress-ring span { position: relative; z-index: 1; font-weight: 800; color: var(--materi-green); }
+    .side-topic { display: flex; gap: .65rem; align-items: center; padding: .55rem .7rem; border-radius: 12px; color: #526a64; text-decoration: none; font-size: .9rem; }
+    .side-topic:hover, .side-topic.active { background: #e6f7f0; color: var(--materi-green); font-weight: 700; }
+    .lesson-card { background: #fff; border: 1px solid #dfeee9; border-radius: 28px; padding: clamp(1.25rem, 3vw, 2.4rem); margin-bottom: 1.5rem; box-shadow: 0 14px 38px rgba(20,71,58,.07); }
+    .lesson-number { width: 46px; height: 46px; flex: 0 0 auto; border-radius: 15px; display: grid; place-items: center; background: linear-gradient(135deg,#0ba879,#35c49a); color: white; font-weight: 800; }
+    .objective-box { background: #effaf6; border-left: 4px solid #18a677; border-radius: 0 16px 16px 0; padding: 1rem 1.2rem; }
+    .concept-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .85rem; }
+    .concept-card { border-radius: 18px; padding: 1rem; background: #f8fbfa; border: 1px solid #e2efeb; height: 100%; }
+    .concept-icon { font-size: 1.7rem; }
+    .chain-flow { display: flex; align-items: stretch; gap: .5rem; overflow-x: auto; padding: .5rem 0 1rem; }
+    .chain-node { min-width: 142px; flex: 1; text-align: center; border: 1px solid #dcece7; border-radius: 18px; padding: 1rem .6rem; background: #fff; }
+    .chain-arrow { align-self: center; color: #14a274; font-size: 1.4rem; font-weight: 800; }
+    .quick-check { background: linear-gradient(135deg,#fff9df,#fff); border: 1px solid #f5df8b; border-radius: 20px; padding: 1.1rem; }
+    .answer-btn { border: 1px solid #d8e7e2; background: #fff; border-radius: 12px; padding: .65rem .85rem; text-align: left; transition: .15s; }
+    .answer-btn:hover { border-color: #18a677; background: #f2fbf7; }
+    .answer-btn.correct { background: #dff7eb; border-color: #18a677; color: #087f5b; }
+    .answer-btn.wrong { background: #ffe8e8; border-color: #ef6b6b; color: #a52828; }
+    .scenario-btn { border: 0; border-radius: 14px; padding: .75rem 1rem; background: #eaf7f2; color: #12684f; font-weight: 700; }
+    .scenario-result { min-height: 105px; border-radius: 18px; border: 1px dashed #66bea2; background: #f5fcf9; padding: 1rem; }
+    .water-step { position: relative; padding: 1rem 1rem 1rem 3.5rem; border-radius: 18px; background: #eff8ff; border: 1px solid #cfe9fa; }
+    .water-step strong { color: #1673a8; }
+    .water-step .step-no { position: absolute; left: 1rem; top: 1rem; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: #2a9bd6; font-weight: 800; }
+    .complete-topic { border: 1px solid #18a677; color: #087f5b; background: #fff; border-radius: 999px; padding: .55rem 1rem; font-weight: 700; }
+    .complete-topic.done { color: #fff; background: #0d9c70; }
+    .summary-card { background: linear-gradient(135deg,#087f5b,#0aa67a); color: #fff; border-radius: 28px; padding: 2rem; }
+    @media (max-width: 991.98px) { .learning-map { grid-template-columns: repeat(2,minmax(0,1fr)); } .progress-panel { position: static; } }
+    @media (max-width: 575.98px) {
+      .materi-hero { padding: 3rem 0 4rem; }
+      .materi-hero h1 { font-size: 2.35rem !important; overflow-wrap: anywhere; }
+      .materi-hero h1 span { display: block; }
+      .curriculum-chip { font-size: .9rem; padding-inline: .8rem; }
+      .concept-grid { grid-template-columns: 1fr; }
+      .chain-arrow { transform: rotate(0deg); }
+      .lesson-card { border-radius: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+    <div class="container">
+      <a class="brand-wrapper" href="index.html">
+        <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
+        <div class="brand-text"><span>Lahan Basah Hijau</span><span class="brand-badge">🌱 STEM Interaktif</span></div>
+      </a>
+      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Buka navigasi"><i class="bi bi-list fs-2 text-success"></i></button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html"><span>🏠</span> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link active" href="materi.html"><span>📚</span> Materi</a></li>
+          <li class="nav-item"><a class="nav-link" href="kuis.html"><span>🧠</span> Kuis</a></li>
+          <li class="nav-item"><a class="nav-link" href="simulasi.html"><span>🧪</span> Simulasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyek.html"><span>💡</span> Proyek</a></li>
+          <li class="nav-item"><a class="nav-link" href="leaderboard.html"><span>🏆</span> Peringkat</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="materi-hero">
+    <div class="container position-relative" style="z-index:2">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7" data-aos="fade-right">
+          <span class="curriculum-chip">📘 IPAS Kelas V · Kurikulum Merdeka</span>
+          <h1 class="display-font mt-3 mb-3" style="font-size:clamp(2.5rem,6vw,4.6rem);color:#075e47">Harmoni dalam<br><span style="color:#0aa87b">Ekosistem Lahan Basah</span></h1>
+          <p class="lead text-secondary mb-4">Jelajahi hubungan makhluk hidup, rantai makanan, keseimbangan ekosistem, peran manusia, dan siklus air melalui lingkungan lahan basah Kalimantan Selatan.</p>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="#peta-belajar" class="btn-eco-primary"><i class="bi bi-compass"></i> Mulai Belajar</a>
+            <a href="kuis.html" class="btn-eco-outline"><i class="bi bi-patch-question"></i> Langsung ke Kuis</a>
+          </div>
+        </div>
+        <div class="col-lg-5 text-center" data-aos="zoom-in">
+          <img src="foto/modul.webp" alt="Ilustrasi modul pembelajaran" class="img-fluid hero-book" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-5" id="peta-belajar">
+    <section class="mb-5" data-aos="fade-up">
+      <div class="text-center mb-4">
+        <span class="badge bg-success-subtle text-success rounded-pill px-3 py-2">🗺️ Peta Perjalanan Belajar</span>
+        <h2 class="display-font text-success mt-2">Delapan Pemberhentian Pengetahuan</h2>
+        <p class="text-muted">Topik 1-7 berfokus pada Bab 3. Topik 8 menguatkan pemahaman melalui Bab 4.</p>
+      </div>
+      <div class="learning-map">
+        <a href="#topik-1">🌱 Ekosistem</a><a href="#topik-2">🧩 Komponen</a><a href="#topik-3">🔗 Interaksi</a><a href="#topik-4">🕸️ Rantai Makanan</a>
+        <a href="#topik-5">⚖️ Keseimbangan</a><a href="#topik-6">⚠️ Gangguan</a><a href="#topik-7">🛡️ Peran Manusia</a><a href="#topik-8">💧 Siklus Air</a>
+      </div>
+    </section>
+
+    <div class="row g-4 align-items-start">
+      <aside class="col-lg-3">
+        <div class="progress-panel p-3" id="progressPanel">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="progress-ring position-relative" id="progressRing"><span id="progressPercent">0%</span></div>
+            <div><strong class="d-block">Progres Belajarmu</strong><small class="text-muted"><span id="progressCount">0</span> dari 8 topik selesai</small></div>
+          </div>
+          <nav class="d-flex flex-column" id="sideTopics">
+            <a class="side-topic" href="#topik-1">1. Mengenal Ekosistem</a><a class="side-topic" href="#topik-2">2. Komponen & Habitat</a>
+            <a class="side-topic" href="#topik-3">3. Saling Bergantung</a><a class="side-topic" href="#topik-4">4. Rantai Makanan</a>
+            <a class="side-topic" href="#topik-5">5. Keseimbangan</a><a class="side-topic" href="#topik-6">6. Gangguan</a>
+            <a class="side-topic" href="#topik-7">7. Peran Manusia</a><a class="side-topic" href="#topik-8">8. Siklus Air</a>
+          </nav>
+        </div>
+      </aside>
+
+      <div class="col-lg-9">
+        <article class="lesson-card" id="topik-1" data-topic="1" data-aos="fade-up">
+          <div class="d-flex gap-3 align-items-start mb-3"><div class="lesson-number">1</div><div><span class="badge bg-success-subtle text-success">Bab 3 · Dasar</span><h2 class="display-font text-success mb-1">Mengenal Ekosistem Lahan Basah</h2><p class="text-muted mb-0">Semua bagian alam saling terhubung.</p></div></div>
+          <div class="objective-box mb-4"><strong>🎯 Tujuan belajar:</strong> Kamu dapat menjelaskan ekosistem dan membedakan makhluk hidup dengan benda alam tak hidup.</div>
+          <p><strong>Ekosistem</strong> adalah sistem hubungan antara makhluk hidup dan benda alam tak hidup di suatu tempat. Rawa, sungai, gambut, dan mangrove disebut ekosistem karena ikan, tumbuhan, burung, manusia, air, tanah, udara, dan cahaya saling memengaruhi.</p>
+          <div class="concept-grid mb-4">
+            <div class="concept-card"><span class="concept-icon">🌿</span><h5>Komponen biotik</h5><p class="mb-0 text-muted">Semua makhluk hidup, misalnya ikan gabus, bangau, purun, jamur, bakteri, dan manusia.</p></div>
+            <div class="concept-card"><span class="concept-icon">☀️</span><h5>Komponen abiotik</h5><p class="mb-0 text-muted">Benda alam tak hidup, misalnya air, tanah, lumpur, udara, cahaya, suhu, dan mineral.</p></div>
+          </div>
+          <div class="quick-check" data-question="q1"><strong>🧠 Cek cepat:</strong><p class="mb-2">Manakah kelompok yang seluruhnya merupakan komponen abiotik?</p><div class="d-grid gap-2"><button class="answer-btn" data-correct="false">Ikan, air, dan lumpur</button><button class="answer-btn" data-correct="true">Air, tanah, dan cahaya</button><button class="answer-btn" data-correct="false">Jamur, bakteri, dan tanah</button></div><div class="quiz-feedback small mt-2"></div></div>
+          <div class="text-end mt-3"><button class="complete-topic" data-complete="1">✓ Tandai selesai</button></div>
+        </article>
+
+        <article class="lesson-card" id="topik-2" data-topic="2" data-aos="fade-up">
+          <div class="d-flex gap-3 align-items-start mb-3"><div class="lesson-number">2</div><div><span class="badge bg-success-subtle text-success">Bab 3 · Komponen</span><h2 class="display-font text-success mb-1">Individu, Populasi, Komunitas, dan Habitat</h2><p class="text-muted mb-0">Kenali tingkat kehidupan dalam ekosistem.</p></div></div>
+          <div class="objective-box mb-4"><strong>🎯 Tujuan belajar:</strong> Kamu dapat mengelompokkan makhluk hidup dan menjelaskan habitatnya.</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6"><div class="concept-card"><strong>🐟 Individu</strong><p class="mb-0 text-muted">Satu makhluk hidup, misalnya seekor ikan seluang.</p></div></div>
+            <div class="col-md-6"><div class="concept-card"><strong>🐟🐟 Populasi</strong><p class="mb-0 text-muted">Sekumpulan makhluk hidup sejenis, misalnya populasi ikan seluang.</p></div></div>
+            <div class="col-md-6"><div class="concept-card"><strong>🌿🐟🐦 Komunitas</strong><p class="mb-0 text-muted">Berbagai populasi yang hidup bersama dan berinteraksi.</p></div></div>
+            <div class="col-md-6"><div class="concept-card"><strong>🏞️ Habitat</strong><p class="mb-0 text-muted">Tempat hidup yang menyediakan makanan, air, perlindungan, dan ruang berkembang biak.</p></div></div>
+          </div>
+          <h5>Contoh habitat lahan basah Kalimantan Selatan</h5>
+          <div class="row g-3">
+            <div class="col-md-4"><div class="concept-card"><img src="foto/rawa.jpg" alt="Rawa" class="img-fluid rounded-3 mb-2"><strong>Rawa</strong><p class="small text-muted mb-0">Purun, teratai, katak, ikan, air tawar, dan lumpur.</p></div></div>
+            <div class="col-md-4"><div class="concept-card"><img src="foto/gambut.jpg" alt="Gambut" class="img-fluid rounded-3 mb-2"><strong>Gambut</strong><p class="small text-muted mb-0">Pohon rawa, jamur, serangga, tanah organik, dan air.</p></div></div>
+            <div class="col-md-4"><div class="concept-card"><img src="foto/mangrove.jpg" alt="Mangrove" class="img-fluid rounded-3 mb-2"><strong>Mangrove</strong><p class="small text-muted mb-0">Bakau, kepiting, udang, burung, air payau, dan lumpur.</p></div></div>
+          </div>
+          <div class="text-end mt-3"><button class="complete-topic" data-complete="2">✓ Tandai selesai</button></div>
+        </article>
+
+        <article class="lesson-card" id="topik-3" data-topic="3" data-aos="fade-up">
+          <div class="d-flex gap-3 align-items-start mb-3"><div class="lesson-number">3</div><div><span class="badge bg-success-subtle text-success">Bab 3 · Interaksi</span><h2 class="display-font text-success mb-1">Setiap Komponen Saling Bergantung</h2><p class="text-muted mb-0">Perubahan kecil dapat menimbulkan dampak berantai.</p></div></div>
+          <div class="objective-box mb-4"><strong>🎯 Tujuan belajar:</strong> Kamu dapat menjelaskan hubungan komponen biotik dan abiotik melalui sebab-akibat.</div>
+          <p>Tumbuhan memerlukan air, cahaya, udara, tanah, dan mineral. Ikan memerlukan air yang sesuai dan makanan. Bangau memerlukan perairan dangkal serta ikan atau hewan kecil. Dekomposer memerlukan sisa makhluk hidup untuk diuraikan.</p>
+          <h5 class="mb-3">Permainan “Andaikan...”</h5>
+          <div class="d-flex flex-wrap gap-2 mb-3"><button class="scenario-btn" data-scenario="air">💧 Air tercemar</button><button class="scenario-btn" data-scenario="tumbuhan">🌿 Tumbuhan hilang</button><button class="scenario-btn" data-scenario="tanah">☀️ Tanah mengering</button></div>
+          <div class="scenario-result" id="scenarioResult"><strong>Pilih satu keadaan.</strong><p class="mb-0 text-muted">Telusuri sedikitnya tiga komponen yang terkena dampak.</p></div>
+          <div class="text-end mt-3"><button class="complete-topic" data-complete="3">✓ Tandai selesai</button></div>
+        </article>
+
+        <article class="lesson-card" id="topik-4" data-topic="4" data-aos="fade-up">
+          <div class="d-flex gap-3 align-items-start mb-3"><div class="lesson-number">4</div><div><span class="badge bg-success-subtle text-success">Bab 3 · Energi</span><h2 class="display-font text-success mb-1">Rantai dan Jaring-Jaring Makanan</h2><p class="text-muted mb-0">Energi berpindah melalui proses makan dan dimakan.</p></div></div>
+          <div class="objective-box mb-4"><strong>🎯 Tujuan belajar:</strong> Kamu dapat menentukan produsen, konsumen, dekomposer, serta membaca arah panah.</div>
+          <div class="chain-flow">
+            <div class="chain-node"><div class="fs-2">🌱</div><strong>Fitoplankton</strong><small class="d-block text-success">Produsen</small></div><div class="chain-arrow">→</div>
+            <div class="chain-node"><div class="fs-2">🔬</div><strong>Zooplankton</strong><small class="d-block text-info">Konsumen I</small></div><div class="chain-arrow">→</div>
+            <div class="chain-node"><div class="fs-2">🐟</div><strong>Ikan Seluang</strong><small class="d-block text-warning">Konsumen II</small></div><div class="chain-arrow">→</div>
+            <div class="chain-node"><div class="fs-2">🐦</div><strong>Bangau</strong><small class="d-block text-danger">Pemangsa</small></div><div class="chain-arrow">→</div>
+            <div class="chain-node"><div class="fs-2">🍄</div><strong>Jamur & Bakteri</strong><small class="d-block text-secondary">Dekomposer</small></div>
+          </div>
+          <div class="alert alert-info rounded-4"><strong>Ingat:</strong> panah menunjukkan perpindahan energi dari makanan menuju pemakannya. Beberapa rantai yang terhubung membentuk <strong>jaring-jaring makanan</strong>.</div>
+          <div class="quick-check" data-question="q2"><strong>🧠 Cek cepat:</strong><p class="mb-2">Jika ikan seluang berkurang, apa dampak yang paling mungkin bagi bangau?</p><div class="d-grid gap-2"><button class="answer-btn" data-correct="true">Bangau lebih sulit mendapatkan makanan</button><button class="answer-btn" data-correct="false">Bangau berubah menjadi produsen</button><button class="answer-btn" data-correct="false">Jumlah cahaya matahari langsung hilang</button></div><div class="quiz-feedback small mt-2"></div></div>
+          <div class="text-end mt-3"><button class="complete-topic" data-complete="4">✓ Tandai selesai</button></div>
+        </article>
+
+        <article class="lesson-card" id="topik-5" data-topic="5" data-aos="fade-up">
+          <div class="d-flex gap-3 align-items-start mb-3"><div class="lesson-number">5</div><div><span class="badge bg-success-subtle text-success">Bab 3 · Keseimbangan</span><h2 class="display-font text-success mb-1">Kapan Ekosistem Disebut Seimbang?</h2><p class="text-muted mb-0">Jumlah dan peran komponen berada dalam kondisi yang mendukung kehidupan.</p></div></div>
+          <div class="objective-box mb-4"><strong>🎯 Tujuan belajar:</strong> Kamu dapat memprediksi dampak perubahan jumlah organisme dalam jaring makanan.</div>
+          <p>Ekosistem tidak selalu memiliki jumlah organisme yang sama, tetapi perubahan yang terlalu besar dapat mengganggu hubungan di dalamnya. Produsen, konsumen, dekomposer, air, tanah, dan cahaya perlu menjalankan perannya.</p>
+          <div class="row g-3">
+            <div class="col-md-4"><div class="concept-card"><span class="concept-icon">📈</span><h5>Mangsa berlebihan</h5><p class="mb-0 text-muted">Makanan dapat cepat habis dan persaingan meningkat.</p></div></div>
+            <div class="col-md-4"><div class="concept-card"><span class="concept-icon">📉</span><h5>Mangsa berkurang</h5><p class="mb-0 text-muted">Pemangsa kesulitan makan dan populasinya dapat menurun.</p></div></div>
+            <div class="col-md-4"><div class="concept-card"><span class="concept-icon">🧩</span><h5>Habitat rusak</h5><p class="mb-0 text-muted">Banyak populasi kehilangan air, makanan, perlindungan, atau tempat berkembang biak.</p></div></div>
+          </div>
+          <div class="text-end mt-3"><button class="complete-topic" data-complete="5">✓ Tandai selesai</button></div>
+        </article>
+
+        <article class="lesson-card" id="topik-6" data-topic="6" data-aos="fade-up">
+          <div class="d-flex gap-3 align-items-start mb-3"><div class="lesson-number">6</div><div><span class="badge bg-danger-subtle text-danger">Bab 3 · Gangguan</span><h2 class="display-font text-success mb-1">Gangguan terhadap Ekosistem</h2><p class="text-muted mb-0">Gangguan alam dan perilaku manusia memiliki dampak yang berbeda.</p></div></div>
+          <div class="objective-box mb-4"><strong>🎯 Tujuan belajar:</strong> Kamu dapat menelusuri penyebab, komponen pertama yang terdampak, dan akibat lanjutannya.</div>
+          <div class="row g-3">
+            <div class="col-md-6"><div class="concept-card"><h5>🚯 Sampah plastik</h5><p class="mb-0 text-muted">Dapat menyumbat aliran, menjerat atau termakan hewan, lalu mengganggu rantai makanan.</p></div></div>
+            <div class="col-md-6"><div class="concept-card"><h5>🪓 Penebangan</h5><p class="mb-0 text-muted">Menghilangkan tempat bersarang, peneduh, sumber makanan, dan perlindungan tanah.</p></div></div>
+            <div class="col-md-6"><div class="concept-card"><h5>🏭 Pencemaran air</h5><p class="mb-0 text-muted">Menurunkan kualitas komponen abiotik dan dapat menyebabkan organisme air sakit atau mati.</p></div></div>
+            <div class="col-md-6"><div class="concept-card"><h5>🔥 Kebakaran</h5><p class="mb-0 text-muted">Merusak tumbuhan, tanah, udara, dan habitat berbagai populasi sekaligus.</p></div></div>
+          </div>
+          <div class="alert alert-warning rounded-4 mt-3 mb-0"><strong>Latihan berpikir:</strong> pilih satu gangguan, lalu tulis urutan “penyebab → komponen terdampak → perubahan populasi → dampak bagi manusia”.</div>
+          <div class="text-end mt-3"><button class="complete-topic" data-complete="6">✓ Tandai selesai</button></div>
+        </article>
+
+        <article class="lesson-card" id="topik-7" data-topic="7" data-aos="fade-up">
+          <div class="d-flex gap-3 align-items-start mb-3"><div class="lesson-number">7</div><div><span class="badge bg-success-subtle text-success">Bab 3 · Aksi</span><h2 class="display-font text-success mb-1">Peran Manusia dalam Ekosistem</h2><p class="text-muted mb-0">Tindakan sehari-hari dapat menjaga atau merusak keseimbangan.</p></div></div>
+          <div class="objective-box mb-4"><strong>🎯 Tujuan belajar:</strong> Kamu dapat memilih tindakan yang aman, nyata, dan dapat dipantau hasilnya.</div>
+          <div class="row g-3">
+            <div class="col-md-6"><div class="concept-card"><h5>✅ Menjaga</h5><ul class="mb-0 text-muted"><li>Mengurangi plastik sekali pakai.</li><li>Menghemat air.</li><li>Menjaga tumbuhan lokal.</li><li>Mengamati tanpa mengganggu hewan.</li></ul></div></div>
+            <div class="col-md-6"><div class="concept-card"><h5>❌ Merusak</h5><ul class="mb-0 text-muted"><li>Membuang sampah ke saluran air.</li><li>Merusak sarang atau mengambil satwa.</li><li>Menebang tumbuhan sembarangan.</li><li>Membuang minyak atau bahan kimia ke air.</li></ul></div></div>
+          </div>
+          <div class="alert alert-success rounded-4 mt-3"><strong>🌟 Tantangan 30 hari:</strong> pilih dua kebiasaan baik, catat pelaksanaannya, dan ceritakan hasilnya kepada guru atau keluarga. Kegiatan di sungai atau rawa harus didampingi orang dewasa.</div>
+          <div class="text-end mt-3"><button class="complete-topic" data-complete="7">✓ Tandai selesai</button></div>
+        </article>
+
+        <article class="lesson-card" id="topik-8" data-topic="8" data-aos="fade-up">
+          <div class="d-flex gap-3 align-items-start mb-3"><div class="lesson-number">8</div><div><span class="badge bg-info-subtle text-primary">Bab 4 · Penguatan</span><h2 class="display-font text-success mb-1">Siklus Air Menopang Ekosistem</h2><p class="text-muted mb-0">Air bergerak dari bumi ke atmosfer dan kembali lagi.</p></div></div>
+          <div class="objective-box mb-4"><strong>🎯 Tujuan belajar:</strong> Kamu dapat mengurutkan tahapan siklus air dan menghubungkannya dengan lahan basah.</div>
+          <div class="d-grid gap-2 mb-4">
+            <div class="water-step"><span class="step-no">1</span><strong>Evaporasi dan transpirasi</strong><div class="text-muted">Air permukaan menguap karena panas matahari; tumbuhan juga melepaskan uap air melalui daun.</div></div>
+            <div class="water-step"><span class="step-no">2</span><strong>Kondensasi</strong><div class="text-muted">Uap air mendingin dan membentuk titik-titik air yang berkumpul menjadi awan.</div></div>
+            <div class="water-step"><span class="step-no">3</span><strong>Presipitasi</strong><div class="text-muted">Air jatuh kembali ke bumi, salah satunya dalam bentuk hujan.</div></div>
+            <div class="water-step"><span class="step-no">4</span><strong>Infiltrasi</strong><div class="text-muted">Sebagian air meresap ke tanah dan membantu mengisi air tanah.</div></div>
+            <div class="water-step"><span class="step-no">5</span><strong>Aliran air</strong><div class="text-muted">Air bergerak dari tempat tinggi ke rendah menuju rawa, danau, sungai, lalu laut.</div></div>
+          </div>
+          <p><strong>Hubungannya dengan Bab 3:</strong> ketersediaan dan kualitas air memengaruhi tumbuhan, hewan, dekomposer, serta keseimbangan seluruh jaring-jaring makanan.</p>
+          <div class="quick-check" data-question="q3"><strong>🧠 Cek cepat:</strong><p class="mb-2">Proses masuknya air hujan ke dalam tanah disebut...</p><div class="d-grid gap-2"><button class="answer-btn" data-correct="false">Kondensasi</button><button class="answer-btn" data-correct="false">Evaporasi</button><button class="answer-btn" data-correct="true">Infiltrasi</button></div><div class="quiz-feedback small mt-2"></div></div>
+          <div class="text-end mt-3"><button class="complete-topic" data-complete="8">✓ Tandai selesai</button></div>
+        </article>
+
+        <section class="summary-card" data-aos="zoom-in">
+          <div class="row align-items-center g-3"><div class="col-lg-8"><span class="badge bg-light text-success mb-2">🏁 Rangkuman Akhir</span><h2 class="display-font">Siap Menguji Pemahamanmu?</h2><p class="mb-0 opacity-90">Ekosistem tersusun dari komponen yang saling berinteraksi. Energi berpindah melalui jaring makanan, keseimbangan dapat terganggu, dan manusia memiliki peran penting untuk menjaganya. Air menopang seluruh hubungan tersebut.</p></div><div class="col-lg-4"><div class="d-grid gap-2"><a href="kuis.html" class="btn btn-light rounded-pill fw-bold text-success">Kerjakan Kuis →</a><a href="simulasi.html" class="btn btn-outline-light rounded-pill fw-bold">Buka Simulasi</a></div></div></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="custom-footer mt-5"><div class="container footer-content text-center"><div class="d-flex align-items-center justify-content-center gap-2 mb-2"><img src="foto/logo.webp" alt="Logo" width="40" height="40"><span class="footer-brand">Lahan Basah Hijau</span></div><p class="small text-muted mb-2">Materi IPAS Kelas V berbasis konteks lahan basah Kalimantan Selatan.</p><div class="footer-bottom"><small>© 2026 Lahan Basah Hijau. Belajar menjaga harmoni dalam ekosistem.</small></div></div></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="sfx.js"></script>
+  <script>
+    AOS.init({ duration: 700, once: true, easing: 'ease-out-cubic' });
+    const PROGRESS_KEY = 'lahanBasahMateriProgress';
+    const completed = new Set(JSON.parse(localStorage.getItem(PROGRESS_KEY) || '[]'));
+
+    function updateProgress() {
+      const count = completed.size;
+      const percent = Math.round((count / 8) * 100);
+      document.getElementById('progressCount').textContent = count;
+      document.getElementById('progressPercent').textContent = `${percent}%`;
+      document.getElementById('progressRing').style.setProperty('--progress', `${percent}%`);
+      document.querySelectorAll('[data-complete]').forEach((button) => {
+        const done = completed.has(button.dataset.complete);
+        button.classList.toggle('done', done);
+        button.textContent = done ? '✓ Sudah selesai' : '✓ Tandai selesai';
+      });
+    }
+
+    document.querySelectorAll('[data-complete]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const id = button.dataset.complete;
+        completed.has(id) ? completed.delete(id) : completed.add(id);
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify([...completed]));
+        updateProgress();
+        if (typeof SoundEffects !== 'undefined') SoundEffects.playPop();
+      });
+    });
+
+    document.querySelectorAll('.quick-check').forEach((box) => {
+      box.querySelectorAll('.answer-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+          box.querySelectorAll('.answer-btn').forEach((item) => item.classList.remove('correct', 'wrong'));
+          const correct = button.dataset.correct === 'true';
+          button.classList.add(correct ? 'correct' : 'wrong');
+          box.querySelector('.quiz-feedback').innerHTML = correct ? '<span class="text-success fw-bold">Benar! Penalaranmu tepat.</span>' : '<span class="text-danger fw-bold">Belum tepat. Baca kembali penjelasan di atas.</span>';
+          if (typeof SoundEffects !== 'undefined') correct ? SoundEffects.playCorrect() : SoundEffects.playWrong();
+        });
+      });
+    });
+
+    const scenarios = {
+      air: '<strong>Air tercemar →</strong> plankton dan ikan terganggu → katak dan bangau kehilangan makanan → jaring makanan melemah.',
+      tumbuhan: '<strong>Tumbuhan hilang →</strong> konsumen kehilangan makanan dan tempat berlindung → populasi hewan menurun.',
+      tanah: '<strong>Tanah mengering →</strong> tumbuhan rawa sulit hidup → serangga dan hewan lain kehilangan habitat → keseimbangan berubah.'
+    };
+    document.querySelectorAll('[data-scenario]').forEach((button) => button.addEventListener('click', () => {
+      document.getElementById('scenarioResult').innerHTML = scenarios[button.dataset.scenario];
+      if (typeof SoundEffects !== 'undefined') SoundEffects.playPop();
+    }));
+
+    const sections = [...document.querySelectorAll('.lesson-card')];
+    const links = [...document.querySelectorAll('.side-topic, .learning-map a')];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        links.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
+      });
+    }, { rootMargin: '-25% 0px -65% 0px' });
+    sections.forEach((section) => observer.observe(section));
+    updateProgress();
+  </script>
+</body>
+</html>

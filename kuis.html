@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuis Interaktif - Lahan Basah Hijau</title>
+
+  <!-- CSS Framework & Libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+  
+  <!-- Custom Design System -->
+  <link rel="stylesheet" href="custom.css" />
+
+  <style>
+    /* Specific styles for Quiz Arena */
+    .quiz-card-wrapper {
+      max-width: 840px;
+      margin: -40px auto 50px;
+      position: relative;
+      z-index: 10;
+      padding: 0 15px;
+    }
+
+    .glass-quiz-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: var(--radius-xl);
+      padding: 38px 32px;
+      box-shadow: 0 15px 35px rgba(6, 78, 59, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .level-badge-pill {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 6px 18px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .level-mudah-pill {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+
+    .level-sedang-pill {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .level-sulit-pill {
+      background: #ffe4e6;
+      color: #be123c;
+      border: 1px solid #fecdd3;
+    }
+
+    .streak-badge {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+      animation: floatSubtle 2s ease-in-out infinite;
+    }
+
+    .quiz-progress-bar {
+      height: 10px;
+      border-radius: var(--radius-pill);
+      background-color: #e2e8f0;
+      overflow: hidden;
+      margin: 15px 0 25px;
+    }
+
+    .quiz-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #0284c7);
+      border-radius: var(--radius-pill);
+      transition: width 0.4s ease;
+    }
+
+    .question-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      margin-bottom: 12px;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: #10b981;
+      background-color: #f0fdf4;
+      transform: translateX(6px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    }
+
+    .option-letter {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-pill);
+      background: #f1f5f9;
+      color: #0f172a;
+      font-family: var(--font-display);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+
+    .option-btn:hover:not(:disabled) .option-letter {
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    /* Option States */
+    .option-btn.btn-correct {
+      background: #dcfce7 !important;
+      border-color: #22c55e !important;
+      color: #15803d !important;
+      font-weight: 700;
+      transform: scale(1.02);
+    }
+    .option-btn.btn-correct .option-letter {
+      background: #22c55e !important;
+      color: #ffffff !important;
+    }
+
+    .option-btn.btn-wrong {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+      opacity: 0.9;
+    }
+    .option-btn.btn-wrong .option-letter {
+      background: #ef4444 !important;
+      color: #ffffff !important;
+    }
+
+    .option-btn.btn-eliminated {
+      opacity: 0.3 !important;
+      pointer-events: none !important;
+      text-decoration: line-through;
+    }
+
+    .explanation-box {
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-top: 18px;
+      font-size: 0.95rem;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Results Card */
+    .trophy-glow-icon {
+      font-size: 5rem;
+      animation: floatSubtle 3s ease-in-out infinite;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+    }
+
+    .score-circle-num {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .score-circle-total {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVBAR
+       ========================================================================== -->
+  <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+    <div class="container">
+      <a class="brand-wrapper" href="index.html">
+        <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
+        <div class="brand-text">
+          <span>Lahan Basah Hijau</span>
+          <span class="brand-badge">🌱 STEM Interaktif</span>
+        </div>
+      </a>
+
+      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="bi bi-list fs-2 text-success"></i>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html"><span>🏠</span> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link active" href="kuis.html"><span>🧠</span> Kuis</a></li>
+          <li class="nav-item"><a class="nav-link" href="simulasi.html"><span>🧪</span> Simulasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyek.html"><span>💡</span> Proyek</a></li>
+          <li class="nav-item"><a class="nav-link" href="leaderboard.html"><span>🏆</span> Papan Peringkat</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== -->
+  <section class="hero-section">
+    <img src="foto/cloud1.webp" class="hero-cloud c1" alt="Awan Cantik" />
+    <img src="foto/cloud2.webp" class="hero-cloud c2" alt="Awan Cantik" />
+    <img src="foto/daun1.webp" class="hero-floating-leaf leaf1" alt="Daun Hijau" />
+    <img src="foto/daun2.webp" class="hero-floating-leaf leaf2" alt="Daun Hijau" />
+
+    <img src="foto/kuis.webp" class="hero-mascot-right" alt="Maskot Kuis" style="max-height: 250px;" data-aos="fade-left" />
+
+    <div class="container hero-content">
+      <div class="hero-tag" data-aos="fade-down">
+        <span>🧠</span> Asah Wawasan Sains & Lingkungan
+      </div>
+
+      <h1 class="hero-title" data-aos="zoom-in">
+        Kuis Interaktif <br><span class="highlight">Lahan Basah</span>
+      </h1>
+
+      <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
+        Uji sejauh mana pemahamanmu tentang ekosistem rawa, gambut, dan cara melindungi air bumi. Dapatkan streak tertinggi dan raih posisimu di puncak Papan Peringkat!
+      </p>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3" data-aos="fade-up" data-aos-delay="200">
+        <a href="#quizArena" class="btn-eco-primary">
+          <i class="bi bi-play-circle-fill"></i> Mulai Kuis Sekarang
+        </a>
+        <a href="leaderboard.html" class="btn-eco-outline">
+          <i class="bi bi-trophy-fill"></i> Lihat Papan Peringkat
+        </a>
+      </div>
+    </div>
+
+    <!-- Organic Wave Divider -->
+    <div class="hero-wave-divider">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.31,200,105,242.79,94.92,284.28,74.58,321.39,56.44Z" class="shape-fill"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       QUIZ CONTAINER
+       ========================================================================== -->
+  <div class="quiz-card-wrapper" id="quizArena">
+
+    <!-- 1. REGISTRATION FORM (Initial Screen) -->
+    <div id="mulaiForm" class="glass-quiz-card text-center" data-aos="fade-up">
+      <div class="mb-4">
+        <span class="fs-1 d-inline-block mb-2">🎯</span>
+        <h3 class="display-font text-success mb-2">Registrasi Peserta Kuis</h3>
+        <p class="text-muted">Masukkan data dirimu untuk mencatatkan namamu di Papan Peringkat Lahan Basah!</p>
+      </div>
+
+      <!-- Level Information Preview -->
+      <div class="row g-3 mb-4 text-start">
+        <div class="col-sm-4">
+          <div class="p-3 rounded-4 bg-primary-subtle border border-primary-subtle text-center">
+            <span class="fs-4 d-block mb-1">🟢</span>
+            <strong class="text-primary d-block">Level Mudah</strong>
+            <small class="text-muted">Soal 1 s/d 4 (Dasar Lahan Basah)</small>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="p-3 rounded-4 bg-warning-subtle border border-warning-subtle text-center">
+            <span class="fs-4 d-block mb-1">🟡</span>
+            <strong class="text-warning-emphasis d-block">Level Sedang</strong>
+            <small class="text-muted">Soal 5 s/d 8 (Fungsi & Ekologi)</small>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="p-3 rounded-4 bg-danger-subtle border border-danger-subtle text-center">
+            <span class="fs-4 d-block mb-1">🔴</span>
+            <strong class="text-danger d-block">Level Sulit</strong>
+            <small class="text-muted">Soal 9 s/d 12 (Ancaman & Konservasi)</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9 mx-auto text-start">
+        <div class="mb-3">
+          <label for="nama" class="form-label fw-bold small text-muted">
+            <i class="bi bi-person-fill text-success"></i> Nama Lengkap
+          </label>
+          <input type="text" class="form-control form-control-lg rounded-pill px-4 fs-6 border-success-subtle shadow-sm" id="nama" placeholder="Contoh: Luna Amanda" required />
+        </div>
+
+        <div class="mb-4">
+          <label for="sekolah" class="form-label fw-bold small text-muted">
+            <i class="bi bi-mortarboard-fill text-primary"></i> Nama Sekolah / Instansi
+          </label>
+          <input type="text" class="form-control form-control-lg rounded-pill px-4 fs-6 border-primary-subtle shadow-sm" id="sekolah" placeholder="Contoh: SMA Negeri 2 Banjarmasin" required />
+        </div>
+
+        <div class="d-grid mt-4">
+          <button class="btn-eco-primary py-3 fs-5 justify-content-center" onclick="mulaiKuis()">
+            🚀 Mulai Kuis Sekarang
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. QUESTION ARENA (During Quiz) -->
+    <div id="soalContainer" class="glass-quiz-card" style="display:none;">
+      
+      <!-- Quiz Status Header -->
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+        <div class="d-flex align-items-center gap-2">
+          <span class="level-badge-pill" id="badgeLevel">
+            <span id="levelDot">🟢</span> <span id="levelTitle">Level Mudah</span>
+          </span>
+          <span class="streak-badge" id="streakBadge" style="display:none;">
+            🔥 Streak <span id="streakNum">0</span>
+          </span>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <!-- 50:50 Lifeline Button -->
+          <button class="btn btn-sm btn-outline-warning rounded-pill px-3 fw-bold" id="btnLifeline" onclick="use5050Lifeline()" title="Hapus 2 pilihan salah (1x pakai)">
+            💡 Bantuan 50:50
+          </button>
+          <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fs-7 fw-bold" id="soalCounter">
+            Soal 1 / 12
+          </span>
+          <span class="badge bg-success-subtle text-success border border-success px-3 py-2 rounded-pill fs-7 fw-bold" id="liveScoreCounter">
+            Skor: 0
+          </span>
+        </div>
+      </div>
+
+      <!-- Animated Progress Bar -->
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="quizProgressBar" style="width: 8%;"></div>
+      </div>
+
+      <!-- Question Text -->
+      <div class="question-title" id="teksSoal">
+        Memuat soal kuis...
+      </div>
+
+      <!-- Options -->
+      <div id="opsiJawaban">
+        <!-- Buttons injected dynamically by JS -->
+      </div>
+
+      <!-- Instant Feedback Box -->
+      <div id="feedback" class="explanation-box" style="display:none;"></div>
+
+      <!-- Next Button -->
+      <div class="text-end mt-4">
+        <button class="btn-eco-primary" id="btnLanjut" onclick="lanjutSoal()" style="display:none;">
+          <span>Soal Berikutnya</span> <i class="bi bi-arrow-right-circle-fill"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. RESULT CARD (Quiz Finished) -->
+    <div id="hasilContainer" class="glass-quiz-card text-center" style="display:none;">
+      <div class="trophy-glow-icon" id="resultTrophy">🏆</div>
+      <h2 class="display-font text-success mb-1" id="hasilTitle">Luar Biasa!</h2>
+      <p class="text-muted" id="pesanHasil">Kamu telah menyelesaikan seluruh kuis dengan gemilang.</p>
+
+      <div class="score-circle">
+        <div class="score-circle-num" id="skorAngka">0</div>
+        <div class="score-circle-total">dari 12 Benar</div>
+      </div>
+
+      <div class="p-3 bg-light rounded-4 border mx-auto mb-4" style="max-width: 500px;">
+        <div class="d-flex justify-content-around text-center">
+          <div>
+            <small class="text-muted d-block">Persentase</small>
+            <strong class="fs-5 text-primary" id="scorePercent">0%</strong>
+          </div>
+          <div class="border-start"></div>
+          <div>
+            <small class="text-muted d-block">Peringkat Predikat</small>
+            <strong class="fs-5 text-success" id="scoreGrade">Juara</strong>
+          </div>
+          <div class="border-start"></div>
+          <div>
+            <small class="text-muted d-block">Max Streak</small>
+            <strong class="fs-5 text-warning" id="scoreMaxStreak">0🔥</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+        <button class="btn-eco-outline" id="btnCobaLagi" onclick="cobaLagi()">
+          <i class="bi bi-arrow-repeat"></i> Coba Kuis Lagi
+        </button>
+        <button class="btn btn-light border rounded-pill px-4 fw-bold text-primary shadow-sm" onclick="bukaReviewModal()">
+          <i class="bi bi-card-checklist"></i> Tinjau Kunci Jawaban
+        </button>
+        <button class="btn btn-warning rounded-pill px-4 fw-bold text-dark shadow-sm" onclick="shareScore()">
+          <i class="bi bi-share-fill"></i> Bagikan Hasil
+        </button>
+        <a href="leaderboard.html" class="btn-eco-primary">
+          <i class="bi bi-trophy-fill"></i> Lihat Papan Peringkat
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Review Modal (Tinjau Kunci Jawaban) -->
+  <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+      <div class="modal-content rounded-4 border-0 shadow-lg">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold text-success">
+            <i class="bi bi-journal-check"></i> Tinjauan Jawaban Kuis
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4" id="reviewModalBody">
+          <!-- Diinjeksi otomatis via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast Area -->
+  <div id="notifArea" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 10050; max-width: 90%;"></div>
+
+  <!-- ==========================================================================
+       FLOATING MUSIC DOCK & TOAST
+       ========================================================================== -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="sound/sound2.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
+    <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
+      <span id="music-icon">🔊</span>
+    </button>
+    <div class="sound-bars">
+      <span class="sound-bar"></span>
+      <span class="sound-bar"></span>
+      <span class="sound-bar"></span>
+    </div>
+    <span class="music-label d-none d-sm-inline">Musik Alam</span>
+  </div>
+
+  <div id="music-toast" class="music-toast-popup">
+    Musik Dinyalakan
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="custom-footer">
+    <div class="footer-top-wave">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+      </svg>
+    </div>
+
+    <div class="container footer-content text-center">
+      <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+        <img src="foto/logo.webp" alt="Logo" width="40" height="40" />
+        <span class="footer-brand">Lahan Basah Hijau</span>
+      </div>
+      <p class="small text-muted mb-3">Aplikasi pembelajaran interaktif berbasis STEM untuk mengenal, menjaga, dan mencintai lahan basah.</p>
+      <div class="footer-bottom">
+        <small>© 2025 Lahan Basah Hijau. Semua hak dilindungi.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="sfx.js"></script>
+
+  <!-- Firebase Compat Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    // Bank Soal
+    const soalMudah = [
+      {
+        pertanyaan: "Apa pengertian mendasar dari lahan basah (wetland)?",
+        opsi: [
+          "Daerah yang sering atau selalu tergenang air seperti rawa, gambut, dan sungai",
+          "Tanah padang pasir kering yang tandus",
+          "Kawasan pegunungan berbatu tanpa vegetasi",
+          "Lahan buatan yang tertutup oleh aspal jalanan"
+        ],
+        jawaban: "Daerah yang sering atau selalu tergenang air seperti rawa, gambut, dan sungai",
+        penjelasan: "Lahan basah adalah wilayah daratan yang jenuh atau tergenang air dangkal secara permanen maupun musiman."
+      },
+      {
+        pertanyaan: "Tumbuhan khas yang hidup mengapung atau berakar di air lahan basah adalah...",
+        opsi: ["Teratai & Eceng Gondok", "Pohon Kaktus Gurun", "Pohon Pinus Gunung", "Bunga Edelweis"],
+        jawaban: "Teratai & Eceng Gondok",
+        penjelasan: "Teratai dan eceng gondok adalah tumbuhan hidrofit yang beradaptasi hidup di genangan air tenang."
+      },
+      {
+        pertanyaan: "Di manakah kita paling sering menemukan ekosistem lahan basah alami?",
+        opsi: [
+          "Sepanjang muara sungai, dataran rendah, dan pesisir rawa",
+          "Puncak gunung berapi",
+          "Gurun pasir tandus",
+          "Kawasan industri padat semen"
+        ],
+        jawaban: "Sepanjang muara sungai, dataran rendah, dan pesisir rawa",
+        penjelasan: "Lahan basah terbentuk di dataran rendah di mana air dapat berkumpul dan membentuk tanah jenuh air."
+      },
+      {
+        pertanyaan: "Hewan amfibi yang sangat menyukai kelembapan ekosistem lahan basah adalah...",
+        opsi: ["Katak & Kodok", "Kelinci Padang Rumput", "Unta Berpunuk", "Burung Unta"],
+        jawaban: "Katak & Kodok",
+        penjelasan: "Katak membutuhkan kelembapan air rawa untuk bernapas melalui kulit dan meletakkan telur-telurnya."
+      }
+    ];
+
+    const soalSedang = [
+      {
+        pertanyaan: "Mengapa lahan basah dianalogikan sebagai 'spons raksasa' alami?",
+        opsi: [
+          "Menyerap air hujan berlebih saat banjir dan menyimpannya untuk musim kemarau",
+          "Karena terbuat dari bahan busa sintetis",
+          "Karena menghisap seluruh air hingga sungai menjadi kering total",
+          "Sebagai tempat mencuci kendaraan warga"
+        ],
+        jawaban: "Menyerap air hujan berlebih saat banjir dan menyimpannya untuk musim kemarau",
+        penjelasan: "Lahan gambut dan rawa menyerap jutaan liter air saat hujan deras, mencegah banjir bandang di hilir sungai."
+      },
+      {
+        pertanyaan: "Mengapa keberadaan hutan mangrove (bakau) sangat penting bagi garis pantai?",
+        opsi: [
+          "Akarnya memecah energi gelombang tsunami dan mencegah abrasi pantai",
+          "Membuat air laut berubah menjadi air manis",
+          "Tempat berlabuh kapal tanker raksasa",
+          "Untuk ditebang kayunya tanpa ditanam kembali"
+        ],
+        jawaban: "Akarnya memecah energi gelombang tsunami dan mencegah abrasi pantai",
+        penjelasan: "Sistem perakaran tunjang mangrove sangat kokoh dalam meredam energi ombak dan menahan sedimentasi tanah pesisir."
+      },
+      {
+        pertanyaan: "Dampak langsung yang terjadi jika rawa diuruk dan dialihfungsikan tanpa perencanaan adalah...",
+        opsi: [
+          "Frekuensi banjir meningkat pesat dan hilangnya habitat satwa endemik",
+          "Kualitas udara menjadi dingin seketika",
+          "Musim kemarau hilang selamanya",
+          "Jumlah populasi ikan liar berlipat ganda"
+        ],
+        jawaban: "Frekuensi banjir meningkat pesat dan hilangnya habitat satwa endemik",
+        penjelasan: "Saat daerah resapan air hilang, air hujan langsung menggenangi pemukiman warga karena tidak ada waduk alami."
+      },
+      {
+        pertanyaan: "Siapa yang paling bertanggung jawab dalam menjaga kelestarian lahan basah?",
+        opsi: [
+          "Seluruh masyarakat, termasuk pelajar, warga, dan pemerintah",
+          "Hanya nelayan di pesisir sungai",
+          "Hanya penjaga hutan seorang diri",
+          "Tidak ada yang perlu bertanggung jawab"
+        ],
+        jawaban: "Seluruh masyarakat, termasuk pelajar, warga, dan pemerintah",
+        penjelasan: "Menjaga lingkungan adalah tanggung jawab kolektif. Kebiasaan membuang sampah pada tempatnya dimulai dari diri kita sendiri."
+      }
+    ];
+
+    const soalSulit = [
+      {
+        pertanyaan: "Mengapa kebakaran di lahan gambut saat kemarau jauh lebih berbahaya dan sulit dipadamkan?",
+        opsi: [
+          "Api membakar lapisan bahan organik di bawah tanah (ground fire) dan menghasilkan kabut asap pekat",
+          "Karena gambut menghasilkan semburan air dingin",
+          "Karena gambut tidak bisa menyerap panas matahari",
+          "Karena ada magnet di dalam tanah gambut"
+        ],
+        jawaban: "Api membakar lapisan bahan organik di bawah tanah (ground fire) dan menghasilkan kabut asap pekat",
+        penjelasan: "Api gambut merambat di bawah permukaan tanah berpori kering, melepaskan miliaran ton karbon dioksida ke atmosfer."
+      },
+      {
+        pertanyaan: "Aktivitas antropogenik (manusia) apa yang paling cepat memicu eutrofikasi di perairan rawa?",
+        opsi: [
+          "Pembuangan limbah deterjen, limbah rumah tangga, dan pupuk fosfat berlebih",
+          "Penanaman bibit pohon bakau",
+          "Pemasangan filter alami berbasis pasir",
+          "Pengamatan burung bangau dengan teropong"
+        ],
+        jawaban: "Pembuangan limbah deterjen, limbah rumah tangga, dan pupuk fosfat berlebih",
+        penjelasan: "Nutrisi fosfat dan nitrat berlebih memicu ledakan gulma eceng gondok yang menghabiskan oksigen terlarut dalam air."
+      },
+      {
+        pertanyaan: "Apa peran ekologis lahan gambut dalam isu perubahan iklim global?",
+        opsi: [
+          "Sebagai rosot (penyimpan) karbon terestrial terbesar di bumi",
+          "Sebagai pendingin buatan berkekuatan freon",
+          "Memantulkan 100% sinar UV kembali ke angkasa",
+          "Tidak memiliki pengaruh terhadap iklim dunia"
+        ],
+        jawaban: "Sebagai rosot (penyimpan) karbon terestrial terbesar di bumi",
+        penjelasan: "Meskipun hanya mencakup 3% permukaan daratan bumi, lahan gambut menyimpan dua kali lebih banyak karbon dibanding gabungan seluruh hutan di dunia!"
+      },
+      {
+        pertanyaan: "Langkah restorasi ekosistem lahan basah yang tepat dan berkelanjutan adalah...",
+        opsi: [
+          "Penyekatan kanal (rewetting), reboisasi vegetasi lokal, dan edukasi konservasi",
+          "Membeton seluruh pinggiran rawa dengan semen",
+          "Mengalirkan air limbah industri secara langsung tanpa pengolahan IPAL",
+          "Mengeringkan rawa untuk dijadikan jalan raya"
+        ],
+        jawaban: "Penyekatan kanal (rewetting), reboisasi vegetasi lokal, dan edukasi konservasi",
+        penjelasan: "Restorasi gambut menerapkan prinsip 3R: Rewetting (pembasahan kembali), Revegetasi (penanaman), dan Revitalisasi ekonomi masyarakat."
+      }
+    ];
+
+    // Firebase Init
+    const firebaseConfig = {
+      apiKey: "AIzaSyDguvGwMNqADw8vC2877IDvoxmnTvj1txU",
+      authDomain: "inovasi-stem-lahan-basah.firebaseapp.com",
+      databaseURL: "https://inovasi-stem-lahan-basah-default-rtdb.firebaseio.com",
+      projectId: "inovasi-stem-lahan-basah",
+      storageBucket: "inovasi-stem-lahan-basah.appspot.com",
+      messagingSenderId: "853863316290",
+      appId: "1:853863316290:web:721e94519c84e725f1a6db"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Quiz State
+    let indexSoal = 0;
+    let skor = 0;
+    let currentStreak = 0;
+    let maxStreak = 0;
+    let usedLifeline = false;
+    let seluruhSoal = [];
+    let riwayatJawaban = [];
+    const letters = ["A", "B", "C", "D"];
+
+    function acakArray(arr) {
+      return [...arr].sort(() => Math.random() - 0.5);
+    }
+
+    function mulaiKuis() {
+      const nama = document.getElementById("nama").value.trim();
+      const sekolah = document.getElementById("sekolah").value.trim();
+
+      if (!nama || !sekolah) {
+        showNotification("Yuk isi nama lengkap dan asal sekolahmu terlebih dahulu!", "warning");
+        return;
+      }
+
+      SoundEffects.playPop();
+
+      const userId = `${nama.toLowerCase().replace(/\s+/g, '_')}_${sekolah.toLowerCase().replace(/\s+/g, '_')}`;
+
+      db.ref(`kuis/${userId}`).once("value", (snapshot) => {
+        if (snapshot.exists()) {
+          showNotification(`Halo ${nama}! Skor lamamu (${snapshot.val().skor}/12) tersimpan. Kamu boleh mengulang kuis untuk meraih skor lebih tinggi!`, "info");
+        }
+
+        document.getElementById("mulaiForm").style.display = "none";
+        document.getElementById("soalContainer").style.display = "block";
+
+        seluruhSoal = [
+          ...acakArray(soalMudah),
+          ...acakArray(soalSedang),
+          ...acakArray(soalSulit)
+        ];
+
+        indexSoal = 0;
+        skor = 0;
+        currentStreak = 0;
+        maxStreak = 0;
+        usedLifeline = false;
+        riwayatJawaban = [];
+        document.getElementById("btnLifeline").disabled = false;
+        tampilkanSoal();
+      });
+    }
+
+    function tampilkanSoal() {
+      if (!seluruhSoal[indexSoal]) return;
+
+      const soal = seluruhSoal[indexSoal];
+      const totalSoal = seluruhSoal.length;
+
+      document.getElementById("soalCounter").textContent = `Soal ${indexSoal + 1} / ${totalSoal}`;
+      document.getElementById("liveScoreCounter").textContent = `Skor: ${skor}`;
+
+      const progressPercent = Math.round(((indexSoal + 1) / totalSoal) * 100);
+      document.getElementById("quizProgressBar").style.width = `${progressPercent}%`;
+
+      // Update Streak
+      const streakBadge = document.getElementById("streakBadge");
+      if (currentStreak >= 2) {
+        streakBadge.style.display = "inline-flex";
+        document.getElementById("streakNum").textContent = currentStreak;
+      } else {
+        streakBadge.style.display = "none";
+      }
+
+      // Update Level Badge
+      const badgeLevel = document.getElementById("badgeLevel");
+      const levelDot = document.getElementById("levelDot");
+      const levelTitle = document.getElementById("levelTitle");
+
+      if (indexSoal < 4) {
+        badgeLevel.className = "level-badge-pill level-mudah-pill";
+        levelDot.textContent = "🟢";
+        levelTitle.textContent = "Level 1: Dasar";
+      } else if (indexSoal < 8) {
+        badgeLevel.className = "level-badge-pill level-sedang-pill";
+        levelDot.textContent = "🟡";
+        levelTitle.textContent = "Level 2: Ekologi";
+      } else {
+        badgeLevel.className = "level-badge-pill level-sulit-pill";
+        levelDot.textContent = "🔴";
+        levelTitle.textContent = "Level 3: Konservasi";
+      }
+
+      document.getElementById("teksSoal").innerHTML = `${indexSoal + 1}. ${soal.pertanyaan}`;
+
+      const opsiContainer = document.getElementById("opsiJawaban");
+      const feedback = document.getElementById("feedback");
+      const btnLanjut = document.getElementById("btnLanjut");
+
+      opsiContainer.innerHTML = "";
+      feedback.style.display = "none";
+      btnLanjut.style.display = "none";
+
+      const opsiAcak = acakArray(soal.opsi);
+      opsiAcak.forEach((pilihan, i) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerHTML = `
+          <span class="option-letter">${letters[i] || '•'}</span>
+          <span class="flex-grow-1">${pilihan}</span>
+        `;
+        btn.onclick = () => cekJawaban(btn, pilihan, soal);
+        opsiContainer.appendChild(btn);
+      });
+    }
+
+    function use5050Lifeline() {
+      if (usedLifeline) return;
+      usedLifeline = true;
+      document.getElementById("btnLifeline").disabled = true;
+
+      const soal = seluruhSoal[indexSoal];
+      const allButtons = Array.from(document.querySelectorAll(".option-btn"));
+      const wrongButtons = allButtons.filter(btn => {
+        const text = btn.querySelector("span:not(.option-letter)").textContent.trim();
+        return text !== soal.jawaban;
+      });
+
+      // Acak dan eliminasi 2 tombol salah
+      const toEliminate = acakArray(wrongButtons).slice(0, 2);
+      toEliminate.forEach(btn => btn.classList.add("btn-eliminated"));
+      SoundEffects.playPop();
+      showNotification("💡 2 pilihan yang salah telah dieliminasi!", "info");
+    }
+
+    function cekJawaban(selectedBtn, pilihanUser, soal) {
+      const benar = pilihanUser === soal.jawaban;
+
+      if (benar) {
+        skor++;
+        currentStreak++;
+        maxStreak = Math.max(maxStreak, currentStreak);
+        SoundEffects.playCorrect();
+      } else {
+        currentStreak = 0;
+        SoundEffects.playWrong();
+      }
+
+      // Catat riwayat
+      riwayatJawaban.push({
+        soal: soal.pertanyaan,
+        pilihanUser,
+        jawabanBenar: soal.jawaban,
+        benar,
+        penjelasan: soal.penjelasan
+      });
+
+      // Update Opsi Buttons
+      const allButtons = document.querySelectorAll(".option-btn");
+      allButtons.forEach(btn => {
+        btn.disabled = true;
+        const textSpan = btn.querySelector("span:not(.option-letter)").textContent.trim();
+        if (textSpan === soal.jawaban) {
+          btn.classList.add("btn-correct");
+        }
+      });
+
+      if (!benar) {
+        selectedBtn.classList.add("btn-wrong");
+      }
+
+      // Feedback Box
+      const feedback = document.getElementById("feedback");
+      feedback.style.display = "block";
+      if (benar) {
+        feedback.className = "explanation-box bg-success-subtle text-success border border-success-subtle";
+        feedback.innerHTML = `<strong><i class="bi bi-check-circle-fill"></i> Tepat Sekali!</strong> ${soal.penjelasan}`;
+      } else {
+        feedback.className = "explanation-box bg-danger-subtle text-danger border border-danger-subtle";
+        feedback.innerHTML = `<strong><i class="bi bi-x-circle-fill"></i> Kurang Tepat.</strong> ${soal.penjelasan}`;
+      }
+
+      const btnLanjut = document.getElementById("btnLanjut");
+      btnLanjut.style.display = "inline-flex";
+      if (indexSoal === seluruhSoal.length - 1) {
+        btnLanjut.innerHTML = `<span>Selesai & Lihat Skor</span> <i class="bi bi-award-fill"></i>`;
+      } else {
+        btnLanjut.innerHTML = `<span>Soal Berikutnya</span> <i class="bi bi-arrow-right-circle-fill"></i>`;
+      }
+    }
+
+    function lanjutSoal() {
+      SoundEffects.playPop();
+      indexSoal++;
+      if (indexSoal < seluruhSoal.length) {
+        tampilkanSoal();
+      } else {
+        selesaikanKuis();
+      }
+    }
+
+    function selesaikanKuis() {
+      document.getElementById("soalContainer").style.display = "none";
+      const hasilContainer = document.getElementById("hasilContainer");
+      hasilContainer.style.display = "block";
+
+      const total = seluruhSoal.length;
+      const persentase = Math.round((skor / total) * 100);
+
+      document.getElementById("skorAngka").textContent = skor;
+      document.getElementById("scorePercent").textContent = `${persentase}%`;
+      document.getElementById("scoreMaxStreak").textContent = `${maxStreak}🔥`;
+
+      const hasilTitle = document.getElementById("hasilTitle");
+      const pesanHasil = document.getElementById("pesanHasil");
+      const trophyIcon = document.getElementById("resultTrophy");
+      const scoreGrade = document.getElementById("scoreGrade");
+
+      if (skor >= 10) {
+        trophyIcon.textContent = "🏆";
+        hasilTitle.textContent = "Fantastis! Juara Ekosistem!";
+        pesanHasil.textContent = "Pemahamanmu tentang lahan basah luar biasa. Pertahankan prestasimu!";
+        scoreGrade.textContent = "Juara Emas ⭐⭐⭐";
+        SoundEffects.playFanfare();
+
+        if (typeof confetti === 'function') {
+          confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+        }
+      } else if (skor >= 7) {
+        trophyIcon.textContent = "🥈";
+        hasilTitle.textContent = "Hebat! Pejuang Lingkungan!";
+        pesanHasil.textContent = "Kamu memahami konsep penting lahan basah dengan sangat baik.";
+        scoreGrade.textContent = "Juara Perak ⭐⭐";
+        SoundEffects.playCorrect();
+      } else {
+        trophyIcon.textContent = "🌱";
+        hasilTitle.textContent = "Ayo Semangat Belajar Lagi!";
+        pesanHasil.textContent = "Bagus sudah mencoba! Baca kembali modul pembelajaran dan coba lagi ya.";
+        scoreGrade.textContent = "Sahabat Pemula ⭐";
+      }
+
+      // Simpan ke Firebase
+      const nama = document.getElementById("nama").value.trim();
+      const sekolah = document.getElementById("sekolah").value.trim();
+      const userId = `${nama.toLowerCase().replace(/\s+/g, '_')}_${sekolah.toLowerCase().replace(/\s+/g, '_')}`;
+
+      db.ref(`kuis/${userId}`).set({
+        nama,
+        sekolah,
+        skor,
+        total,
+        persentase,
+        maxStreak,
+        waktu: new Date().toISOString()
+      }).catch(err => console.error("Firebase save error:", err));
+    }
+
+    // Modal Review Kunci Jawaban
+    function bukaReviewModal() {
+      const modalBody = document.getElementById("reviewModalBody");
+      modalBody.innerHTML = "";
+
+      riwayatJawaban.forEach((item, idx) => {
+        const div = document.createElement("div");
+        div.className = `p-3 rounded-4 mb-3 border ${item.benar ? 'bg-success-subtle border-success-subtle' : 'bg-danger-subtle border-danger-subtle'}`;
+        div.innerHTML = `
+          <div class="d-flex align-items-center justify-content-between mb-1">
+            <strong>Soal ${idx + 1}</strong>
+            <span class="badge ${item.benar ? 'bg-success' : 'bg-danger'}">${item.benar ? 'Benar (+1)' : 'Salah (0)'}</span>
+          </div>
+          <p class="mb-2 fw-semibold">${item.soal}</p>
+          <div class="small mb-1"><strong>Jawabanmu:</strong> ${item.pilihanUser}</div>
+          <div class="small mb-2 text-success"><strong>Kunci Jawaban:</strong> ${item.jawabanBenar}</div>
+          <div class="small text-muted bg-white p-2 rounded-3">💡 ${item.penjelasan}</div>
+        `;
+        modalBody.appendChild(div);
+      });
+
+      const modal = new bootstrap.Modal(document.getElementById("reviewModal"));
+      modal.show();
+    }
+
+    // Share Hasil Kuis
+    function shareScore() {
+      const nama = document.getElementById("nama").value.trim() || "Saya";
+      const shareText = `🌱 ${nama} baru saja meraih skor ${skor}/12 (${Math.round((skor/12)*100)}%) di Kuis Interaktif Lahan Basah Hijau! 🏆 Yuk uji wawasan lingkunganmu juga!`;
+
+      if (navigator.share) {
+        navigator.share({
+          title: "Kuis Lahan Basah Hijau",
+          text: shareText,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(shareText);
+        showNotification("📋 Teks hasil kuis telah disalin ke clipboard! Siap dibagikan ke WhatsApp / medsos.", "success");
+      }
+    }
+
+    function cobaLagi() {
+      indexSoal = 0;
+      skor = 0;
+      currentStreak = 0;
+      maxStreak = 0;
+      usedLifeline = false;
+      riwayatJawaban = [];
+      document.getElementById("btnLifeline").disabled = false;
+      document.getElementById("hasilContainer").style.display = "none";
+      document.getElementById("soalContainer").style.display = "block";
+
+      seluruhSoal = [
+        ...acakArray(soalMudah),
+        ...acakArray(soalSedang),
+        ...acakArray(soalSulit)
+      ];
+
+      tampilkanSoal();
+    }
+
+    function showNotification(pesan, tipe = "info") {
+      const notifArea = document.getElementById("notifArea");
+      const notif = document.createElement("div");
+      notif.className = `alert alert-${tipe} shadow-lg rounded-pill px-4 py-3 text-center fw-bold animate__animated animate__fadeInDown`;
+      notif.style.backdropFilter = "blur(10px)";
+      notif.textContent = pesan;
+
+      notifArea.appendChild(notif);
+      setTimeout(() => {
+        notif.style.opacity = "0";
+        notif.style.transition = "opacity 0.5s ease";
+        setTimeout(() => notif.remove(), 500);
+      }, 4000);
+    }
+
+    // Music
+    const music = document.getElementById('bg-music');
+    const toggleBtn = document.getElementById('music-toggle');
+    const icon = document.getElementById('music-icon');
+    const toast = document.getElementById('music-toast');
+    const musicDock = document.getElementById('music-dock');
+
+    function updateIcon() {
+      if (music.paused) {
+        icon.textContent = '🔇';
+        musicDock.classList.remove('playing');
+      } else {
+        icon.textContent = '🔊';
+        musicDock.classList.add('playing');
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.opacity = '1'; }, 10);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => (toast.style.display = 'none'), 400);
+      }, 2000);
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (music.paused) {
+        music.play().then(() => {
+          updateIcon();
+          showToast('Musik Dinyalakan 🎵');
+        }).catch(() => {});
+      } else {
+        music.pause();
+        updateIcon();
+        showToast('Musik Dimatikan 🔇');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const tryPlay = () => {
+        if (music.paused) {
+          music.play().then(updateIcon).catch(() => {});
+        } else {
+          updateIcon();
+        }
+        document.body.removeEventListener('click', tryPlay);
+      };
+      document.body.addEventListener('click', tryPlay);
+    });
+  </script>
+</body>
+</html>

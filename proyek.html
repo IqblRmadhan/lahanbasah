@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyek Ekosistem - Lahan Basah Hijau</title>
+
+  <!-- CSS Framework & Libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+
+  <!-- Custom Design System -->
+  <link rel="stylesheet" href="custom.css" />
+
+  <style>
+    /* Specific styles for Proyek & Galeri */
+    .project-studio-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: var(--radius-xl);
+      padding: 38px 32px;
+      box-shadow: 0 15px 35px rgba(6, 78, 59, 0.08);
+      max-width: 820px;
+      margin: -40px auto 40px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Ide Inspirasi Cards */
+    .idea-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .idea-card:hover {
+      transform: translateY(-4px);
+      border-color: #10b981;
+      box-shadow: var(--shadow-md);
+    }
+
+    .idea-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    /* Auth Box */
+    .auth-tab-btn {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: #64748b;
+      padding: 8px 24px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: transparent;
+      transition: all 0.25s ease;
+    }
+
+    .auth-tab-btn.active {
+      background: linear-gradient(135deg, #10b981, #0284c7);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    /* File Drop Area */
+    .file-dropzone {
+      border: 2px dashed #10b981;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      background: #f0fdf4;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .file-dropzone:hover {
+      background: #dcfce7;
+      border-color: #059669;
+    }
+
+    .image-preview-thumbnail {
+      max-height: 180px;
+      border-radius: var(--radius-sm);
+      display: none;
+      margin: 12px auto 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Gallery Grid */
+    .gallery-masonry-grid {
+      column-count: 3;
+      column-gap: 20px;
+    }
+
+    @media (max-width: 991px) {
+      .gallery-masonry-grid { column-count: 2; }
+    }
+    @media (max-width: 576px) {
+      .gallery-masonry-grid { column-count: 1; }
+    }
+
+    .gallery-item-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+      break-inside: avoid;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .gallery-item-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: #10b981;
+    }
+
+    .gallery-card-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item-card:hover .gallery-card-img {
+      transform: scale(1.03);
+    }
+
+    .gallery-card-body {
+      padding: 16px;
+    }
+
+    .gallery-author {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #064e3b;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .gallery-desc-text {
+      font-size: 0.9rem;
+      color: #475569;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .gallery-footer-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 10px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .like-btn {
+      border: none;
+      background: #fee2e2;
+      color: #ef4444;
+      border-radius: var(--radius-pill);
+      padding: 3px 10px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .like-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .filter-category-btn {
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      color: #475569;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 6px 18px;
+      border-radius: var(--radius-pill);
+      transition: all 0.25s ease;
+    }
+
+    .filter-category-btn.active {
+      background: linear-gradient(135deg, #10b981, #0284c7);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVBAR
+       ========================================================================== -->
+  <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+    <div class="container">
+      <a class="brand-wrapper" href="index.html">
+        <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
+        <div class="brand-text">
+          <span>Lahan Basah Hijau</span>
+          <span class="brand-badge">🌱 STEM Interaktif</span>
+        </div>
+      </a>
+
+      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="bi bi-list fs-2 text-success"></i>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html"><span>🏠</span> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="kuis.html"><span>🧠</span> Kuis</a></li>
+          <li class="nav-item"><a class="nav-link" href="simulasi.html"><span>🧪</span> Simulasi</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyek.html"><span>💡</span> Proyek</a></li>
+          <li class="nav-item"><a class="nav-link" href="leaderboard.html"><span>🏆</span> Papan Peringkat</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== -->
+  <section class="hero-section">
+    <img src="foto/cloud1.webp" class="hero-cloud c1" alt="Awan Cantik" />
+    <img src="foto/cloud2.webp" class="hero-cloud c2" alt="Awan Cantik" />
+    <img src="foto/daun1.webp" class="hero-floating-leaf leaf1" alt="Daun Hijau" />
+    <img src="foto/daun2.webp" class="hero-floating-leaf leaf2" alt="Daun Hijau" />
+
+    <img src="foto/peneliti.webp" class="hero-mascot-right" alt="Maskot Peneliti Muda" style="max-height: 250px;" data-aos="fade-left" />
+
+    <div class="container hero-content">
+      <div class="hero-tag" data-aos="fade-down">
+        <span>💡</span> Kreasi Karya Ramah Lingkungan
+      </div>
+
+      <h1 class="hero-title" data-aos="zoom-in">
+        Proyek & Galeri <br><span class="highlight">Karya Pengguna</span>
+      </h1>
+
+      <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
+        Wujudkan ide cemerlangmu untuk menyelamatkan ekosistem lahan basah! Upload hasil karya, kerajinan, atau eksperimen STEM-mu di sini.
+      </p>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3" data-aos="fade-up" data-aos-delay="200">
+        <a href="#formProyekSection" class="btn-eco-primary">
+          <i class="bi bi-cloud-arrow-up-fill"></i> Upload Karyamu Sekarang
+        </a>
+        <a href="#galeriSection" class="btn-eco-outline">
+          <i class="bi bi-images"></i> Lihat Galeri Sahabat
+        </a>
+      </div>
+    </div>
+
+    <!-- Organic Wave Divider -->
+    <div class="hero-wave-divider">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.31,200,105,242.79,94.92,284.28,74.58,321.39,56.44Z" class="shape-fill"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       INSPIRATION IDEAS SECTION
+       ========================================================================== -->
+  <section class="container my-5">
+    <div class="text-center mb-4" data-aos="fade-up">
+      <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill mb-2">
+        ✨ Inspirasi Ide STEM
+      </span>
+      <h3 class="display-font text-success mb-2">Ide Proyek yang Bisa Kamu Coba di Rumah & Sekolah</h3>
+      <p class="text-muted small">Bingung mau buat apa? Berikut beberapa ide seru dan mudah:</p>
+    </div>
+
+    <div class="row g-3" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-sm-6 col-lg-4">
+        <div class="idea-card">
+          <span class="idea-icon">🧪</span>
+          <div>
+            <strong class="d-block text-dark">Filter Air Sederhana</strong>
+            <small class="text-muted">Gunakan botol bekas, pasir, kerikil, dan arang untuk menyaring air rawa keruh.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <div class="idea-card">
+          <span class="idea-icon">🌱</span>
+          <div>
+            <strong class="d-block text-dark">Terarium Tumbuhan Air</strong>
+            <small class="text-muted">Tanam eceng gondok atau lumut air dalam wadah transparan untuk mengamati fotosintesis.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <div class="idea-card">
+          <span class="idea-icon">♻️</span>
+          <div>
+            <strong class="d-block text-dark">Kerajinan Daur Ulang</strong>
+            <small class="text-muted">Olah sampah botol plastik menjadi pot tanaman vertikal atau miniatur perahu rawa.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <div class="idea-card">
+          <span class="idea-icon">🎨</span>
+          <div>
+            <strong class="d-block text-dark">Poster & Komik Edukasi</strong>
+            <small class="text-muted">Gambar petualangan hewan lahan basah dan ajakan menjaga kebersihan sungai.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <div class="idea-card">
+          <span class="idea-icon">📸</span>
+          <div>
+            <strong class="d-block text-dark">Fotografi Alam Sekitar</strong>
+            <small class="text-muted">Potret keindahan rawa, burung bangau, atau bunga teratai di lingkungan sekitarmu.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <div class="idea-card">
+          <span class="idea-icon">🚯</span>
+          <div>
+            <strong class="d-block text-dark">Aksi Bersih Selokan/Sungai</strong>
+            <small class="text-muted">Aksi gotong royong membersihkan sampah plastik di saluran air agar tidak mencemari rawa.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       PROJECT UPLOAD STUDIO (Auth & Upload Form)
+       ========================================================================== -->
+  <section class="container" id="formProyekSection">
+    <div class="project-studio-card" data-aos="fade-up">
+
+      <!-- 1. AUTH SCREEN -->
+      <div id="authContainer">
+        <div class="text-center mb-4">
+          <span class="fs-1 d-inline-block mb-1">🔐</span>
+          <h3 class="display-font text-success mb-1">Studio Kreator Lahan Basah</h3>
+          <p class="text-muted small">Masuk atau daftarkan akunmu secara gratis untuk mulai mengunggah karya ke galeri!</p>
+
+          <div class="d-inline-flex bg-light p-1 rounded-pill border my-3">
+            <button class="auth-tab-btn active" id="tabLogin" onclick="switchAuthTab('login')">
+              🔓 Masuk
+            </button>
+            <button class="auth-tab-btn" id="tabSignup" onclick="switchAuthTab('signup')">
+              📝 Daftar Baru
+            </button>
+          </div>
+        </div>
+
+        <div class="col-md-8 mx-auto">
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted">
+              <i class="bi bi-envelope-fill text-success"></i> Alamat Email
+            </label>
+            <input type="email" class="form-control rounded-pill px-4 fs-6 border shadow-sm" id="email" placeholder="nama@email.com" required />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted">
+              <i class="bi bi-lock-fill text-primary"></i> Kata Sandi (Minimal 6 karakter)
+            </label>
+            <div class="input-group">
+              <input type="password" class="form-control rounded-start-pill ps-4 fs-6 border shadow-sm" id="password" placeholder="••••••••" required />
+              <button class="btn btn-outline-secondary rounded-end-pill px-3" type="button" onclick="togglePasswordVisibility()">
+                <i class="bi bi-eye" id="togglePasswordIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="d-grid mt-4">
+            <button class="btn-eco-primary justify-content-center py-3 fs-6" id="authSubmitBtn" onclick="submitAuth()">
+              🔓 Masuk Sekarang
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. UPLOAD FORM -->
+      <div id="uploadContainer" style="display:none;">
+        <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-4 border-bottom">
+          <div class="d-flex align-items-center gap-2">
+            <span class="fs-2">👩‍🔬</span>
+            <div>
+              <h5 class="display-font text-success mb-0" id="userGreeting">Selamat Datang, Kreator Alam!</h5>
+              <small class="text-muted" id="userEmailBadge">Terhubung sebagai Peneliti Muda</small>
+            </div>
+          </div>
+          <button class="btn btn-outline-danger btn-sm rounded-pill px-3" onclick="logout()">
+            <i class="bi bi-box-arrow-right"></i> Keluar (Logout)
+          </button>
+        </div>
+
+        <form id="formUploadProyek">
+          <div class="mb-3">
+            <label for="nama" class="form-label fw-bold small text-muted">
+              <i class="bi bi-person-fill text-success"></i> Nama Kamu / Tim
+            </label>
+            <input type="text" class="form-control rounded-pill px-4 fs-6 border shadow-sm" id="nama" placeholder="Contoh: Aulia & Tim Pelestari" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="deskripsi" class="form-label fw-bold small text-muted">
+              <i class="bi bi-card-text text-primary"></i> Deskripsi Karya / Proyek
+            </label>
+            <textarea class="form-control rounded-4 p-3 fs-6 border shadow-sm" id="deskripsi" rows="3" placeholder="Ceritakan apa yang kamu buat, bahan yang digunakan, dan manfaatnya untuk lahan basah..." required></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-bold small text-muted">
+              <i class="bi bi-image text-warning"></i> Foto Dokumentasi Karya (Otomatis Dioptimalkan)
+            </label>
+            <div class="file-dropzone" onclick="document.getElementById('gambar').click()">
+              <input type="file" id="gambar" accept="image/*" class="d-none" onchange="previewSelectedImage(event)" required />
+              <i class="bi bi-cloud-arrow-up fs-1 text-success d-block mb-1"></i>
+              <div class="fw-bold text-dark">Klik untuk memilih foto karyamu</div>
+              <small class="text-muted">Format: JPG, PNG, atau WEBP</small>
+              <img id="imagePreview" class="image-preview-thumbnail" alt="Preview Gambar" />
+            </div>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn-eco-primary justify-content-center py-3 fs-6" id="btnSubmitProyek">
+              <i class="bi bi-send-fill"></i> Publikasikan Karyamu ke Galeri
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       COMMUNITY PROJECT GALLERY SECTION
+       ========================================================================== -->
+  <section class="container my-5" id="galeriSection">
+    <div class="text-center mb-4" data-aos="fade-up">
+      <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1 rounded-pill mb-2">
+        🖼️ Galeri Karya Sahabat
+      </span>
+      <h2 class="display-font text-success mb-2" style="font-size: 2.3rem;">
+        Karya & Inovasi Sahabat Lahan Basah
+      </h2>
+      <p class="text-muted mx-auto" style="max-width: 600px;">
+        Lihat berbagai inspirasi nyata dari teman-teman seluruh Indonesia yang berkontribusi menjaga kelestarian alam!
+      </p>
+
+      <!-- Search & Filter Bar Galeri -->
+      <div class="col-md-6 mx-auto mt-3">
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0 rounded-start-pill ps-4 text-muted">
+            <i class="bi bi-search"></i>
+          </span>
+          <input type="text" class="form-control rounded-end-pill pe-4 border-start-0 py-2" id="gallerySearchInput" placeholder="Cari karya teman atau nama kreator..." oninput="filterGalleryProjects()" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Spinner Indicator -->
+    <div id="galeriLoading" class="text-center my-5">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Memuat galeri...</span>
+      </div>
+      <p class="text-muted small mt-2">Sedang memuat karya teman-teman...</p>
+    </div>
+
+    <!-- Masonry Columns Grid -->
+    <div class="gallery-masonry-grid" id="galeriContainer">
+      <!-- Diinjeksi otomatis via Firebase -->
+    </div>
+  </section>
+
+  <!-- Modal Preview Gambar Full Size -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 border-0 overflow-hidden shadow-lg">
+        <div class="modal-body p-0 position-relative">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-3 z-3 bg-white p-2 rounded-circle shadow-sm" data-bs-dismiss="modal"></button>
+          <img src="" id="modalImg" class="w-100 h-auto d-block" alt="Detail Karya" />
+          <div class="p-4 bg-white">
+            <h5 class="fw-bold text-success mb-1" id="modalAuthor">Nama Kreator</h5>
+            <p class="text-muted mb-0 small" id="modalDesc">Deskripsi proyek...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast Area -->
+  <div id="notifArea" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 10050; max-width: 90%;"></div>
+
+  <!-- ==========================================================================
+       FLOATING MUSIC DOCK & TOAST
+       ========================================================================== -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="sound/sound2.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
+    <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
+      <span id="music-icon">🔊</span>
+    </button>
+    <div class="sound-bars">
+      <span class="sound-bar"></span>
+      <span class="sound-bar"></span>
+      <span class="sound-bar"></span>
+    </div>
+    <span class="music-label d-none d-sm-inline">Musik Alam</span>
+  </div>
+
+  <div id="music-toast" class="music-toast-popup">
+    Musik Dinyalakan
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="custom-footer">
+    <div class="footer-top-wave">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+      </svg>
+    </div>
+
+    <div class="container footer-content text-center">
+      <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+        <img src="foto/logo.webp" alt="Logo" width="40" height="40" />
+        <span class="footer-brand">Lahan Basah Hijau</span>
+      </div>
+      <p class="small text-muted mb-3">Aplikasi pembelajaran interaktif berbasis STEM untuk mengenal, menjaga, dan mencintai lahan basah.</p>
+      <div class="footer-bottom">
+        <small>© 2025 Lahan Basah Hijau. Semua hak dilindungi.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="sfx.js"></script>
+
+  <!-- Firebase Compat Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    // Firebase Init
+    const firebaseConfig = {
+      apiKey: "AIzaSyDguvGwMNqADw8vC2877IDvoxmnTvj1txU",
+      authDomain: "inovasi-stem-lahan-basah.firebaseapp.com",
+      databaseURL: "https://inovasi-stem-lahan-basah-default-rtdb.firebaseio.com",
+      projectId: "inovasi-stem-lahan-basah",
+      storageBucket: "inovasi-stem-lahan-basah.appspot.com",
+      messagingSenderId: "853863316290",
+      appId: "1:853863316290:web:721e94519c84e725f1a6db"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const auth = firebase.auth();
+
+    let authMode = "login";
+    let compressedBase64 = null;
+    let allGalleryItems = [];
+
+    function switchAuthTab(mode) {
+      authMode = mode;
+      SoundEffects.playPop();
+      const tabLogin = document.getElementById("tabLogin");
+      const tabSignup = document.getElementById("tabSignup");
+      const submitBtn = document.getElementById("authSubmitBtn");
+
+      if (mode === "login") {
+        tabLogin.classList.add("active");
+        tabSignup.classList.remove("active");
+        submitBtn.innerHTML = `🔓 Masuk Sekarang`;
+      } else {
+        tabSignup.classList.add("active");
+        tabLogin.classList.remove("active");
+        submitBtn.innerHTML = `📝 Daftarkan Akun Baru`;
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const pwd = document.getElementById("password");
+      const icon = document.getElementById("togglePasswordIcon");
+      if (pwd.type === "password") {
+        pwd.type = "text";
+        icon.className = "bi bi-eye-slash";
+      } else {
+        pwd.type = "password";
+        icon.className = "bi bi-eye";
+      }
+    }
+
+    function submitAuth() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        showNotification("Harap masukkan email dan kata sandi terlebih dahulu!", "warning");
+        return;
+      }
+
+      SoundEffects.playPop();
+
+      if (authMode === "login") {
+        auth.signInWithEmailAndPassword(email, password)
+          .then(() => {
+            SoundEffects.playCorrect();
+            showNotification("Berhasil masuk! Selamat berkarya 🎉", "success");
+          })
+          .catch(err => {
+            SoundEffects.playWrong();
+            showNotification(err.message || "Gagal masuk. Periksa kembali email dan kata sandi.", "danger");
+          });
+      } else {
+        if (password.length < 6) {
+          showNotification("Kata sandi minimal harus 6 karakter ya!", "warning");
+          return;
+        }
+        auth.createUserWithEmailAndPassword(email, password)
+          .then(() => {
+            SoundEffects.playFanfare();
+            showNotification("Pendaftaran berhasil! Selamat datang 🎉", "success");
+          })
+          .catch(err => {
+            SoundEffects.playWrong();
+            showNotification(err.message || "Pendaftaran gagal. Coba lagi.", "danger");
+          });
+      }
+    }
+
+    function logout() {
+      auth.signOut().then(() => {
+        SoundEffects.playPop();
+        showNotification("Kamu telah berhasil keluar.", "info");
+      });
+    }
+
+    auth.onAuthStateChanged(user => {
+      const authContainer = document.getElementById("authContainer");
+      const uploadContainer = document.getElementById("uploadContainer");
+      const userGreeting = document.getElementById("userGreeting");
+      const userEmailBadge = document.getElementById("userEmailBadge");
+
+      if (user) {
+        authContainer.style.display = "none";
+        uploadContainer.style.display = "block";
+        userGreeting.textContent = `Halo, ${user.displayName || user.email.split('@')[0]}!`;
+        userEmailBadge.textContent = user.email;
+      } else {
+        authContainer.style.display = "block";
+        uploadContainer.style.display = "none";
+      }
+    });
+
+    // Client-side Image Compression via Canvas
+    function previewSelectedImage(event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById("imagePreview");
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 900;
+          const MAX_HEIGHT = 900;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Kompresi kualitas 0.8
+          compressedBase64 = canvas.toDataURL("image/jpeg", 0.8);
+          preview.src = compressedBase64;
+          preview.style.display = "block";
+          SoundEffects.playPop();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    const formProyek = document.getElementById("formUploadProyek");
+    formProyek.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const user = auth.currentUser;
+      if (!user) {
+        showNotification("Silakan masuk terlebih dahulu untuk upload karya.", "warning");
+        return;
+      }
+
+      const nama = document.getElementById("nama").value.trim();
+      const deskripsi = document.getElementById("deskripsi").value.trim();
+
+      if (!nama || !deskripsi || !compressedBase64) {
+        showNotification("Lengkapi semua isian form dan unggah fotomu!", "warning");
+        return;
+      }
+
+      const btnSubmit = document.getElementById("btnSubmitProyek");
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Mengunggah karyamu...`;
+
+      const newProject = {
+        nama,
+        deskripsi,
+        gambar: compressedBase64,
+        waktu: new Date().toISOString(),
+        userId: user.uid,
+        userEmail: user.email,
+        likes: 1
+      };
+
+      db.ref("proyek").push(newProject)
+        .then(() => {
+          SoundEffects.playFanfare();
+          showNotification("🎉 Karya berhasil dipublikasikan ke Galeri!", "success");
+          formProyek.reset();
+          compressedBase64 = null;
+          document.getElementById("imagePreview").style.display = "none";
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = `<i class="bi bi-send-fill"></i> Publikasikan Karyamu ke Galeri`;
+          tampilkanGaleri();
+        })
+        .catch(err => {
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = `<i class="bi bi-send-fill"></i> Publikasikan Karyamu ke Galeri`;
+          showNotification("Gagal menyimpan proyek: " + err.message, "danger");
+        });
+    });
+
+    function tampilkanGaleri() {
+      const galeriContainer = document.getElementById("galeriContainer");
+      const galeriLoading = document.getElementById("galeriLoading");
+
+      galeriLoading.style.display = "block";
+
+      db.ref("proyek").once("value", snapshot => {
+        galeriLoading.style.display = "none";
+        galeriContainer.innerHTML = "";
+
+        if (!snapshot.exists()) {
+          galeriContainer.innerHTML = `
+            <div class="col-12 text-center py-5">
+              <span class="fs-1 d-block mb-2">🌱</span>
+              <h5 class="text-muted">Belum ada karya yang diunggah.</h5>
+              <p class="small text-muted">Jadilah yang pertama membagikan kreasi perlindungan lahan basah!</p>
+            </div>
+          `;
+          return;
+        }
+
+        const items = [];
+        snapshot.forEach(child => {
+          items.push({ id: child.key, ...child.val() });
+        });
+
+        allGalleryItems = items.reverse();
+        renderGalleryList(allGalleryItems);
+      }).catch(err => {
+        galeriLoading.style.display = "none";
+        galeriContainer.innerHTML = `<p class="text-danger text-center">Gagal memuat galeri: ${err.message}</p>`;
+      });
+    }
+
+    function renderGalleryList(items) {
+      const galeriContainer = document.getElementById("galeriContainer");
+      galeriContainer.innerHTML = "";
+
+      if (items.length === 0) {
+        galeriContainer.innerHTML = `<p class="text-center text-muted col-12 py-4">Karya yang dicari tidak ditemukan.</p>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "gallery-item-card";
+
+        const waktuFormatted = item.waktu ? new Date(item.waktu).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' }) : "Baru saja";
+
+        card.innerHTML = `
+          <img src="${item.gambar}" alt="Karya ${item.nama}" class="gallery-card-img" onclick="openImageModal('${item.gambar}', '${escapeHtml(item.nama)}', '${escapeHtml(item.deskripsi)}')" />
+          <div class="gallery-card-body">
+            <div class="gallery-author">
+              <span>🌿</span> ${escapeHtml(item.nama)}
+            </div>
+            <p class="gallery-desc-text">${escapeHtml(item.deskripsi)}</p>
+            <div class="gallery-footer-info">
+              <span><i class="bi bi-calendar3"></i> ${waktuFormatted}</span>
+              <button class="like-btn" onclick="handleLike('${item.id}', this)">
+                <i class="bi bi-heart-fill"></i> <span class="like-count">${item.likes || 1}</span>
+              </button>
+            </div>
+          </div>
+        `;
+
+        galeriContainer.appendChild(card);
+      });
+    }
+
+    function filterGalleryProjects() {
+      const q = document.getElementById("gallerySearchInput").value.toLowerCase().trim();
+      if (!q) {
+        renderGalleryList(allGalleryItems);
+        return;
+      }
+      const filtered = allGalleryItems.filter(item => 
+        (item.nama && item.nama.toLowerCase().includes(q)) ||
+        (item.deskripsi && item.deskripsi.toLowerCase().includes(q))
+      );
+      renderGalleryList(filtered);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function openImageModal(src, author, desc) {
+      document.getElementById("modalImg").src = src;
+      document.getElementById("modalAuthor").textContent = author;
+      document.getElementById("modalDesc").textContent = desc;
+      SoundEffects.playPop();
+      const modal = new bootstrap.Modal(document.getElementById("imageModal"));
+      modal.show();
+    }
+
+    function handleLike(id, btn) {
+      SoundEffects.playPop();
+      const countSpan = btn.querySelector(".like-count");
+      let count = parseInt(countSpan.textContent) || 0;
+      count++;
+      countSpan.textContent = count;
+      btn.style.transform = "scale(1.25)";
+      setTimeout(() => { btn.style.transform = "none"; }, 200);
+
+      // Simpan ke Firebase Realtime DB
+      db.ref(`proyek/${id}/likes`).transaction(curr => (curr || 0) + 1);
+    }
+
+    function showNotification(pesan, tipe = "info") {
+      const notifArea = document.getElementById("notifArea");
+      const notif = document.createElement("div");
+      notif.className = `alert alert-${tipe} shadow-lg rounded-pill px-4 py-3 text-center fw-bold`;
+      notif.style.backdropFilter = "blur(10px)";
+      notif.textContent = pesan;
+
+      notifArea.appendChild(notif);
+      setTimeout(() => {
+        notif.style.opacity = "0";
+        notif.style.transition = "opacity 0.5s ease";
+        setTimeout(() => notif.remove(), 500);
+      }, 4000);
+    }
+
+    // Music
+    const music = document.getElementById('bg-music');
+    const toggleBtn = document.getElementById('music-toggle');
+    const icon = document.getElementById('music-icon');
+    const toast = document.getElementById('music-toast');
+    const musicDock = document.getElementById('music-dock');
+
+    function updateIcon() {
+      if (music.paused) {
+        icon.textContent = '🔇';
+        musicDock.classList.remove('playing');
+      } else {
+        icon.textContent = '🔊';
+        musicDock.classList.add('playing');
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.opacity = '1'; }, 10);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => (toast.style.display = 'none'), 400);
+      }, 2000);
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (music.paused) {
+        music.play().then(() => {
+          updateIcon();
+          showToast('Musik Dinyalakan 🎵');
+        }).catch(() => {});
+      } else {
+        music.pause();
+        updateIcon();
+        showToast('Musik Dimatikan 🔇');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      tampilkanGaleri();
+      const tryPlay = () => {
+        if (music.paused) {
+          music.play().then(updateIcon).catch(() => {});
+        } else {
+          updateIcon();
+        }
+        document.body.removeEventListener('click', tryPlay);
+      };
+      document.body.addEventListener('click', tryPlay);
+    });
+  </script>
+</body>
+</html>

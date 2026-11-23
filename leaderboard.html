@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Papan Peringkat - Lahan Basah Hijau</title>
+
+  <!-- CSS Framework & Libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+
+  <!-- Custom Design System -->
+  <link rel="stylesheet" href="custom.css" />
+
+  <style>
+    /* Specific styles for Leaderboard */
+    .leaderboard-container {
+      max-width: 900px;
+      margin: -40px auto 50px;
+      position: relative;
+      z-index: 10;
+      padding: 0 15px;
+    }
+
+    .glass-leaderboard-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: var(--radius-xl);
+      padding: 38px 32px;
+      box-shadow: 0 15px 35px rgba(6, 78, 59, 0.08);
+    }
+
+    /* Podium Top 3 */
+    .podium-wrapper {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 16px;
+      margin: 30px auto 40px;
+      max-width: 650px;
+    }
+
+    .podium-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .podium-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      background: #ffffff;
+      transition: transform 0.3s ease;
+    }
+
+    .podium-col.rank-1 .podium-avatar {
+      width: 90px;
+      height: 90px;
+      font-size: 2.7rem;
+      border: 4px solid #f59e0b;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
+      animation: floatSubtle 3s ease-in-out infinite;
+    }
+
+    .podium-col.rank-2 .podium-avatar {
+      border: 4px solid #94a3b8;
+    }
+
+    .podium-col.rank-3 .podium-avatar {
+      border: 4px solid #b45309;
+    }
+
+    .crown-icon {
+      position: absolute;
+      top: -24px;
+      font-size: 1.8rem;
+    }
+
+    .podium-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .podium-school {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      max-width: 130px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-bottom: 8px;
+    }
+
+    .podium-pedestal {
+      width: 100%;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      padding: 16px 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .podium-col.rank-1 .podium-pedestal {
+      height: 145px;
+      background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    .podium-col.rank-2 .podium-pedestal {
+      height: 110px;
+      background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
+    }
+
+    .podium-col.rank-3 .podium-pedestal {
+      height: 85px;
+      background: linear-gradient(180deg, #d97706 0%, #92400e 100%);
+    }
+
+    .pedestal-rank-num {
+      font-size: 2.3rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .pedestal-score-badge {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: var(--radius-pill);
+      padding: 3px 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    /* List Table / Cards */
+    .ranking-item-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ranking-item-card:hover {
+      transform: translateX(6px);
+      border-color: #10b981;
+      box-shadow: var(--shadow-md);
+    }
+
+    .rank-number-pill {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-pill);
+      background: #f1f5f9;
+      color: #334155;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .ranking-score-pill {
+      background: #d1fae5;
+      color: #065f46;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid #a7f3d0;
+      white-space: nowrap;
+    }
+
+    /* Search Box */
+    .search-filter-input {
+      border-radius: var(--radius-pill);
+      padding: 12px 20px;
+      border: 1px solid #cbd5e1;
+      box-shadow: var(--shadow-sm);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVBAR
+       ========================================================================== -->
+  <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+    <div class="container">
+      <a class="brand-wrapper" href="index.html">
+        <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
+        <div class="brand-text">
+          <span>Lahan Basah Hijau</span>
+          <span class="brand-badge">🌱 STEM Interaktif</span>
+        </div>
+      </a>
+
+      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="bi bi-list fs-2 text-success"></i>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html"><span>🏠</span> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="kuis.html"><span>🧠</span> Kuis</a></li>
+          <li class="nav-item"><a class="nav-link" href="simulasi.html"><span>🧪</span> Simulasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyek.html"><span>💡</span> Proyek</a></li>
+          <li class="nav-item"><a class="nav-link active" href="leaderboard.html"><span>🏆</span> Papan Peringkat</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== -->
+  <section class="hero-section">
+    <img src="foto/cloud1.webp" class="hero-cloud c1" alt="Awan Cantik" />
+    <img src="foto/cloud2.webp" class="hero-cloud c2" alt="Awan Cantik" />
+    <img src="foto/daun1.webp" class="hero-floating-leaf leaf1" alt="Daun Hijau" />
+    <img src="foto/daun2.webp" class="hero-floating-leaf leaf2" alt="Daun Hijau" />
+
+    <img src="foto/leaderboard.webp" class="hero-mascot-right" alt="Maskot Juara" style="max-height: 250px;" data-aos="fade-left" />
+
+    <div class="container hero-content">
+      <div class="hero-tag" data-aos="fade-down">
+        <span>🏆</span> Hall of Fame Juara Lingkungan
+      </div>
+
+      <h1 class="hero-title" data-aos="zoom-in">
+        Papan Peringkat <br><span class="highlight">Sahabat Lahan Basah</span>
+      </h1>
+
+      <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
+        Inilah para pelajar dan sahabat alam terbaik yang berhasil menaklukkan tantangan Kuis Edukasi STEM Lahan Basah!
+      </p>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3" data-aos="fade-up" data-aos-delay="200">
+        <a href="#leaderboardList" class="btn-eco-primary">
+          <i class="bi bi-award-fill"></i> Lihat Daftar Juara
+        </a>
+        <a href="kuis.html" class="btn-eco-outline">
+          <i class="bi bi-controller"></i> Coba Kuis Sekarang
+        </a>
+      </div>
+    </div>
+
+    <!-- Organic Wave Divider -->
+    <div class="hero-wave-divider">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.31,200,105,242.79,94.92,284.28,74.58,321.39,56.44Z" class="shape-fill"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       LEADERBOARD MAIN CONTAINER
+       ========================================================================== -->
+  <div class="leaderboard-container" id="leaderboardList">
+    <div class="glass-leaderboard-card" data-aos="fade-up">
+
+      <div class="text-center mb-4">
+        <h3 class="display-font text-success mb-1">🏅 Panggung Juara Teratas</h3>
+        <p class="text-muted small">Peringkat diperbarui secara otomatis secara real-time dari Firebase Database.</p>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div id="leaderboardLoading" class="text-center my-5">
+        <div class="spinner-border text-success" role="status">
+          <span class="visually-hidden">Memuat data skor...</span>
+        </div>
+        <p class="text-muted small mt-2">Sedang mengambil data peringkat terbaru...</p>
+      </div>
+
+      <!-- Top 3 Podium -->
+      <div class="podium-wrapper" id="podiumArea" style="display:none;">
+        
+        <!-- Juara 2 (Perak) -->
+        <div class="podium-col rank-2">
+          <div class="podium-avatar">🥈</div>
+          <div class="podium-name" id="p2Name">-</div>
+          <div class="podium-school" id="p2School">-</div>
+          <div class="podium-pedestal">
+            <span class="pedestal-rank-num">2</span>
+            <span class="pedestal-score-badge" id="p2Score">0 Pts</span>
+          </div>
+        </div>
+
+        <!-- Juara 1 (Emas) -->
+        <div class="podium-col rank-1">
+          <div class="podium-avatar">
+            <span class="crown-icon">👑</span>
+            🥇
+          </div>
+          <div class="podium-name" id="p1Name">-</div>
+          <div class="podium-school" id="p1School">-</div>
+          <div class="podium-pedestal">
+            <span class="pedestal-rank-num">1</span>
+            <span class="pedestal-score-badge" id="p1Score">0 Pts</span>
+          </div>
+        </div>
+
+        <!-- Juara 3 (Perunggu) -->
+        <div class="podium-col rank-3">
+          <div class="podium-avatar">🥉</div>
+          <div class="podium-name" id="p3Name">-</div>
+          <div class="podium-school" id="p3School">-</div>
+          <div class="podium-pedestal">
+            <span class="pedestal-rank-num">3</span>
+            <span class="pedestal-score-badge" id="p3Score">0 Pts</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Search & Filter Bar -->
+      <div class="mb-4">
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0 rounded-start-pill ps-4 text-muted">
+            <i class="bi bi-search"></i>
+          </span>
+          <input type="text" class="form-control search-filter-input border-start-0 rounded-end-pill pe-4" id="searchInput" placeholder="Cari nama peserta atau nama sekolah..." oninput="filterLeaderboard()" />
+        </div>
+      </div>
+
+      <!-- Rankings List (Rank 4 to 10+) -->
+      <div id="rankingListContainer">
+        <!-- Diinjeksi otomatis oleh JS -->
+      </div>
+
+      <!-- Call to Action Footer Card -->
+      <div class="p-4 bg-success-subtle rounded-4 border border-success-subtle text-center mt-4">
+        <h5 class="fw-bold text-success mb-2">Ingin Namamu Masuk Papan Juara? 🚀</h5>
+        <p class="text-muted small mb-3">Tunjukkan kemampuanmu dalam Kuis Interaktif Lahan Basah sekarang juga!</p>
+        <a href="kuis.html" class="btn-eco-primary">
+          <i class="bi bi-lightning-charge-fill"></i> Mulai Kerjakan Kuis Sekarang
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FLOATING MUSIC DOCK & TOAST
+       ========================================================================== -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="sound/sound2.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
+    <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
+      <span id="music-icon">🔊</span>
+    </button>
+    <div class="sound-bars">
+      <span class="sound-bar"></span>
+      <span class="sound-bar"></span>
+      <span class="sound-bar"></span>
+    </div>
+    <span class="music-label d-none d-sm-inline">Musik Alam</span>
+  </div>
+
+  <div id="music-toast" class="music-toast-popup">
+    Musik Dinyalakan
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="custom-footer">
+    <div class="footer-top-wave">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+      </svg>
+    </div>
+
+    <div class="container footer-content text-center">
+      <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+        <img src="foto/logo.webp" alt="Logo" width="40" height="40" />
+        <span class="footer-brand">Lahan Basah Hijau</span>
+      </div>
+      <p class="small text-muted mb-3">Aplikasi pembelajaran interaktif berbasis STEM untuk mengenal, menjaga, dan mencintai lahan basah.</p>
+      <div class="footer-bottom">
+        <small>© 2025 Lahan Basah Hijau. Semua hak dilindungi.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="sfx.js"></script>
+
+  <!-- Firebase Compat Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    // Firebase Init
+    const firebaseConfig = {
+      apiKey: "AIzaSyDguvGwMNqADw8vC2877IDvoxmnTvj1txU",
+      authDomain: "inovasi-stem-lahan-basah.firebaseapp.com",
+      databaseURL: "https://inovasi-stem-lahan-basah-default-rtdb.firebaseio.com",
+      projectId: "inovasi-stem-lahan-basah",
+      storageBucket: "inovasi-stem-lahan-basah.appspot.com",
+      messagingSenderId: "853863316290",
+      appId: "1:853863316290:web:721e94519c84e725f1a6db"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    let allLeaderboardData = [];
+
+    function renderLeaderboard() {
+      const loading = document.getElementById("leaderboardLoading");
+      const podiumArea = document.getElementById("podiumArea");
+      const listContainer = document.getElementById("rankingListContainer");
+
+      loading.style.display = "block";
+
+      db.ref("kuis").once("value", snapshot => {
+        loading.style.display = "none";
+        const rawData = snapshot.val();
+
+        if (!rawData) {
+          listContainer.innerHTML = `<div class="text-center py-5 text-muted">
+            <span class="fs-1 d-block mb-2">🌱</span>
+            Belum ada data kuis yang tercatat. Jadilah yang pertama!
+          </div>`;
+          return;
+        }
+
+        const data = [];
+        for (let key in rawData) {
+          const item = rawData[key];
+          if (item && item.nama && item.skor !== undefined) {
+            data.push({
+              nama: item.nama,
+              skor: Number(item.skor),
+              sekolah: item.sekolah || "-",
+              waktu: item.waktu || null
+            });
+          }
+        }
+
+        data.sort((a, b) => b.skor - a.skor);
+        allLeaderboardData = data;
+
+        displayData(allLeaderboardData);
+      }).catch(err => {
+        loading.style.display = "none";
+        listContainer.innerHTML = `<p class="text-danger text-center">Gagal memuat papan peringkat: ${err.message}</p>`;
+      });
+    }
+
+    function displayData(data) {
+      const podiumArea = document.getElementById("podiumArea");
+      const listContainer = document.getElementById("rankingListContainer");
+      listContainer.innerHTML = "";
+
+      if (data.length === 0) {
+        podiumArea.style.display = "none";
+        listContainer.innerHTML = `<p class="text-center text-muted py-4">Tidak ada data yang cocok dengan pencarian.</p>`;
+        return;
+      }
+
+      if (data.length >= 1) {
+        podiumArea.style.display = "flex";
+        
+        // Juara 1
+        document.getElementById("p1Name").textContent = data[0].nama;
+        document.getElementById("p1School").textContent = data[0].sekolah;
+        document.getElementById("p1Score").textContent = `${data[0].skor} / 12`;
+
+        // Juara 2
+        if (data.length >= 2) {
+          document.getElementById("p2Name").textContent = data[1].nama;
+          document.getElementById("p2School").textContent = data[1].sekolah;
+          document.getElementById("p2Score").textContent = `${data[1].skor} / 12`;
+        } else {
+          document.getElementById("p2Name").textContent = "-";
+          document.getElementById("p2School").textContent = "-";
+          document.getElementById("p2Score").textContent = "-";
+        }
+
+        // Juara 3
+        if (data.length >= 3) {
+          document.getElementById("p3Name").textContent = data[2].nama;
+          document.getElementById("p3School").textContent = data[2].sekolah;
+          document.getElementById("p3Score").textContent = `${data[2].skor} / 12`;
+        } else {
+          document.getElementById("p3Name").textContent = "-";
+          document.getElementById("p3School").textContent = "-";
+          document.getElementById("p3Score").textContent = "-";
+        }
+      }
+
+      const restData = data.slice(3, 25);
+      if (restData.length > 0) {
+        restData.forEach((item, index) => {
+          const rank = index + 4;
+          const card = document.createElement("div");
+          card.className = "ranking-item-card";
+
+          card.innerHTML = `
+            <div class="rank-number-pill">#${rank}</div>
+            <div class="flex-grow-1">
+              <div class="fw-bold text-dark fs-6">${escapeHtml(item.nama)}</div>
+              <small class="text-muted"><i class="bi bi-building"></i> ${escapeHtml(item.sekolah)}</small>
+            </div>
+            <div class="ranking-score-pill">
+              ⭐ ${item.skor} / 12
+            </div>
+          `;
+
+          listContainer.appendChild(card);
+        });
+      }
+    }
+
+    function filterLeaderboard() {
+      const query = document.getElementById("searchInput").value.toLowerCase().trim();
+      if (!query) {
+        displayData(allLeaderboardData);
+        return;
+      }
+
+      const filtered = allLeaderboardData.filter(item => 
+        item.nama.toLowerCase().includes(query) ||
+        item.sekolah.toLowerCase().includes(query)
+      );
+
+      displayData(filtered);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    // Music
+    const music = document.getElementById('bg-music');
+    const toggleBtn = document.getElementById('music-toggle');
+    const icon = document.getElementById('music-icon');
+    const toast = document.getElementById('music-toast');
+    const musicDock = document.getElementById('music-dock');
+
+    function updateIcon() {
+      if (music.paused) {
+        icon.textContent = '🔇';
+        musicDock.classList.remove('playing');
+      } else {
+        icon.textContent = '🔊';
+        musicDock.classList.add('playing');
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.opacity = '1'; }, 10);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => (toast.style.display = 'none'), 400);
+      }, 2000);
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (music.paused) {
+        music.play().then(() => {
+          updateIcon();
+          showToast('Musik Dinyalakan 🎵');
+        }).catch(() => {});
+      } else {
+        music.pause();
+        updateIcon();
+        showToast('Musik Dimatikan 🔇');
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderLeaderboard();
+      const tryPlay = () => {
+        if (music.paused) {
+          music.play().then(updateIcon).catch(() => {});
+        } else {
+          updateIcon();
+        }
+        document.body.removeEventListener('click', tryPlay);
+      };
+      document.body.addEventListener('click', tryPlay);
+    });
+  </script>
+</body>
+</html>

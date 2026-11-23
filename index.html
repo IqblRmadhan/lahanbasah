@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lahan Basah Hijau - Pembelajaran STEM Interaktif Berbasis Lingkungan</title>
+  
+  <!-- CSS Framework & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  
+  <!-- Custom Professional Design System -->
+  <link rel="stylesheet" href="custom.css" />
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVBAR (Glassmorphic & Sticky)
+       ========================================================================== -->
+  <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+    <div class="container">
+      <a class="brand-wrapper" href="index.html">
+        <img src="foto/logo.webp" alt="Logo Lahan Basah Hijau" class="brand-logo-img" />
+        <div class="brand-text">
+          <span>Lahan Basah Hijau</span>
+          <span class="brand-badge">🌱 STEM Interaktif</span>
+        </div>
+      </a>
+
+      <!-- Mobile Toggler -->
+      <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="bi bi-list fs-2 text-success"></i>
+      </button>
+
+      <!-- Navigation Links -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav custom-nav-pills mt-3 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">
+              <span>🏠</span> Beranda
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="kuis.html">
+              <span>🧠</span> Kuis
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="simulasi.html">
+              <span>🧪</span> Simulasi
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="proyek.html">
+              <span>💡</span> Proyek
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="leaderboard.html">
+              <span>🏆</span> Papan Peringkat
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== -->
+  <section class="hero-section">
+    <!-- Floating Background Decor Elements -->
+    <img src="foto/cloud1.webp" class="hero-cloud c1" alt="Awan Cantik" />
+    <img src="foto/cloud2.webp" class="hero-cloud c2" alt="Awan Cantik" />
+    <img src="foto/daun1.webp" class="hero-floating-leaf leaf1" alt="Daun Hijau" />
+    <img src="foto/daun2.webp" class="hero-floating-leaf leaf2" alt="Daun Hijau" />
+
+    <!-- Left & Right Mascots -->
+    <img src="foto/puzzle.webp" class="hero-mascot-left" alt="Maskot STEM" data-aos="fade-right" data-aos-duration="1000" />
+    <img src="foto/children.webp" class="hero-mascot-right" alt="Anak Belajar Alam" data-aos="fade-left" data-aos-duration="1000" />
+
+    <div class="container hero-content">
+      <div class="hero-tag" data-aos="fade-down">
+        <span>✨</span> Platform Edukasi Lingkungan STEM Masa Depan
+      </div>
+
+      <h1 class="hero-title" data-aos="zoom-in" data-aos-duration="800">
+        Eksplorasi Keajaiban <br><span class="highlight">Lahan Basah Hijau</span>
+      </h1>
+
+      <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
+        Kenali ekosistem rawa, gambut, dan hutan mangrove melalui petualangan edukatif STEM. Pelajari bagaimana sains dan teknologi mampu menjaga kelestarian air dan bumi kita bersama!
+      </p>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+        <a href="#modul" class="btn-eco-primary">
+          <i class="bi bi-book-half"></i> Mulai Belajar Modul
+        </a>
+        <a href="simulasi.html" class="btn-eco-outline">
+          <i class="bi bi-flask"></i> Uji Laboratorium Simulasi
+        </a>
+      </div>
+
+      <!-- Feature Shortcut Cards (Bento Menu) -->
+      <div class="feature-card-grid" data-aos="fade-up" data-aos-delay="300">
+        <a href="#modul" class="feature-nav-card theme-modul">
+          <div class="card-icon-circle">
+            <img src="foto/modul.webp" alt="Modul Belajar" />
+          </div>
+          <div class="feature-card-title">Modul Belajar</div>
+          <div class="feature-card-desc">Pelajari pengertian, ekosistem & fakta ilmiah</div>
+          <span class="feature-pill-badge text-warning">8 Topik Lengkap ➔</span>
+        </a>
+
+        <a href="kuis.html" class="feature-nav-card theme-kuis">
+          <div class="card-icon-circle">
+            <img src="foto/kuis.webp" alt="Kuis Cerdas" />
+          </div>
+          <div class="feature-card-title">Kuis Interaktif</div>
+          <div class="feature-card-desc">Uji wawasanmu dari level mudah sampai sulit</div>
+          <span class="feature-pill-badge text-primary">12 Soal Seru ➔</span>
+        </a>
+
+        <a href="simulasi.html" class="feature-nav-card theme-simulasi">
+          <div class="card-icon-circle">
+            <img src="foto/simulasi.webp" alt="Simulasi Ekosistem" />
+          </div>
+          <div class="feature-card-title">Simulasi Alam</div>
+          <div class="feature-card-desc">Bantu Kodokko & Bango memulihkan lingkungan</div>
+          <span class="feature-pill-badge text-success">Laboratorium Digital ➔</span>
+        </a>
+
+        <a href="proyek.html" class="feature-nav-card theme-proyek">
+          <div class="card-icon-circle">
+            <img src="foto/proyek.webp" alt="Proyek Kreatif" />
+          </div>
+          <div class="feature-card-title">Galeri Proyek</div>
+          <div class="feature-card-desc">Upload dan bagikan ide kreasi pelestarian</div>
+          <span class="feature-pill-badge text-danger">Karya Komunitas ➔</span>
+        </a>
+
+        <a href="leaderboard.html" class="feature-nav-card theme-leaderboard">
+          <div class="card-icon-circle">
+            <img src="foto/leaderboard.webp" alt="Papan Peringkat" />
+          </div>
+          <div class="feature-card-title">Papan Peringkat</div>
+          <div class="feature-card-desc">Lihat para juara dengan skor kuis tertinggi</div>
+          <span class="feature-pill-badge" style="color: #8b5cf6;">Top 10 Terbaik ➔</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Organic Wave Divider -->
+    <div class="hero-wave-divider">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.31,200,105,242.79,94.92,284.28,74.58,321.39,56.44Z" class="shape-fill"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FAST FACTS STRIP ("Tahukah Kamu? 🌿")
+       ========================================================================== -->
+  <section class="eco-stats-strip">
+    <div class="row g-3">
+      <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="stat-glass-card">
+          <div class="stat-icon green">
+            <i class="bi bi-droplet-half"></i>
+          </div>
+          <div>
+            <div class="stat-number count-up" data-target="100">100%</div>
+            <div class="stat-label">Spons Alami penyerap banjir & air bersih</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="stat-glass-card">
+          <div class="stat-icon blue">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <div>
+            <div class="stat-number count-up" data-target="90">90%</div>
+            <div class="stat-label">Sedimen racun disaring akar vegetasi rawa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="stat-glass-card">
+          <div class="stat-icon amber">
+            <i class="bi bi-cloud-haze2"></i>
+          </div>
+          <div>
+            <div class="stat-number">3x Lipat</div>
+            <div class="stat-label">Gambut simpan karbon lebih dari hutan biasa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+        <div class="stat-glass-card">
+          <div class="stat-icon purple">
+            <i class="bi bi-heart-pulse"></i>
+          </div>
+          <div>
+            <div class="stat-number count-up" data-target="40">40%</div>
+            <div class="stat-label">Spesies bumi berkembang di lahan basah</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       STEM PILLARS SHOWCASE (Science, Technology, Engineering, Mathematics)
+       ========================================================================== -->
+  <section class="container my-5 py-3">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fs-7 mb-2">
+        🔬 Pendekatan Pembelajaran Berkelanjutan
+      </span>
+      <h2 class="display-font" style="font-size: 2.3rem;">
+        Integrasi 4 Pilar STEM di Lahan Basah
+      </h2>
+      <p class="text-muted mx-auto" style="max-width: 680px;">
+        Mengapa belajar lahan basah begitu penting? Karena memadukan sains biologi, rekayasa lingkungan, teknologi pemantau, dan perhitungan matematis.
+      </p>
+    </div>
+
+    <div class="row g-4" data-aos="fade-up" data-aos-delay="150">
+      <!-- Science -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="stem-pillar-card">
+          <div class="stem-badge-icon s">🔬</div>
+          <h5 class="fw-bold text-success mb-2">Science (Sains)</h5>
+          <p class="small text-muted mb-0">
+            Mempelajari siklus biologi rawa, fotosintesis teratai, struktur tanah gambut anaerobik, dan adaptasi perakaran bakau.
+          </p>
+        </div>
+      </div>
+
+      <!-- Technology -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="stem-pillar-card">
+          <div class="stem-badge-icon t">💻</div>
+          <h5 class="fw-bold text-primary mb-2">Technology (Teknologi)</h5>
+          <p class="small text-muted mb-0">
+            Pemanfaatan sensor kualitas air digital (pH, TDS, kekeruhan) serta citra satelit pemantau deforestasi dan kelembapan tanah.
+          </p>
+        </div>
+      </div>
+
+      <!-- Engineering -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="stem-pillar-card">
+          <div class="stem-badge-icon e">⚙️</div>
+          <h5 class="fw-bold text-warning mb-2">Engineering (Teknik)</h5>
+          <p class="small text-muted mb-0">
+            Merancang konstruksi sekat kanal pembasahan gambut (<em>canal blocking</em>) dan instalasi pengolahan air limbah alami (IPAL).
+          </p>
+        </div>
+      </div>
+
+      <!-- Mathematics -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="stem-pillar-card">
+          <div class="stem-badge-icon m">📐</div>
+          <h5 class="fw-bold text-purple mb-2" style="color: #7c3aed;">Mathematics (Matematika)</h5>
+          <p class="small text-muted mb-0">
+            Menghitung debit penyerapan air hujan per meter persegi, rasio biomassa karbon terikat, dan statistik laju kepunahan spesies.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MODUL PEMBELAJARAN INTERAKTIF
+       ========================================================================== -->
+  <section class="py-5" id="modul">
+    <div class="container">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-5" data-aos="fade-up">
+        <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fs-6 mb-2">
+          📖 Pusat Pengetahuan STEM
+        </span>
+        <h2 class="display-font fw-bold" style="color: #064e3b; font-size: 2.5rem;">
+          Modul Pembelajaran Interaktif
+        </h2>
+        <p class="text-muted mx-auto" style="max-width: 650px;">
+          Pilih salah satu topik di bawah untuk menjelajahi konsep ilmiah ekosistem lahan basah. Kamu juga bisa mendengarkan narator suara otomatis!
+        </p>
+
+        <!-- Search Bar Modul -->
+        <div class="col-md-6 mx-auto mt-4">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0 rounded-start-pill ps-4 text-muted">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control rounded-end-pill pe-4 border-start-0 py-2" id="modulSearchInput" placeholder="Cari materi: misal 'gambut', 'mangrove', 'rantai makanan'..." oninput="filterModulTopics()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="text-center mb-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="modul-tabs-wrapper" id="modulTabs" role="tablist">
+          <button class="modul-tab-btn active" data-bs-toggle="tab" data-bs-target="#pengertian" type="button" role="tab">
+            🌱 Pengertian
+          </button>
+          <button class="modul-tab-btn" data-bs-toggle="tab" data-bs-target="#jenis" type="button" role="tab">
+            🌊 Jenis-Jenis
+          </button>
+          <button class="modul-tab-btn" data-bs-toggle="tab" data-bs-target="#manfaat" type="button" role="tab">
+            💎 Manfaat
+          </button>
+          <button class="modul-tab-btn" data-bs-toggle="tab" data-bs-target="#ekosistem" type="button" role="tab">
+            🕸️ Rantai Makanan
+          </button>
+          <button class="modul-tab-btn" data-bs-toggle="tab" data-bs-target="#kualitasAir" type="button" role="tab">
+            💧 Kualitas Air
+          </button>
+          <button class="modul-tab-btn" data-bs-toggle="tab" data-bs-target="#limbah" type="button" role="tab">
+            ♻️ Kelola Limbah
+          </button>
+          <button class="modul-tab-btn" data-bs-toggle="tab" data-bs-target="#ancaman" type="button" role="tab">
+            ⚠️ Ancaman
+          </button>
+          <button class="modul-tab-btn" data-bs-toggle="tab" data-bs-target="#upaya" type="button" role="tab">
+            🛡️ Cara Menjaga
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="tab-content content-card-box" id="modulTabsContent" data-aos="fade-up" data-aos-delay="200">
+        
+        <!-- Tab 1: Pengertian -->
+        <div class="tab-pane fade show active" id="pengertian" role="tabpanel">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-3">🌱</span>
+              <h3 class="display-font text-success mb-0">Apa Itu Lahan Basah?</h3>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+              <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="speakCurrentTab('pengertian')">
+                <i class="bi bi-volume-up-fill"></i> Putar Narator Suara
+              </button>
+              <button class="btn btn-sm btn-light border rounded-pill px-3" onclick="SoundEffects.stopSpeaking()">
+                <i class="bi bi-stop-fill"></i> Berhenti
+              </button>
+            </div>
+          </div>
+
+          <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+              <p class="text-secondary lead fs-6" style="text-align: justify;">
+                <strong>Lahan basah (wetland)</strong> adalah wilayah daratan yang jenuh atau tergenang oleh air, baik secara musiman maupun permanen. Airnya bisa berasal dari curah hujan, luapan sungai, danau, ataupun pasang surut air laut.
+              </p>
+              
+              <div class="row g-3 my-2">
+                <div class="col-sm-4">
+                  <div class="p-3 rounded-4 bg-light text-center border">
+                    <span class="fs-2 d-block mb-1">💧</span>
+                    <strong class="text-primary d-block">Air Tawar</strong>
+                    <small class="text-muted">Sungai, rawa darat & danau</small>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="p-3 rounded-4 bg-light text-center border">
+                    <span class="fs-2 d-block mb-1">🌿</span>
+                    <strong class="d-block" style="color: #0d9488;">Air Payau</strong>
+                    <small class="text-muted">Muara sungai & delta pesisir</small>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="p-3 rounded-4 bg-light text-center border">
+                    <span class="fs-2 d-block mb-1">🌊</span>
+                    <strong class="text-info d-block">Air Asin</strong>
+                    <small class="text-muted">Hutan mangrove & pesisir</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 p-3 bg-success-subtle rounded-4 border border-success-subtle">
+                <h6 class="fw-bold text-success mb-2"><i class="bi bi-lightbulb-fill"></i> Karakteristik Utama Lahan Basah:</h6>
+                <ul class="mb-0 ps-3 small text-secondary">
+                  <li>Genangan air dangkal yang menutupi permukaan tanah sepanjang atau sebagian tahun.</li>
+                  <li>Kaya vegetasi hidrofit (tumbuhan yang beradaptasi dengan tanah tergenang).</li>
+                  <li>Lapisan tanah hidrik yang lembek, berlumpur, atau kaya serat organik gambut.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-lg-5 text-center">
+              <div class="position-relative p-2 bg-white rounded-4 shadow-sm border">
+                <img src="foto/rawa.jpg" alt="Ekosistem Rawa" class="img-fluid rounded-4 w-100" style="max-height: 290px; object-fit: cover;" />
+                <div class="p-2 small text-muted fst-italic">Foto: Panorama vegetasi rawa air tawar alami</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Jenis-Jenis -->
+        <div class="tab-pane fade" id="jenis" role="tabpanel">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-3">🌊</span>
+              <h3 class="display-font text-success mb-0">Jenis-Jenis Lahan Basah Utama</h3>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+              <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="speakCurrentTab('jenis')">
+                <i class="bi bi-volume-up-fill"></i> Putar Narator Suara
+              </button>
+            </div>
+          </div>
+
+          <p class="text-muted mb-4">
+            Geser kartu di bawah ini untuk melihat keunikan dari masing-masing tipe lahan basah yang ada di sekitar kita:
+          </p>
+
+          <!-- Swiper Carousel -->
+          <div class="swiper mySwiper pb-4">
+            <div class="swiper-wrapper">
+              
+              <!-- Slide 1: Rawa -->
+              <div class="swiper-slide">
+                <div class="wetland-swiper-card">
+                  <img src="foto/rawa.jpg" alt="Rawa" />
+                  <div class="wetland-swiper-caption">
+                    <span class="badge bg-success mb-2">Tawar & Payau</span>
+                    <h5 class="mb-1">Rawa (Swamp & Marsh)</h5>
+                    <p class="small text-muted mb-0">Tanah luas berair yang ditumbuhi rerumputan air, purun, eceng gondok, dan pohon galam.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 2: Gambut -->
+              <div class="swiper-slide">
+                <div class="wetland-swiper-card">
+                  <img src="foto/gambut.jpg" alt="Gambut" />
+                  <div class="wetland-swiper-caption">
+                    <span class="badge bg-warning text-dark mb-2">Kaya Karbon</span>
+                    <h5 class="mb-1">Lahan Gambut (Peatland)</h5>
+                    <p class="small text-muted mb-0">Terbentuk dari tumpukan sisa daun & kayu selama ribuan tahun. Sangat lembap dan menyimpan cadangan air raksasa.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 3: Mangrove -->
+              <div class="swiper-slide">
+                <div class="wetland-swiper-card">
+                  <img src="foto/mangrove.jpg" alt="Mangrove" />
+                  <div class="wetland-swiper-caption">
+                    <span class="badge bg-info text-dark mb-2">Pesisir Pantai</span>
+                    <h5 class="mb-1">Hutan Mangrove (Bakau)</h5>
+                    <p class="small text-muted mb-0">Benteng alami pantai pemecah ombak dengan akar tunjang khas. Habitat kepiting, udang, dan burung pesisir.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 4: Sungai & Danau Dangkal -->
+              <div class="swiper-slide">
+                <div class="wetland-swiper-card">
+                  <img src="foto/sungai.jpg" alt="Sungai" />
+                  <div class="wetland-swiper-caption">
+                    <span class="badge bg-primary mb-2">Air Mengalir</span>
+                    <h5 class="mb-1">Sungai & Danau Dangkal</h5>
+                    <p class="small text-muted mb-0">Aliran air tawar yang tenang tempat hidup ikan air tawar, teratai, bekantan, dan jalur transportasi perahu.</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Controls -->
+            <div class="swiper-button-next text-success"></div>
+            <div class="swiper-button-prev text-success"></div>
+            <div class="swiper-pagination mt-3"></div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Manfaat -->
+        <div class="tab-pane fade" id="manfaat" role="tabpanel">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-3">💎</span>
+              <h3 class="display-font text-success mb-0">Manfaat Ekosistem Bagi Bumi & Kita</h3>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+              <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="speakCurrentTab('manfaat')">
+                <i class="bi bi-volume-up-fill"></i> Putar Narator Suara
+              </button>
+            </div>
+          </div>
+
+          <p class="text-secondary mb-4">
+            Lahan basah sering disebut sebagai <span class="term-glossary" title="Organ penting penyaring limbah">ginjal bumi</span> karena perannya yang krusial dalam menyaring racun dan mengatur siklus hidrologi.
+          </p>
+
+          <div class="row g-4">
+            <!-- Lingkungan -->
+            <div class="col-md-6">
+              <div class="p-4 rounded-4 bg-success-subtle h-100 border border-success-subtle">
+                <h5 class="display-font text-success d-flex align-items-center gap-2 mb-3">
+                  <span>🌿</span> Manfaat Untuk Lingkungan
+                </h5>
+                <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                  <li class="d-flex gap-2">
+                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                    <span><strong>Pencegah Banjir:</strong> Menyerap volume air hujan seperti spons raksasa saat debit tinggi.</span>
+                  </li>
+                  <li class="d-flex gap-2">
+                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                    <span><strong>Penyimpan Cadangan Air:</strong> Melepaskan air perlahan saat musim kemarau melanda.</span>
+                  </li>
+                  <li class="d-flex gap-2">
+                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                    <span><strong>Habitat Satwa Endemik:</strong> Rumah bagi bekantan, burung bangau, katak, reptil rawa, dan ikan air tawar.</span>
+                  </li>
+                  <li class="d-flex gap-2">
+                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                    <span><strong>Mitigasi Iklim:</strong> Menyerap dan mengikat karbon dioksida di dalam lapisan gambut.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Manusia -->
+            <div class="col-md-6">
+              <div class="p-4 rounded-4 bg-info-subtle h-100 border border-info-subtle">
+                <h5 class="display-font text-primary d-flex align-items-center gap-2 mb-3">
+                  <span>👨‍🌾</span> Manfaat Untuk Kehidupan Manusia
+                </h5>
+                <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                  <li class="d-flex gap-2">
+                    <i class="bi bi-check-circle-fill text-primary mt-1"></i>
+                    <span><strong>Sumber Pangan:</strong> Perikanan air tawar (ikan gabus, lele, udang) dan pertanian sawah pasang surut.</span>
+                  </li>
+                  <li class="d-flex gap-2">
+                    <i class="bi bi-check-circle-fill text-primary mt-1"></i>
+                    <span><strong>Bahan Kerajinan:</strong> Tanaman purun diolah menjadi tikar, tas anyaman, dan produk bernilai ekonomi.</span>
+                  </li>
+                  <li class="d-flex gap-2">
+                    <i class="bi bi-check-circle-fill text-primary mt-1"></i>
+                    <span><strong>Transportasi Tradisional:</strong> Jalur perahu kelotok yang menghubungkan desa-desa pinggir sungai.</span>
+                  </li>
+                  <li class="d-flex gap-2">
+                    <i class="bi bi-check-circle-fill text-primary mt-1"></i>
+                    <span><strong>Ekowisata & Riset STEM:</strong> Laboratorium alam terbuka untuk belajar biologi, kimia, dan teknik lingkungan.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Rantai Makanan -->
+        <div class="tab-pane fade" id="ekosistem" role="tabpanel">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-3">🕸️</span>
+              <h3 class="display-font text-success mb-0">Rantai Makanan di Lahan Basah</h3>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+              <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="speakCurrentTab('ekosistem')">
+                <i class="bi bi-volume-up-fill"></i> Putar Narator Suara
+              </button>
+            </div>
+          </div>
+
+          <p class="text-secondary mb-4">
+            Ekosistem lahan basah memiliki rantai energi yang dinamis. Jika satu mata rantai terputus (misalnya karena racun limbah), seluruh keseimbangan alam akan terganggu!
+          </p>
+
+          <!-- Diagram Rantai Makanan -->
+          <div class="p-4 bg-light rounded-4 border mb-4">
+            <h6 class="text-center fw-bold text-muted mb-3">CONTOH ALIRAN ENERGI DI RAWA</h6>
+            <div class="food-chain-container">
+              <div class="food-chain-node">
+                <span class="fs-2">🌾</span>
+                <div class="fw-bold text-success">Produsen</div>
+                <small class="text-muted">Rumput Rawa / Teratai</small>
+              </div>
+
+              <div class="food-chain-arrow">➔</div>
+
+              <div class="food-chain-node">
+                <span class="fs-2">🐚</span>
+                <div class="fw-bold text-info">Konsumen I</div>
+                <small class="text-muted">Keong & Ikan Kecil</small>
+              </div>
+
+              <div class="food-chain-arrow">➔</div>
+
+              <div class="food-chain-node">
+                <span class="fs-2">🐦</span>
+                <div class="fw-bold text-warning">Konsumen II</div>
+                <small class="text-muted">Burung Bangau (Bango)</small>
+              </div>
+
+              <div class="food-chain-arrow">➔</div>
+
+              <div class="food-chain-node">
+                <span class="fs-2">🦅</span>
+                <div class="fw-bold text-danger">Predator Puncak</div>
+                <small class="text-muted">Elang Rawa / Ular Air</small>
+              </div>
+
+              <div class="food-chain-arrow">➔</div>
+
+              <div class="food-chain-node">
+                <span class="fs-2">🍄</span>
+                <div class="fw-bold text-secondary">Pengurai</div>
+                <small class="text-muted">Bakteri & Cacing Air</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-success d-flex align-items-center gap-3 rounded-4 mb-0">
+            <i class="bi bi-info-circle-fill fs-3 text-success"></i>
+            <div>
+              <strong>Pesan Kunci STEM:</strong> Pengurai mengembalikan mineral tanah dari organisme mati, yang kemudian diserap kembali oleh tanaman rawa. Siklus ini berjalan lestari tanpa limbah kimia berbahaya.
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Kualitas Air -->
+        <div class="tab-pane fade" id="kualitasAir" role="tabpanel">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-3">💧</span>
+              <h3 class="display-font text-success mb-0">Bagaimana Lahan Basah Menyaring Air?</h3>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+              <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="speakCurrentTab('kualitasAir')">
+                <i class="bi bi-volume-up-fill"></i> Putar Narator Suara
+              </button>
+            </div>
+          </div>
+
+          <p class="text-secondary mb-4">
+            Secara alami, lahan basah bertindak seperti instalasi pengolahan air alami (biofilter). Melalui mekanisme fisik, kimia, dan biologi, air kotor dapat dijernihkan:
+          </p>
+
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="p-3 bg-light rounded-4 h-100 border text-center">
+                <div class="fs-1 text-success mb-2">🌿</div>
+                <h5 class="fw-bold">1. Akar Tanaman</h5>
+                <p class="small text-muted mb-0">Menahan laju aliran air sehingga partikel kotoran mengendap, sekaligus menyerap zat hara nitrat dan fosfat.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="p-3 bg-light rounded-4 h-100 border text-center">
+                <div class="fs-1 text-primary mb-2">🪨</div>
+                <h5 class="fw-bold">2. Lapisan Gambut & Lumpur</h5>
+                <p class="small text-muted mb-0">Bekerja mirip karbon aktif, menjebak logam berat dan partikel tersuspensi agar air di hilir tetap bersih.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="p-3 bg-light rounded-4 h-100 border text-center">
+                <div class="fs-1 text-warning mb-2">🦠</div>
+                <h5 class="fw-bold">3. Mikroorganisme Biofilm</h5>
+                <p class="small text-muted mb-0">Bakteri ramah di sekitar akar merombak zat organik berlebih menjadi senyawa tidak berbahaya.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 6: Pengelolaan Limbah -->
+        <div class="tab-pane fade" id="limbah" role="tabpanel">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-3">♻️</span>
+              <h3 class="display-font text-success mb-0">Pengelolaan Limbah Ramah Lingkungan</h3>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+              <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="speakCurrentTab('limbah')">
+                <i class="bi bi-volume-up-fill"></i> Putar Narator Suara
+              </button>
+            </div>
+          </div>
+
+          <p class="text-secondary mb-3">
+            Meskipun lahan basah memiliki daya dukung penyaringan, sampah plastik dan deterjen dalam jumlah besar dapat meracuni seluruh ekosistem air.
+          </p>
+
+          <div class="row g-4 mt-1">
+            <div class="col-md-6">
+              <div class="p-4 bg-danger-subtle rounded-4 h-100 border border-danger-subtle">
+                <h6 class="fw-bold text-danger mb-2">⚠️ Jika Terlalu Banyak Limbah Masuk:</h6>
+                <ul class="small text-secondary mb-0 ps-3">
+                  <li>Kadar oksigen terlarut (DO) anjlok sehingga ikan dan udang mati lemas.</li>
+                  <li>Muncul fenomena <em>eutrofikasi</em> (ledakan eceng gondok tak terkontrol yang menutupi sinar matahari).</li>
+                  <li>Air berbau busuk dan tidak layak lagi dikonsumsi oleh warga sekitar.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="p-4 bg-success-subtle rounded-4 h-100 border border-success-subtle">
+                <h6 class="fw-bold text-success mb-2">✅ Solusi Cerdas yang Bisa Kita Lakukan:</h6>
+                <ul class="small text-secondary mb-0 ps-3">
+                  <li>Terapkan prinsip 3R (Reduce, Reuse, Recycle) di rumah dan sekolah.</li>
+                  <li>Jangan buang minyak jelantah atau bahan kimia sabun ke selokan yang mengalir ke sungai.</li>
+                  <li>Gunakan deterjen ramah lingkungan yang mudah terurai (biodegradable).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 7: Ancaman -->
+        <div class="tab-pane fade" id="ancaman" role="tabpanel">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-3">⚠️</span>
+              <h3 class="display-font text-danger mb-0">Ancaman Nyata Terhadap Lahan Basah</h3>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+              <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="speakCurrentTab('ancaman')">
+                <i class="bi bi-volume-up-fill"></i> Putar Narator Suara
+              </button>
+            </div>
+          </div>
+
+          <p class="text-secondary mb-4">
+            Banyak kawasan lahan basah yang kini mengalami degradasi fungsi akibat tekanan aktivitas manusia yang tidak bertanggung jawab:
+          </p>
+
+          <div class="row g-3">
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 bg-light rounded-4 border text-center h-100">
+                <span class="fs-1 d-block mb-2">🏗️</span>
+                <strong class="d-block mb-1">Alih Fungsi Lahan</strong>
+                <small class="text-muted">Pengeringan rawa untuk pemukiman atau perkebunan monokultur.</small>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 bg-light rounded-4 border text-center h-100">
+                <span class="fs-1 d-block mb-2">🔥</span>
+                <strong class="d-block mb-1">Kebakaran Gambut</strong>
+                <small class="text-muted">Kanal drainase membuat gambut kering dan sangat mudah terbakar di musim kemarau.</small>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 bg-light rounded-4 border text-center h-100">
+                <span class="fs-1 d-block mb-2">🪓</span>
+                <strong class="d-block mb-1">Penebangan Liar</strong>
+                <small class="text-muted">Penebangan pohon galam dan bakau yang merusak pelindung garis pantai.</small>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="p-3 bg-light rounded-4 border text-center h-100">
+                <span class="fs-1 d-block mb-2">🚯</span>
+                <strong class="d-block mb-1">Sampah Plastik</strong>
+                <small class="text-muted">Mikroplastik mencemari rantai makanan dan mengendap di dasar lumpur.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 8: Cara Menjaga -->
+        <div class="tab-pane fade" id="upaya" role="tabpanel">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-3">🛡️</span>
+              <h3 class="display-font text-success mb-0">Aksi Nyata Kita: Ayo Jaga Bersama!</h3>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+              <button class="btn btn-sm btn-outline-success rounded-pill px-3" onclick="speakCurrentTab('upaya')">
+                <i class="bi bi-volume-up-fill"></i> Putar Narator Suara
+              </button>
+            </div>
+          </div>
+
+          <p class="text-secondary mb-4">
+            Siapa pun kamu—pelajar, guru, orang tua, atau peneliti—kita semua punya peran penting untuk menyelamatkan lahan basah:
+          </p>
+
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="p-4 bg-light rounded-4 border h-100">
+                <h5 class="fw-bold text-success mb-3"><i class="bi bi-person-check-fill"></i> Langkah Praktis Pelajar:</h5>
+                <ol class="mb-0 ps-3 text-secondary d-flex flex-column gap-2">
+                  <li><strong>Aksi Tolak Buang Sampah di Air:</strong> Pastikan sampah selalu dibuang pada tempatnya.</li>
+                  <li><strong>Belajar & Ceritakan:</strong> Bagikan ilmu tentang lahan basah ke teman sekelas atau media sosial.</li>
+                  <li><strong>Ikut Komunitas:</strong> Bergabung dalam kegiatan penanaman bibit bakau atau susur sungai.</li>
+                  <li><strong>Buat Proyek Kreatif:</strong> Rancang kerajinan daur ulang atau miniatur filter air di menu <a href="proyek.html" class="fw-bold text-success">Proyek</a>!</li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="p-4 bg-success text-white rounded-4 shadow h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <h5 class="fw-bold mb-2">🚀 Siap Menguji Pemahamanmu?</h5>
+                  <p class="mb-3 opacity-90">
+                    Setelah membaca modul di atas, saatnya tantang dirimu dalam Kuis 3 Tingkat atau coba langsung laboratorium simulasi kami!
+                  </p>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                  <a href="kuis.html" class="btn btn-light fw-bold rounded-pill px-4 text-success">
+                    Kerjakan Kuis Sekarang ➔
+                  </a>
+                  <a href="simulasi.html" class="btn btn-outline-light fw-bold rounded-pill px-4">
+                    Buka Simulasi
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FLOATING MUSIC DOCK & TOAST
+       ========================================================================== -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="sound/sound2.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="music-dock" id="music-dock" title="Putar / Hentikan Musik Alam">
+    <button id="music-toggle" class="music-btn" aria-label="Toggle Musik">
+      <span id="music-icon">🔊</span>
+    </button>
+    <div class="sound-bars">
+      <span class="sound-bar"></span>
+      <span class="sound-bar"></span>
+      <span class="sound-bar"></span>
+    </div>
+    <span class="music-label d-none d-sm-inline">Musik Alam</span>
+  </div>
+
+  <div id="music-toast" class="music-toast-popup">
+    Musik Dinyalakan
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="custom-footer">
+    <div class="footer-top-wave">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+      </svg>
+    </div>
+
+    <div class="container footer-content">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-5 text-center text-lg-start">
+          <div class="d-flex align-items-center justify-content-center justify-content-lg-start gap-2 mb-2">
+            <img src="foto/logo.webp" alt="Logo" width="45" height="45" />
+            <span class="footer-brand">Lahan Basah Hijau</span>
+          </div>
+          <p class="footer-desc mb-0">
+            Aplikasi inovasi pembelajaran interaktif berbasis <strong>STEM</strong> (Science, Technology, Engineering, Mathematics) untuk mencintai dan melestarikan ekosistem lahan basah Indonesia.
+          </p>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="row g-3 text-center text-lg-start">
+            <div class="col-6 col-sm-4">
+              <h6 class="fw-bold text-success mb-2">Eksplorasi</h6>
+              <ul class="list-unstyled mb-0">
+                <li><a href="index.html" class="footer-link">Beranda</a></li>
+                <li><a href="#modul" class="footer-link">Modul Belajar</a></li>
+                <li><a href="simulasi.html" class="footer-link">Simulasi Alam</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-sm-4">
+              <h6 class="fw-bold text-success mb-2">Aktivitas</h6>
+              <ul class="list-unstyled mb-0">
+                <li><a href="kuis.html" class="footer-link">Kuis Interaktif</a></li>
+                <li><a href="proyek.html" class="footer-link">Galeri Proyek</a></li>
+                <li><a href="leaderboard.html" class="footer-link">Papan Skor</a></li>
+              </ul>
+            </div>
+            <div class="col-12 col-sm-4 text-center text-sm-start mt-3 mt-sm-0">
+              <span class="badge bg-success px-3 py-2 rounded-pill fs-7 d-inline-block mb-2">
+                🌍 Sahabat Lahan Basah
+              </span>
+              <p class="small text-muted mb-0">Mari jaga bumi kita mulai dari langkah kecil hari ini.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom text-center mt-4">
+        <small>© 2025 Lahan Basah Hijau. Dibuat dengan 💚 untuk Edukasi Lahan Basah Indonesia.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="sfx.js"></script>
+
+  <script>
+    AOS.init({ duration: 800, once: true, easing: 'ease-out-cubic' });
+
+    // Swiper Carousel
+    const swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1.2,
+      spaceBetween: 20,
+      centeredSlides: true,
+      grabCursor: true,
+      loop: true,
+      autoplay: { delay: 3500, disableOnInteraction: false },
+      pagination: { el: ".swiper-pagination", clickable: true },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+      breakpoints: {
+        640: { slidesPerView: 2, spaceBetween: 20, centeredSlides: false },
+        1024: { slidesPerView: 3, spaceBetween: 24, centeredSlides: false }
+      }
+    });
+
+    // Text to Speech Narrator for Modul Tabs
+    function speakCurrentTab(tabId) {
+      const tabEl = document.getElementById(tabId);
+      if (!tabEl) return;
+      const textToRead = tabEl.innerText.replace(/Putar Narator Suara|Berhenti/g, '').trim();
+      SoundEffects.speakText(textToRead.slice(0, 400)); // baca ringkasan awal
+    }
+
+    // Filter Search Topics in Modul
+    function filterModulTopics() {
+      const q = document.getElementById('modulSearchInput').value.toLowerCase().trim();
+      if (!q) return;
+
+      const mapping = [
+        { key: 'pengertian', tab: '#pengertian', terms: ['pengertian', 'definisi', 'apa itu', 'lahan basah', 'karakteristik', 'air tawar'] },
+        { key: 'jenis', tab: '#jenis', terms: ['jenis', 'tipe', 'rawa', 'gambut', 'mangrove', 'bakau', 'sungai', 'danau'] },
+        { key: 'manfaat', tab: '#manfaat', terms: ['manfaat', 'fungsi', 'spons', 'banjir', 'ekowisata', 'pertanian'] },
+        { key: 'ekosistem', tab: '#ekosistem', terms: ['rantai', 'makanan', 'ekosistem', 'produsen', 'konsumen', 'elang', 'bangau', 'keong'] },
+        { key: 'kualitasAir', tab: '#kualitasAir', terms: ['kualitas air', 'filter', 'penyaring', 'biofilter', 'akar', 'jernih'] },
+        { key: 'limbah', tab: '#limbah', terms: ['limbah', 'sampah', 'deterjen', 'eutrofikasi', 'racun', '3r'] },
+        { key: 'ancaman', tab: '#ancaman', terms: ['ancaman', 'kebakaran', 'penebangan', 'alih fungsi', 'rusak', 'kritis'] },
+        { key: 'upaya', tab: '#upaya', terms: ['upaya', 'menjaga', 'solusi', 'pelestarian', 'konservasi', 'aksi'] }
+      ];
+
+      const found = mapping.find(m => m.terms.some(t => t.includes(q) || q.includes(t)));
+      if (found) {
+        const btn = document.querySelector(`button[data-bs-target="${found.tab}"]`);
+        if (btn) {
+          const tab = new bootstrap.Tab(btn);
+          tab.show();
+        }
+      }
+    }
+
+    // Music
+    const music = document.getElementById('bg-music');
+    const toggleBtn = document.getElementById('music-toggle');
+    const icon = document.getElementById('music-icon');
+    const toast = document.getElementById('music-toast');
+    const musicDock = document.getElementById('music-dock');
+
+    function updateIcon() {
+      if (music.paused) {
+        icon.textContent = '🔇';
+        musicDock.classList.remove('playing');
+      } else {
+        icon.textContent = '🔊';
+        musicDock.classList.add('playing');
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.opacity = '1'; }, 10);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => (toast.style.display = 'none'), 400);
+      }, 2000);
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (music.paused) {
+        music.play().then(() => {
+          updateIcon();
+          showToast('Musik Dinyalakan 🎵');
+        }).catch(() => {});
+      } else {
+        music.pause();
+        updateIcon();
+        showToast('Musik Dimatikan 🔇');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const tryPlay = () => {
+        if (music.paused) {
+          music.play().then(updateIcon).catch(() => {});
+        } else {
+          updateIcon();
+        }
+        document.body.removeEventListener('click', tryPlay);
+      };
+      document.body.addEventListener('click', tryPlay);
+    });
+  </script>
+</body>
+</html>
